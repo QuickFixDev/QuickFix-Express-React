@@ -4,9 +4,9 @@ const loggedIn = true; // You can replace this with your authentication logic
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-md bg-light">
+    <nav className="navbar navbar-expand-md nav-fill bg-light">
       <div className="container">
-        <img src="/images/QuickFix_logo.png" class="mx-2" width="50px" alt="logo" />
+        <img src="/images/QuickFix_logo.png" className="mx-2" width="50px" alt="logo" />
         <button
           className="navbar-toggler"
           data-bs-toggle="collapse"
@@ -33,6 +33,14 @@ const Navbar = () => {
                 className="btn-outline-primary nav-link centered-expand-underline"
               >
                 Test
+              </a>
+            </li>
+            <li>
+              <a
+                href="/complain-form"
+                className="btn-outline-primary nav-link centered-expand-underline"
+              >
+                Complain form
               </a>
             </li>
             <li className="nav-item">

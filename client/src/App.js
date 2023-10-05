@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Profile from './pages/Profile';
 import FetchUserTest from './pages/FetchUserTest';
+import ComplainForm from './pages/ComplainForm';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/test" element={<FetchUserTest />} />
+        <Route path="/complain-form" element={<ComplainForm />} />
       </Routes>
     </BrowserRouter>
   );
