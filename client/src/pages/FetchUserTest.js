@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function App() {
+export default function FetchUserTest() {
     const [ backendData, setBackendData ] = useState([ {} ]);
 
     useEffect(() => {

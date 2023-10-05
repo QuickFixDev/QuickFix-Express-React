@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Note the imp
 import Home from './pages/Home';
 import About from './pages/About';
 import Profile from './pages/Profile';
+import FetchUserTest from './pages/FetchUserTest';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/test" element={<FetchUserTest />} />
       </Routes>
     </BrowserRouter>
   );

@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-md bg-light">
       <div className="container">
-        <img src="/images/QuickFix_logo.png" class="mx-2" width="50px" alt="logo"/>
+        <img src="/images/QuickFix_logo.png" class="mx-2" width="50px" alt="logo" />
         <button
           className="navbar-toggler"
           data-bs-toggle="collapse"
@@ -25,6 +25,14 @@ const Navbar = () => {
                 className="btn-outline-primary nav-link centered-expand-underline"
               >
                 Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                href="/test"
+                className="btn-outline-primary nav-link centered-expand-underline"
+              >
+                Test
               </a>
             </li>
             <li className="nav-item">
