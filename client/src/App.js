@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Note the imp
 
 import Home from './pages/Home';
 import About from './pages/About';
-import Profile from './pages/Profile';
 import FetchUserTest from './pages/FetchUserTest';
 import ComplainForm from './pages/ComplainForm';
+import UserProfile from './pages/UserProfile';
+import UserReport from './pages/UserReport';
 
 export default function App() {
   return (
@@ -14,9 +15,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/test" element={<FetchUserTest />} />
         <Route path="/complain-form" element={<ComplainForm />} />
+        <Route path="/user-report" element={<UserReport />} />
       </Routes>
     </BrowserRouter>
   );

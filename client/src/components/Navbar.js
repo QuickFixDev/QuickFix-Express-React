@@ -1,4 +1,14 @@
 import React from 'react';
+// import { Link } from 'react-router-dom';
+
+const generalRoutes = [
+  { path: '/', label: 'Home' },
+  { path: '/about', label: 'About' },
+  { path: '/contact', label: 'Contact' },
+  { path: '/complain-form', label: 'Complain form' },
+  { path: '/user-report', label: 'User report' },
+];
+
 
 const loggedIn = true; // You can replace this with your authentication logic
 
@@ -19,54 +29,23 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse" id="nav">
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <a
-                href="/"
-                className="btn-outline-primary nav-link centered-expand-underline"
-              >
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/test"
-                className="btn-outline-primary nav-link centered-expand-underline"
-              >
-                Test
-              </a>
-            </li>
-            <li>
-              <a
-                href="/complain-form"
-                className="btn-outline-primary nav-link centered-expand-underline"
-              >
-                Complain form
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/about "
-                className="btn-outline-primary nav-link centered-expand-underline"
-              >
-                About
-              </a>
-            </li>
+            {generalRoutes.map((route) => (
+              <li key={route.path}>
+                <a href={route.path} className="btn-outline-primary nav-link centered-expand-underline">
+                  {route.label}
+                </a>
+              </li>
+            ))}
 
             {loggedIn ? (
               <>
                 <li className="nav-item">
-                  <a
-                    href="/profile"
-                    className="nav-link centered-expand-underline"
-                  >
-                    Profile
+                  <a href="/user-profile" className="nav-link centered-expand-underline">
+                    My profile
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a
-                    href="/logout"
-                    className="nav-link centered-expand-underline"
-                  >
+                  <a href="/logout" className="nav-link centered-expand-underline">
                     Logout
                   </a>
                 </li>

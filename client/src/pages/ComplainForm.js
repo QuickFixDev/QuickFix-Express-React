@@ -1,5 +1,6 @@
 // import React, { useState } from 'react';
 import React from 'react';
+import Category from '../components/Category';
 
 function ComplainForm() {
     // const [title, setTitle] = useState('');
@@ -18,7 +19,7 @@ function ComplainForm() {
     // };
 
     return (
-        <div className='container w-50 shadow-sm py-5 mt-5'>
+        <div className='container w-50 shadow-md py-5 mt-5'>
             <div className='container my-3 text-center'>
                 <h1>
                     Submit complain
@@ -33,21 +34,12 @@ function ComplainForm() {
                                 className="form-control"
                                 id="floatingInputGrid"
                                 placeholder="name@example.com"
-                                value="mdo@example.com" />
+                            />
                             <label for="floatingInputGrid">Complain Subject</label>
                         </div>
                     </div>
-                    <div className="col-md">
-                        <div className="form-floating">
-                            <select className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                                <option selected>Category</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                            <label for="floatingSelectGrid">select a category</label>
-                        </div>
-                    </div>
+
+                    <Category />
 
                     <div className="row g-2">
                         <div className="col">
@@ -57,7 +49,7 @@ function ComplainForm() {
                                     className="form-control"
                                     id="floatingInputGrid"
                                     placeholder="name@example.com"
-                                    value="mdo@example.com" />
+                                    value="email@example.com" />
                                 <label for="floatingInputGrid">Email address</label>
                             </div>
                         </div>
