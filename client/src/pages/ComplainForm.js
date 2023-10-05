@@ -18,8 +18,8 @@ function ComplainForm() {
     // };
 
     return (
-        <>
-            <div className='container mt-5 text-center'>
+        <div className='container w-50 shadow-sm py-5 mt-5'>
+            <div className='container my-3 text-center'>
                 <h1>
                     Submit complain
                 </h1>
@@ -34,23 +34,38 @@ function ComplainForm() {
                                 id="floatingInputGrid"
                                 placeholder="name@example.com"
                                 value="mdo@example.com" />
-                            <label for="floatingInputGrid">Email address</label>
+                            <label for="floatingInputGrid">Complain Subject</label>
                         </div>
                     </div>
                     <div className="col-md">
                         <div className="form-floating">
                             <select className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                                <option selected>Open this select menu</option>
+                                <option selected>Category</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
-                            <label for="floatingSelectGrid">Works with selects</label>
+                            <label for="floatingSelectGrid">select a category</label>
                         </div>
                     </div>
+
+                    <div className="row g-2">
+                        <div className="col">
+                            <div className="form-floating">
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    id="floatingInputGrid"
+                                    placeholder="name@example.com"
+                                    value="mdo@example.com" />
+                                <label for="floatingInputGrid">Email address</label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
