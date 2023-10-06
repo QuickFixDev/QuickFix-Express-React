@@ -1,22 +1,13 @@
 import React from 'react';
-import Complain from '../components/Complain';
+import ComplainHeader from '../components/ComplainHeader';
+import ComplainList from '../components/ComplainList';
 
 const Home = () => {
   return (
     <>
-
-      <div className='container w-50 shadow-md py-5 px-3 mt-5'>
-        <div className='container my-3 text-center'>
-          <h1>
-            Your complains
-          </h1>
-        </div>
-        <div className='container mt-5'>
-          {/* Loop */}
-          <Complain />
-          <Complain />
-          <Complain />
-        </div>
+      <div className='container w-lg-50 shadow-md py-5 px-3 mt-5'>
+        <ComplainHeader />
+        <ComplainList />
       </div>
 
     </>

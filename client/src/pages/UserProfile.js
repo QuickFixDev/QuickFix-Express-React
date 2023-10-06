@@ -3,7 +3,7 @@ import Profile from '../components/Profile'
 
 const UserProfile = () => {
   return (
-    <div className="container mt-5 w-50 p-3 border rounded">
+    <div className='container w-50 d-flex flex-column align-items-center p-4 mt-5 border rounded'>
       <Profile />
     </div>
   );

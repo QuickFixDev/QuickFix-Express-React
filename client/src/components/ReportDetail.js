@@ -11,14 +11,14 @@ const complain = {
 
 const ReportDetail = () => {
     return (
-        <div className='container mt-3'>
+        <div className='container mt-3 overflow-auto'>
             <div className="row">
-                <div className="col-6 text-left">
+                <div className="col-md-6 text-left">
                     <h1>{complain.complaint_title}</h1>
                     <h5>{complain.complaint_category}</h5>
                     <p> complaint id: {complain.id}</p>
                 </div>
-                <div className="col-6 text-end">
+                <div className="col-md-6 text-md-end">
                     <p>{complain.complaint_date}</p>
                 </div>
             </div>

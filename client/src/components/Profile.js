@@ -10,14 +10,14 @@ const user = {
 
 const Profile = () => {
     return (
-        <div className="row justify-content-center align-items-center">
-            <div className="col-md-4 text-center">
-                <img src={user.profile_photo} alt="User Profile" className="img-fluid rounded-circle m-3" width="100px" />
-            </div>
-            <div className="col-md-8">
-                <h2>{user.first_name} {user.last_name}</h2>
-                <p>House Number: {user.house_number}</p>
-                <p>Email: {user.email}</p>
+        <div className="row">
+            <div className="col">
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                    <img src={user.profile_photo} alt="User Profile" className="rounded-circle m-3" width="100px" />
+                    <h2>{user.first_name} {user.last_name}</h2>
+                    <p>Email: {user.email}</p>
+                    <p>House Number: {user.house_number}</p>
+                </div>
             </div>
         </div>
     );

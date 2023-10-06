@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Note the imp
 
 import Home from './pages/Home';
 import About from './pages/About';
-import FetchUserTest from './pages/FetchUserTest';
+import ContactMe from './pages/ContactMe';
 import ComplainForm from './pages/ComplainForm';
 import UserProfile from './pages/UserProfile';
 import UserReport from './pages/UserReport';
@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/user-profile" element={<UserProfile />} />
-        <Route path="/test" element={<FetchUserTest />} />
+        <Route path="/contact-me" element={<ContactMe />} />
         <Route path="/complain-form" element={<ComplainForm />} />
         <Route path="/user-report" element={<UserReport />} />
       </Routes>
