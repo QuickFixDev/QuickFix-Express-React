@@ -2,7 +2,7 @@ import React from 'react';
 
 const ContactMe = () => {
     return (
-        <div className='container w-50 shadow-md py-5 px-3 mt-5'>
+        <div className='container d-flex flex-column justify-content-center my-5 w-50 h-75 shadow-md'>
             <div className="row">
                 <div className="col-md-6 offset-md-3">
                     <div className="text-center">

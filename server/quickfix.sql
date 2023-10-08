@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-10-2023 a las 22:45:01
+-- Tiempo de generación: 08-10-2023 a las 02:06:52
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -62,6 +62,13 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `street_name`, `house_number`, `phone_number`, `email`) VALUES
+(1, 'Juan', 'Hernandez', 'Palma mexicana', 406, '4491882083', 'quickfix.dev1@gmail.com');
+
 -- --------------------------------------------------------
 
 --
@@ -82,7 +89,7 @@ CREATE TABLE `user_complaints` (
 --
 
 INSERT INTO `user_complaints` (`complaint_id`, `user_id`, `complaint_title`, `complaint_description`, `complaint_date`, `status`) VALUES
-(1, NULL, 'Some test title', 'The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox. Bright vixens jump; dozy fowl quack. Quick wafting zephyrs vex bold Jim. Quick zephyrs blow.', '2023-10-05 10:55:10', 'Open');
+(2, 1, 'Cleaning Request', 'The common areas in the building need to be cleaned more frequently', '2023-10-07 23:23:27', 'Open');
 
 --
 -- Índices para tablas volcadas
@@ -121,13 +128,13 @@ ALTER TABLE `complain_categories`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `user_complaints`
 --
 ALTER TABLE `user_complaints`
-  MODIFY `complaint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `complaint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas

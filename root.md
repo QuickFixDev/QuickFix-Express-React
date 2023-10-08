@@ -4,7 +4,7 @@
     - components
         - Category
         - ComplainHeader
-        - ComplainList
+        - ComplaintList
         - Navbar
         - Profile
-        - ReportDetail
+        - ComplaintDetail

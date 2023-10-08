@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Category() {
+export default function CategoryCombo() {
     const [ data, setData ] = useState([]);
     const [ loading, setLoading ] = useState(true);
 

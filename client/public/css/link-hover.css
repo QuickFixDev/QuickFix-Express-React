@@ -7,8 +7,9 @@
   content: '';
   position: absolute;
   width: 0;
-  height: 2px;
-  background-color: rgb(0, 128, 255);
+  height: 4px;
+  border-radius: 20px;
+  background: linear-gradient(120deg, rgb(0, 174, 255), rgb(255, 0, 255)) no-repeat;
   bottom: 0;
   left: 0;
   transition: width 0.3s ease-in-out;
