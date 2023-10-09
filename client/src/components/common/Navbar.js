@@ -1,23 +1,19 @@
 import React from 'react';
+import user from '../../contexts/UserContext'
 // import { Link } from 'react-router-dom';
 
-const user = {
-  loggedIn: true,
-  role: 'resident',
-  photo: '/images/QuickFix_logo.png'
-}
 
 const routes = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About' },
-  { path: '/contact-me', label: 'Contact me' },
-  { path: '/complain-form', label: 'Complain form' },
-  { path: '/profile', label: 'My profile' },
-  { path: '/my-complaints', label: 'My complaints' },
-  { path: '/complaint-log', label: 'Complaint log' },
-  { path: '/stats', label: 'Stats' },
-  { path: '/logout', label: 'Logout' },
-  ];
+  { userRequired: 'common', path: '/', label: 'Home' },
+  { userRequired: 'common', path: '/about', label: 'About' },
+  { userRequired: 'common', path: '/contact-me', label: 'Contact me' },
+  { userRequired: 'common', path: '/profile', label: 'My profile' },
+  { userRequired: 'resident', path: '/complain-form', label: 'Complain form' },
+  { userRequired: 'resident', path: '/my-complaints', label: 'My complaints' },
+  { userRequired: 'admin', path: '/complaint-log', label: 'Complaint log' },
+  { userRequired: 'admin', path: '/stats', label: 'Stats' },
+  { userRequired: 'common', path: '/logout', label: 'Logout' },
+];
 
 const Navbar = () => {
   return (
@@ -30,17 +26,23 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse" id="nav">
           <ul className="navbar-nav">
+            <li className="nav-link fw-bold"> {user.role} view </li>
+            <div class="border-end mx-2"></div>
+
             {routes.map((route) => (
-              <li key={route.path}>
-                <a href={route.path} className="btn-outline-primary nav-link underline-on-hover">
-                  {route.label}
-                </a>
-              </li>
+              // if permissions                    if common                          if dev
+              (user.role === route.userRequired || route.userRequired === "common" || user.role === "dev") ? (
+                <li key={route.path} >
+                  <a href={route.path} className="btn-outline-primary nav-link underline-on-hover">
+                    {route.label}
+                  </a>
+                </li>) : null
             ))}
+
           </ul>
         </div>
       </div>
-    </nav>
+    </nav >
   );
 };
 

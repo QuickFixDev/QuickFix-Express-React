@@ -2,57 +2,43 @@ const express = require('express');
 const authMiddleware = require('./middleware/authMiddleware'); // Adjust the path as needed
 const PORT = 5000;
 const pool = require('./dbConnection'); // Require the database connection pool
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
 
-// Route to retrieve categories from the database
-app.get('/complain-form', authMiddleware.isResident, (req, res) => {
-    pool.query('SELECT category_name FROM complain_categories ORDER BY category_name ASC', (error, results) => {
-        if (error) {
-            console.error('Error executing SQL query:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        res.json(results);
-        console.log(results);
-    });
-});
-
-// Route to retrieve categories from the database
-app.get('/my-complaints', (req, res) => {
-    const user = {
-        id: 1
-    }
-
-    pool.query('SELECT * FROM user_complaints WHERE user_id = ?', user.id, (error, results) => {
-        if (error) {
-            console.error('Error executing SQL query:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        res.json(results);
-        console.log(results);
-    });
-});
-
-// Route to retrieve categories from the database
-app.get('/complaint-log', (req, res) => {
-    const complaint = {
-        id: 3
-    }
-
+app.post('/complain-form', (req, res) => {
     const sqlQuery = `
-    SELECT uc.*, cc.category_name, u.house_number, u.street_name
-    FROM user_complaints uc
-    INNER JOIN complain_categories cc ON uc.category_id = cc.category_id
-    INNER JOIN users u ON uc.user_id = u.user_id
-    WHERE uc.complaint_id = ?;
-    `;
+    INSERT INTO user_complaints
+    (complaint_id, user_id, complaint_title, complaint_description, complaint_date, status, category_id)
+    VALUES (NULL, ?, ?, ?, ?, ?, ?);
+    `
+
+    const values = [
+        req.body.user_id,
+        req.body.complaint_title,
+        req.body.complaint_description,
+        req.body.complaint_date,
+        req.body.status,
+        req.body.category_id
+    ]
+
+    pool.query(sqlQuery, values, (err, data) => {
+        if (err) {
+            console.error("MySQL Error:", err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        return res.json(data);
+    });
+});
 
 
-    // uc means "user_complaints" and cc means "complain category"
-    pool.query(sqlQuery, complaint.id, (error, results) => {
+
+function executeQuery(res, sqlQuery, params = []) {
+    console.log("executeQuery params:", params)
+    pool.query(sqlQuery, params, (error, results) => {
         if (error) {
             console.error('Error executing SQL query:', error);
             res.status(500).json({ error: 'Internal Server Error' });
@@ -61,48 +47,25 @@ app.get('/complaint-log', (req, res) => {
         res.json(results);
         console.log(results);
     });
-});
+}
 
-// Route to retrieve categories from the database
-app.get('/profile', (req, res) => {
-    const user = {
-        id: 1
-    }
+const user = { id: 1 }
+const complaint = { id: 4 }
 
-    pool.query('SELECT * FROM users WHERE user_id = ?', user.id, (error, results) => {
-        if (error) {
-            console.error('Error executing SQL query:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        res.json(results);
-        console.log(results);
+const apiRoutes = [
+    { route: '/complain-form', sqlQuery: 'SELECT category_name FROM complain_categories ORDER BY category_name ASC' },
+    { route: '/my-complaints', sqlQuery: 'SELECT * FROM user_complaints WHERE user_id = ?', params: user.id },
+    { route: '/complaint-log', sqlQuery: 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?', params: [complaint.id] },
+    { route: '/profile', sqlQuery: 'SELECT * FROM users WHERE user_id = ?', params: [user.id] },
+    { route: '/stats', sqlQuery: 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name' },
+];
+
+// Loop through route configurations and set up routes
+apiRoutes.forEach(({ route, sqlQuery, params }) => {
+    app.get(route, (req, res) => {
+        console.log("params", params);
+        executeQuery(res, sqlQuery, params);
     });
-});
-
-// Route to retrieve categories from the database
-app.get('/stats', (req, res) => {
-    const sqlQuery = `
-    SELECT cc.category_name, COUNT(uc.category_id) AS category_count
-    FROM user_complaints uc
-    INNER JOIN complain_categories cc ON uc.category_id = cc.category_id
-    GROUP BY cc.category_name;
-    `;
-
-    pool.query(sqlQuery, (error, results) => {
-        if (error) {
-            console.error('Error executing SQL query:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        res.json(results);
-        console.log(results);
-    });
-});
-
-// Sample API route
-app.get('/api', (req, res) => {
-    res.json({ users: [ 'userOne', 'userTwo', 'userThree' ] });
 });
 
 app.listen(PORT, () => {

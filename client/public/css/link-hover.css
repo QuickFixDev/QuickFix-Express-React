@@ -1,6 +1,7 @@
 .underline-on-hover {
   position: relative;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .underline-on-hover::after {
@@ -15,7 +16,6 @@
   transition: width 0.3s ease-in-out;
 }
 
-/* Add the hover effect */
 .underline-on-hover:hover::after {
   width: 100%;
 }

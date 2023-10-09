@@ -1,70 +1,139 @@
 import React, { useState } from 'react';
-import CategoryCombo from '../../components/common/CategoryCombo';
+import axios from 'axios';
+import user from '../../contexts/UserContext'
+import AccessDenied from '../common/AccessDenied';
 
-function ComplainForm() {
-    const [complaint_title, setComplainSubject] = useState('');
-    const [category_name, setComplainCategory] = useState(''); // Use a separate state for category
-    const [complaint_description, setComplainDescription] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Complain Subject:', complaint_title);
-        console.log('Category:', category_name); // Use complain_category state here
-        console.log('Description:', complaint_description);
+const ComplainForm = () => {
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate
+            .getHours()
+            .toString()
+            .padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate
+                .getSeconds()
+                .toString()
+                .padStart(2, '0')}`;
+    const data = {
+        user_id: 1,
+        complaint_date: formattedDate,
+    };
+    const [ values, setValues ] = useState({
+        user_id: '',
+        complaint_title: '',
+        complaint_description: '',
+        complaint_date: '',
+        status: '',
+        category_id: '',
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        // Parse value to an integer if the name is "category_id"
+        setValues({
+            ...values,
+            [ name ]: name === 'category_id' ? parseInt(value, 10) : value,
+        });
     };
 
-    return (
-        <div className='container w-50 shadow-md p-5 mt-5'>
-            <div className='container my-3 text-center'>
-                <h1>Complain form</h1>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div className='container mt-5'>
-                    <div className="row g-2">
-                        <div className="col-md">
-                            <div className="form-floating">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="complain_subject"
-                                    placeholder="Complain subject"
-                                    value={complaint_title}
-                                    onChange={(e) => setComplainSubject(e.target.value)}
-                                />
-                                <label htmlFor="complain_subject">Complain Subject</label>
-                            </div>
-                        </div>
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        axios
+            .post('http://localhost:3000/complain-form', values)
+            .then((res) => console.log('Successful storage'))
+            .catch((error) => console.log(error));
+    };
 
-                        <div className="col-md">
-                            <CategoryCombo
-                                id="complain_category"
-                                selectedCategory={category_name} // Pass selected category as a prop
-                                onSelectCategory={(category) => setComplainCategory(category)} // Handle category selection
-                            />
-                        </div>
+    if (user.role === "resident" || user.role === "dev") {
+        return (
+
+            <div className="container mt-5 p-5 w-75 shadow-md">
+                <h1 className='text-center mb-5'>Submit complain</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-floating mb-3">
+                        <input
+                            placeholder="User ID"
+                            onChange={handleChange}
+                            type="number"
+                            name="user_id"
+                            className="form-control"
+                            id="user_id"
+                        />
+                        <label htmlFor="user_id">User ID</label>
                     </div>
-                    <div className="mt-1 row g-2">
-                        <div className="col-md">
-                            <div className="form-group">
-                                <label htmlFor="complainDescription">Description</label>
-                                <textarea
-                                    className="form-control"
-                                    id="complainDescription"
-                                    rows="8"
-                                    style={{ minHeight: "100px", resize: "none" }}
-                                    value={complaint_description}
-                                    onChange={(e) => setComplainDescription(e.target.value)}
-                                ></textarea>
-                            </div>
-                        </div>
+                    <div className="form-floating mb-3">
+                        <input
+                            placeholder="Complaint Title"
+                            onChange={handleChange}
+                            type="text"
+                            name="complaint_title"
+                            className="form-control"
+                            id="complaint_title"
+                        />
+                        <label htmlFor="complaint_title">Complaint Title</label>
                     </div>
-                    <div className="mt-3 text-center">
-                        <button type="submit" className="btn btn-primary w-100">Submit</button>
+                    <div className="form-floating mb-3">
+                        <input
+                            placeholder="Complaint Description"
+                            onChange={handleChange}
+                            type="text"
+                            name="complaint_description"
+                            className="form-control"
+                            id="complaint_description"
+                        />
+                        <label htmlFor="complaint_description">Complaint Description</label>
                     </div>
-                </div>
-            </form>
-        </div>
+                    <div className="form-floating mb-3">
+                        <input
+                            placeholder="Complaint Date"
+                            onChange={handleChange}
+                            type="text"
+                            name="complaint_date"
+                            value={data.complaint_date}
+                            className="form-control"
+                            id="complaint_date"
+                            readOnly
+                        />
+                        <label htmlFor="complaint_date">Complaint Date</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                        <select
+                            onChange={handleChange}
+                            name="status"
+                            className="form-control"
+                            id="status"
+                        >
+                            <option value="">Select</option>
+                            <option value="Closed">Closed</option>
+                            <option value="Open">Open</option>
+                        </select>
+                        <label htmlFor="status">Status</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                        <select
+                            onChange={handleChange}
+                            name="category_id"
+                            className="form-control"
+                            id="category_id"
+                        >
+                            <option value="">Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                        <label htmlFor="category_id">Category ID</label>
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Submit Complaint
+                    </button>
+                </form>
+            </div>
+        );
+    }
+    return (
+        <AccessDenied />
     );
-}
+};
 
 export default ComplainForm;

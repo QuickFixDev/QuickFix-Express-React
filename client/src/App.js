@@ -8,7 +8,6 @@ import Profile from './pages/common/Profile';
 import MyComplaints from './pages/resident/MyComplaints';
 import ComplaintLog from './pages/admin/ComplaintLog';
 import Stats from './pages/admin/Stats';
-import WAChat from './pages/admin/WAChat';
 
 export default function App() {
   return (
@@ -23,7 +22,6 @@ export default function App() {
           <Route path="/my-complaints" element={<MyComplaints />} />
           <Route path="/complaint-log" element={<ComplaintLog />} />
           <Route path="/stats" element={<Stats />} />
-          <Route path="/chat" element={<WAChat />} />
       </Routes>
     </BrowserRouter>
   );
