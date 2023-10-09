@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2023 a las 02:06:52
+-- Tiempo de generación: 09-10-2023 a las 11:23:49
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -44,7 +44,12 @@ INSERT INTO `complain_categories` (`category_id`, `category_name`, `category_des
 (4, 'Cooling system', 'Inadequate cooling system in the residence.'),
 (5, 'Garbage Collection', 'Missed garbage collection in the residence.'),
 (6, 'Roof Leakage', 'Leakage issues in the residence\'s roof.'),
-(7, 'Infestation', 'Pest infestation problem in the residence.');
+(7, 'Infestation', 'Pest infestation problem in the residence.'),
+(8, 'Plumbing', 'related to plumbing systems, including issues with pipes, drains, faucets, toilets, and other water-related fixtures.'),
+(9, 'Maintenance', 'Related with repairing services'),
+(10, 'Noise', 'Excessive noice caused by neighboors'),
+(11, 'Security', 'No description provided'),
+(12, 'Parking', 'No description provided');
 
 -- --------------------------------------------------------
 
@@ -81,15 +86,26 @@ CREATE TABLE `user_complaints` (
   `complaint_title` varchar(255) NOT NULL,
   `complaint_description` text NOT NULL,
   `complaint_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('Open','In Progress','Closed') DEFAULT 'Open'
+  `status` enum('Open','In Progress','Closed') DEFAULT 'Open',
+  `category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `user_complaints`
 --
 
-INSERT INTO `user_complaints` (`complaint_id`, `user_id`, `complaint_title`, `complaint_description`, `complaint_date`, `status`) VALUES
-(2, 1, 'Cleaning Request', 'The common areas in the building need to be cleaned more frequently', '2023-10-07 23:23:27', 'Open');
+INSERT INTO `user_complaints` (`complaint_id`, `user_id`, `complaint_title`, `complaint_description`, `complaint_date`, `status`, `category_id`) VALUES
+(2, 1, 'Cleaning Request', 'The common areas in the building need to be cleaned more frequently', '2023-10-07 23:23:27', 'Open', 5),
+(3, 1, 'Water Supply Issue', 'There is a lack of water supply in my residence, and it has been ongoing for the past two days. We need an urgent solution to this problem.', '2023-10-08 00:50:09', 'Open', 1),
+(4, 1, 'Water supply issue', 'Residents in Apartment 304 have been experiencing low water pressure in their kitchen faucet for the past week. This issue affects their ability to perform daily tasks like washing dishes and cooking', '2023-10-08 09:58:22', 'In Progress', 1),
+(5, 1, 'Broken Window', 'One of the windows in my bedroom is broken, and it needs to be repaired to prevent rainwater from coming in.', '2023-10-08 12:07:15', 'Closed', 9),
+(6, NULL, 'Loud Music Next Door', 'The neighbors are playing loud music late at night, making it impossible to sleep.', '2023-10-08 12:08:47', 'In Progress', 10),
+(7, NULL, 'Broken lock', 'The front door lock is broken, and it poses a security risk to the residents. It needs immediate repair.', '2023-10-08 12:09:31', 'Open', 9),
+(8, 1, 'Ant Infestation', 'There\'s a severe infestation of ants in the kitchen. We need pest control services to address this issue.', '2023-10-08 12:11:13', 'Closed', 7),
+(9, 1, 'Air Conditioner Not Cooling', 'The air conditioner in the living room is not cooling properly, and it\'s uncomfortable during hot weather.', '2023-10-08 12:11:49', 'Closed', 4),
+(10, 1, 'Unauthorized Parking', 'Several cars are parked in the resident-only parking area without permits. It\'s causing inconvenience to residents.', '2023-10-08 12:12:44', 'Closed', 12),
+(27, 1, 'Some subject', 'Some desc', '0000-00-00 00:00:00', 'Open', 1),
+(38, 1, 'Damn it worked broooooo', 'Sheeeesh', '0000-00-00 00:00:00', 'Closed', 2);
 
 --
 -- Índices para tablas volcadas
@@ -112,7 +128,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_complaints`
   ADD PRIMARY KEY (`complaint_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -122,7 +139,7 @@ ALTER TABLE `user_complaints`
 -- AUTO_INCREMENT de la tabla `complain_categories`
 --
 ALTER TABLE `complain_categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -134,7 +151,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `user_complaints`
 --
 ALTER TABLE `user_complaints`
-  MODIFY `complaint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `complaint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Restricciones para tablas volcadas
@@ -144,7 +161,8 @@ ALTER TABLE `user_complaints`
 -- Filtros para la tabla `user_complaints`
 --
 ALTER TABLE `user_complaints`
-  ADD CONSTRAINT `user_complaints_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `user_complaints_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `user_complaints_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `complain_categories` (`category_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
