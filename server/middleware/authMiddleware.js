@@ -4,8 +4,8 @@ const user = {
 
 function isAdmin(req, res, next) {
     // Check user's role
-    if (user && (user.role === 'dev' || user.role === 'admin')) {
-        console.log(user.role, "authorized"); // Move this line here
+    if (user && (tentant.role === 'dev' || tentant.role === 'admin')) {
+        console.log(tentant.role, "authorized"); // Move this line here
         return next(); // Allow access for admin and dev
     }
 
@@ -15,8 +15,8 @@ function isAdmin(req, res, next) {
 
 function isResident(req, res, next) {
     // Check user's role
-    if (user.role === 'resident') {
-        console.log(user.role, "authorized");
+    if (tentant.role === 'resident') {
+        console.log(tentant.role, "authorized");
         return next(); // Allow access for dev and resident
     }   
     
