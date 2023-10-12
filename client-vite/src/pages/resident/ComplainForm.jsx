@@ -1,5 +1,5 @@
 import { useState } from 'react';
-    import axios from 'axios';
+import axios from 'axios';
 import tentant from '../../contexts/UserContext'
 import AccessDenied from '../common/AccessDenied';
 import CategoryCombo from '../../components/common/CategoryCombo';
@@ -52,6 +52,20 @@ const ComplainForm = () => {
             <div className="container mt-5 p-5 w-75 shadow-md">
                 <h1 className='text-center mb-5'>Submit complain</h1>
                 <form onSubmit={handleSubmit}>
+
+                    <div className="form-floating mb-3">
+                        <input
+                            placeholder="Complaint Date"
+                            onChange={handleChange}
+                            type="text"
+                            name="complaint_date"
+                            value={data.complaint_date}
+                            className="form-control"
+                            id="complaint_date"
+                            hidden
+                        />
+                    </div>
+
                     <div className="form-floating mb-3">
                         <input
                             onChange={handleChange}
@@ -74,29 +88,20 @@ const ComplainForm = () => {
                         />
                         <label htmlFor="complaint_title">Complaint Title</label>
                     </div>
-                    <div className="form-floating mb-3">
-                        <input
-                            placeholder="Complaint Description"
-                            onChange={handleChange}
+
+                    <div className="form-group">
+                        <label className='mb-2' htmlFor="reportDescription">Description</label>
+                        <textarea
                             type="text"
+                            className="form-control mb-3"
                             name="complaint_description"
-                            className="form-control"
-                            id="complaint_description"
-                        />
-                        <label htmlFor="complaint_description">Complaint Description</label>
-                    </div>
-                    <div className="form-floating mb-3">
-                        <input
-                            placeholder="Complaint Date"
+                            id="reportDescription"
+                            rows="8"
+                            placeholder="Enter report description"
                             onChange={handleChange}
-                            type="text"
-                            name="complaint_date"
-                            value={data.complaint_date}
-                            className="form-control"
-                            id="complaint_date"
-                            hidden
-                        />
+                        ></textarea>
                     </div>
+
                     <div className="form-floating mb-3">
                         <select
                             onChange={handleChange}

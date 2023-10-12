@@ -14,6 +14,7 @@ const routes = [
   { userRequired: 'resident', path: '/my-complaints', label: 'My complaints' },
   { userRequired: 'admin', path: '/complaint-log', label: 'Complaint log' },
   { userRequired: 'admin', path: '/stats', label: 'Stats' },
+  { userRequired: 'admin', path: '/filter-test', label: 'Filter' },
 ];
 
 const Navbar = () => {

@@ -1,6 +1,6 @@
 const tenant = {
     id: 1,
-    role: "resident",
+    role: "dev",
 };
 
 export default tenant;

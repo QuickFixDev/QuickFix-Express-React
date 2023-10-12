@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Note the import order
 
+import MyComplaints from './pages/resident/MyComplaints';
 import About from './pages/common/About';
 import ContactMe from './pages/common/ContactMe';
 import ComplainForm from './pages/resident/ComplainForm';
 import Profile from './pages/common/Profile';
-import MyComplaints from './pages/resident/MyComplaints';
 import ComplaintLog from './pages/admin/ComplaintLog';
 import Stats from './pages/admin/Stats';
+import FilterTest from './pages/admin/FilterTest';
 import Auth0ProviderWithNavigate from './components/Auth0ProviderWithNavigate'
 import Navbar from './components/common/Navbar'
 
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/my-complaints" element={<MyComplaints />} />
             <Route path="/complaint-log" element={<ComplaintLog />} />
             <Route path="/stats" element={<Stats />} />
+            <Route path="/filter-test" element={<FilterTest/>} />
           </Routes>
       </Auth0ProviderWithNavigate>
     </BrowserRouter>
