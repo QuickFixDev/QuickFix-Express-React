@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PORT from '../../constants/constants';
 
 export default function CategoryCombo() {
     const [ data, setData ] = useState([]);
@@ -6,7 +7,7 @@ export default function CategoryCombo() {
 
     useEffect(() => {
         // Make an HTTP GET request to your Node.js server
-        fetch('http://localhost:5000/complain-form')
+        fetch(`http://localhost:${PORT}/complain-form`) // Replace with the correct endpoint
             .then((response) => response.json())
             .then((responseData) => {
                 setData(responseData); // Update the component state with the data
@@ -19,24 +20,24 @@ export default function CategoryCombo() {
     }, []);
 
     return (
-            <div className="col-md">
-                <div className="form-floating">
-                    {loading ? (
-                        <select className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                            <option>loading...</option>
-                        </select>
-                    ) : (
-                        <select className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                            {data.map((data) => (
-                                <option key={data.category_id}>
-                                    {data.category_name}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                    <label htmlFor="floatingSelectGrid">select a category</label>
-                </div>
+        <div className="col-md">
+            <div className="form-floating">
+                {loading ? (
+                    <select className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                        <option>loading...</option>
+                    </select>
+                ) : (
+                    <select className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                        {data.map((data) => (
+                            <option key={data.category_id}>
+                                {data.category_name}
+                            </option>
+                        ))}
+                    </select>
+                )}
+                <label htmlFor="floatingSelectGrid">select a category</label>
             </div>
+        </div>
 
 
     );

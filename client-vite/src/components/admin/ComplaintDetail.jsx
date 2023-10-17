@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
+import PORT from '../../constants/constants'
 const ReportStructure = (props) => {
+
 
     const {
         complaint_title,
@@ -37,7 +39,7 @@ const ComplaintDetail = () => {
 
     useEffect(() => {
         // Make an HTTP GET request to fetch complaints data
-        fetch('http://localhost:5000/complaint-log') // Replace with the correct endpoint
+        fetch(`http://localhost:${PORT}/complaint-log`) // Replace with the correct endpoint
             .then((response) => response.json())
             .then((responseData) => {
                 setDetail(responseData); // Update the complaints state with the fetched data

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import PORT from '../../constants/constants';
 
 const Stats = () => {
-    const [data, setData] = useState([]);
+    const [ data, setData ] = useState([]);
 
     useEffect(() => {
         // Fetch data from your Express.js server
-        fetch('http://localhost:5000/stats')
+        fetch(`http://localhost:${PORT}/stats`) // Replace with the correct endpoint
+
             .then((response) => response.json())
             .then((responseData) => {
                 setData(responseData); // Update the component state with the fetched data

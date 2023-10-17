@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('./middleware/authMiddleware'); // Adjust the path as needed
-const PORT = 5000;
+const PORT = 5173;
 const pool = require('./dbConnection'); // Require the database connection pool
 const cors = require('cors')
 

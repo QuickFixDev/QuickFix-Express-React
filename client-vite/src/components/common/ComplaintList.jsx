@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
+import PORT from '../../constants/constants';
 
 
 const ComplainItem = (props) => {
@@ -35,7 +36,8 @@ const ComplaintList = () => {
 
   useEffect(() => {
     // Make an HTTP GET request to fetch complaints data
-    fetch('http://localhost:5000/my-complaints') // Replace with the correct endpoint
+    
+    fetch(`http://localhost:${PORT}/my-complaints`) // Replace with the correct endpoint
       .then((response) => response.json())
       .then((responseData) => {
         setComplaints(responseData); // Update the complaints state with the fetched data
