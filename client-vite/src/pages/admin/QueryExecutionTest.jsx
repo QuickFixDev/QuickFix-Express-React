@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const FilterTest = () => {
+const QueryExecution = () => {
     const [queryResult, setQueryResult] = useState(null);
 
     function handleQueryExecution() {
@@ -41,4 +41,4 @@ const FilterTest = () => {
     )
 }
 
-export default FilterTest;
+export default QueryExecution;
