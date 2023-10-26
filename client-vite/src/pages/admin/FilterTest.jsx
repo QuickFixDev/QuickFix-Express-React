@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+
 const initialSqlQuery = 'SELECT * FROM user_complaints';
 const availableFilters = [
   { name: 'User id', key: 'user_id', options: [ '1', '2', '3' ] },
@@ -10,15 +11,42 @@ const availableFilters = [
 
 const FilterTest = () => {
   const [ selectedFilters, setSelectedFilters ] = useState([]);
+  const [ filterQuery, setFilterQuery ] = useState(initialSqlQuery);
+  const [ queryResult, setQueryResult ] = useState(null);
+
+  const handleQueryExecution = () => {
+    const sqlQuery = filterQuery; 
+    const serverUrl = "http://localhost:5000/filter-test"; // Update with your actual server URL
+
+    try {
+      // Make an HTTP POST request to the server
+      fetch(serverUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sqlQuery }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Update the state with the query result
+          setQueryResult(data);
+        })
+        .catch(error => {
+          console.error("Error executing query:", error);
+        });
+    } catch (error) {
+      console.error('Error while executing the query:', error);
+    }
+  };
 
   const buildFilterQuery = () => {
     const appliedFilters = selectedFilters.map(filter => `${filter.key} = '${filter.value}'`);
     const whereClause = appliedFilters.length > 0 ? `WHERE ${appliedFilters.join(' AND ')}` : '';
+    handleQueryExecution();
 
     return `${initialSqlQuery} ${whereClause}`;
   };
-
-  const [ filterQuery, setFilterQuery ] = useState(buildFilterQuery());
 
   const toggleFilter = (filterName, filterValue) => {
     const filterIndex = selectedFilters.findIndex(filter => filter.name === filterName);
@@ -47,7 +75,6 @@ const FilterTest = () => {
     <div className="container mt-5">
       <div className="card p-3">
         <div className='border-start border-primary border-3 bg-light p-3 my-3'>
-
           <p>{filterQuery}</p>
         </div>
         <div className='row'>
@@ -68,6 +95,14 @@ const FilterTest = () => {
               </select>
             </div>
           ))}
+        </div>
+        <div>
+          {queryResult && (
+            <div>
+              <h2>Query Result</h2>
+              <pre>{JSON.stringify(queryResult, null, 2)}</pre>
+            </div>
+          )}
         </div>
       </div>
     </div>
