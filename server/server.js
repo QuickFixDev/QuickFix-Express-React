@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.post('/filter-test', (req, res) => {
     console.log("posted app in server side")
-    const sqlQuery = req.body.sqlQuery; // Assuming your query is sent in the request body
+    const sqlQuery = req.body.filterQuery; // Assuming your query is sent in the request body
     console.log('sqlQuery is:', sqlQuery);
 
     // Execute the SQL query

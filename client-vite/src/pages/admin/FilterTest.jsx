@@ -1,107 +1,117 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 
 const initialSqlQuery = 'SELECT * FROM user_complaints';
 const availableFilters = [
-  { name: 'User id', key: 'user_id', options: [ '1', '2', '3' ] },
-  { name: 'Complaint Category', key: 'complain_category', options: [ 'Water', 'Electricity', 'Security' ] },
-  { name: 'Role', key: 'role', options: [ 'Resident', 'Staff', 'Admin' ] },
-  { name: 'Complaint date', key: 'complaint_date', options: [ '00/00/0000', '00/00/0000', '00/00/0000' ] }
+  { name: 'User id', key: 'user_id', options: [ 1, 2 ] },
+  { name: 'Category ID', key: 'category_id', options: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] },
+  { name: 'Status', key: 'status', options: [ 'Open', 'In Progress', 'Closed' ] },
+  { name: 'Complaint date', key: 'complaint_date', options: [ '00/00/0000', '00/00/0000', '00/00/0000' ] },
 ];
 
 const FilterTest = () => {
   const [ selectedFilters, setSelectedFilters ] = useState([]);
-  const [ filterQuery, setFilterQuery ] = useState(initialSqlQuery);
   const [ queryResult, setQueryResult ] = useState(null);
+  const [ loading, setLoading ] = useState(false);
 
-  const handleQueryExecution = () => {
-    const sqlQuery = filterQuery; 
+  useEffect(() => {
+    const fetchQueryResult = async () => {
+      setLoading(true);
+      try {
+        const filterQuery = buildFilterQuery();
+        const result = await executeQuery(filterQuery);
+        setQueryResult(result);
+      } catch (error) {
+        console.error('Error executing query:', error);
+        setQueryResult(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQueryResult();
+  }, [ selectedFilters ]);
+
+  const executeQuery = async (filterQuery) => {
     const serverUrl = "http://localhost:5000/filter-test"; // Update with your actual server URL
-
-    try {
-      // Make an HTTP POST request to the server
-      fetch(serverUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ sqlQuery }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Update the state with the query result
-          setQueryResult(data);
-        })
-        .catch(error => {
-          console.error("Error executing query:", error);
-        });
-    } catch (error) {
-      console.error('Error while executing the query:', error);
+    const response = await fetch(serverUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ filterQuery }),
+    });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
     }
+    return response.json();
   };
 
   const buildFilterQuery = () => {
-    const appliedFilters = selectedFilters.map(filter => `${filter.key} = '${filter.value}'`);
+    // Build the filter query based on selected filters
+    const appliedFilters = selectedFilters.map(filter => `${filter.key} = ${filter.value}`);
     const whereClause = appliedFilters.length > 0 ? `WHERE ${appliedFilters.join(' AND ')}` : '';
-    handleQueryExecution();
-
     return `${initialSqlQuery} ${whereClause}`;
   };
 
   const toggleFilter = (filterName, filterValue) => {
-    const filterIndex = selectedFilters.findIndex(filter => filter.name === filterName);
+    const updatedFilters = [ ...selectedFilters ];
+    const filterIndex = updatedFilters.findIndex(filter => filter.name === filterName);
 
     if (filterValue === '') {
-      // Remove the filter if the value is empty
       if (filterIndex !== -1) {
-        selectedFilters.splice(filterIndex, 1);
+        updatedFilters.splice(filterIndex, 1);
       }
     } else {
       if (filterIndex !== -1) {
-        // If the filter is already selected, update the value
-        selectedFilters[ filterIndex ].value = filterValue;
+        updatedFilters[ filterIndex ].value = filterValue;
       } else {
-        // Otherwise, add a new filter
         const key = availableFilters.find(filter => filter.name === filterName).key;
-        selectedFilters.push({ name: filterName, key, value: filterValue });
+        updatedFilters.push({ name: filterName, key, value: filterValue });
       }
     }
 
-    setSelectedFilters([ ...selectedFilters ]);
-    setFilterQuery(buildFilterQuery());
+    setSelectedFilters(updatedFilters);
   };
 
   return (
     <div className="container mt-5">
+      <div className="row">
+        {availableFilters.map((filter, index) => (
+          <div key={index} className="form-group col">
+            <label>{filter.name}:</label>
+            <select
+              className="form-control"
+              onChange={(e) => toggleFilter(filter.name, e.target.value)}
+              value={selectedFilters.find(selectedFilter => selectedFilter.name === filter.name)?.value || ''}
+            >
+              <option value="">Select</option>
+              {filter.options.map((option, optionIndex) => (
+                <option key={optionIndex} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
+
       <div className="card p-3">
         <div className='border-start border-primary border-3 bg-light p-3 my-3'>
-          <p>{filterQuery}</p>
-        </div>
-        <div className='row'>
-          {availableFilters.map((filter, index) => (
-            <div key={index} className="form-group col">
-              <label>{filter.name}:</label>
-              <select
-                className="form-control"
-                onChange={(e) => toggleFilter(filter.name, e.target.value)}
-                value={selectedFilters.find(selectedFilter => selectedFilter.name === filter.name)?.value || ''}
-              >
-                <option value="">Select</option>
-                {filter.options.map((option, optionIndex) => (
-                  <option key={optionIndex} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ))}
-        </div>
-        <div>
-          {queryResult && (
+          {queryResult ? (
             <div>
               <h2>Query Result</h2>
-              <pre>{JSON.stringify(queryResult, null, 2)}</pre>
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                queryResult.length === 0 ? (
+                  <p>No data found with the selected filter criteria.</p>
+                ) : (
+                  <pre>{JSON.stringify(queryResult, null, 2)}</pre>
+                )
+              )}
             </div>
+          ) : (
+            loading && <p>Loading...</p>
           )}
         </div>
       </div>
