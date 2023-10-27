@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import { useAuth0 } from '@auth0/auth0-react';
 import tentant from '../../contexts/UserContext';
-// import { Link } from 'react-router-dom';
 
 
 const routes = [
@@ -15,6 +14,8 @@ const routes = [
   { userRequired: 'admin', path: '/complaint-log', label: 'Complaint log' },
   { userRequired: 'admin', path: '/stats', label: 'Stats' },
   { userRequired: 'admin', path: '/filter-test', label: 'Filter' },
+  { userRequired: 'admin', path: '/user-storage', label: 'Register User' },
+  { userRequired: 'admin', path: '/user-edition', label: 'UserEdition' },
 ];
 
 const Navbar = () => {

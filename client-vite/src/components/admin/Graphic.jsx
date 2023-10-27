@@ -6,8 +6,7 @@ const Stats = () => {
     const [ data, setData ] = useState([]);
 
     useEffect(() => {
-        // Fetch data from your Express.js server
-        fetch(`http://localhost:${PORT}/stats`) // Replace with the correct endpoint
+        fetch(`http://localhost:${PORT}/stats`)
 
             .then((response) => response.json())
             .then((responseData) => {

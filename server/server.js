@@ -8,18 +8,76 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/user-storage', (req, res) => {
+    const tableName = 'users'
+    const query = `DESCRIBE ${tableName}`;
+    pool.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to fetch attributes' });
+        } else {
+            const attributes = results.map((row) => row.Field);
+            res.json(attributes);
+        }
+    });
+});
+
+app.post('/user-storage', (req, res) => {
+    const tableName = 'users'
+    const formData = req.body;
+
+    // Construct an SQL query dynamically based on tableName
+    const query = `INSERT INTO ${tableName} SET ?`;
+
+    // Execute the query to insert the data into the specified table
+    pool.query(query, formData, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Form submission failed' });
+        } else {
+            console.log('Form data inserted successfully');
+            res.status(200).json({ message: 'Form submitted successfully' });
+        }
+    });
+});
+// Assuming you have a user table in your database
+
+
+app.get('/user-edition', async (req, res) => {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        const [ rows ] = await connection.query('DESCRIBE your_table_name');
+        connection.end();
+        res.json(rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch table attributes' });
+    }
+});
+
+app.get('/user-edition', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        const [ row ] = await connection.query('SELECT * FROM your_table_name WHERE id = ?', [ id ]);
+        connection.end();
+        res.json(row[ 0 ]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch data' });
+    }
+});
+
 app.post('/filter-test', (req, res) => {
     console.log("posted app in server side")
-    const sqlQuery = req.body.filterQuery; // Assuming your query is sent in the request body
+    const sqlQuery = req.body.filterQuery;
     console.log('sqlQuery is:', sqlQuery);
 
-    // Execute the SQL query
     pool.query(sqlQuery, (err, result) => {
         if (err) {
             console.error('Error executing query:', err);
             res.status(500).json({ error: 'Error executing query' });
         } else {
-            // Send the query result back as JSON
             res.json(result);
         }
     });

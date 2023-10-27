@@ -66,7 +66,6 @@ const AboutContent = () => {
         subtitle: "User-Friendly Interface:",
         description: "The user interface is designed for ease of use, with intuitive forms for complaint submission and profile management."
       },
-      // Add more details objects as needed
     ],
   };
 

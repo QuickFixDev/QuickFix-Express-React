@@ -35,9 +35,7 @@ const ComplaintList = () => {
   const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
-    // Make an HTTP GET request to fetch complaints data
-    
-    fetch(`http://localhost:${PORT}/my-complaints`) // Replace with the correct endpoint
+    fetch(`http://localhost:${PORT}/my-complaints`)
       .then((response) => response.json())
       .then((responseData) => {
         setComplaints(responseData); // Update the complaints state with the fetched data

@@ -5,6 +5,8 @@ const initialSqlQuery = 'SELECT * FROM user_complaints';
 const availableFilters = [
   { name: 'User id', key: 'user_id', options: [ 1, 2 ] },
   { name: 'Category ID', key: 'category_id', options: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] },
+  { name: 'Status', key: 'status', options: [ 'Open', 'In Progress', 'Closed' ] },
+  { name: 'Complaint date', key: 'complaint_date', options: [ '00/00/0000', '00/00/0000', '00/00/0000' ] },
 ];
 
 const FilterTest = () => {
