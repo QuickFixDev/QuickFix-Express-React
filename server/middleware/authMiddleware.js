@@ -5,7 +5,7 @@ const user = {
 function isAdmin(req, res, next) {
     // Check user's role
     if (user && (tentant.role === 'dev' || tentant.role === 'admin')) {
-        console.log(tentant.role, "authorized"); // Move this line here
+        console.log(tentant.role, "authorized");
         return next(); // Allow access for admin and dev
     }
 
@@ -21,10 +21,9 @@ function isResident(req, res, next) {
     }   
     
     console.log("Access Denied")
-    res.status(403).send('Access Denied'); // Send a response here if access is denied
+    res.status(403).send('Access Denied'); // Send a response if access is denied
 }
 
-// export both functions
 module.exports = {
     isAdmin,
     isResident,

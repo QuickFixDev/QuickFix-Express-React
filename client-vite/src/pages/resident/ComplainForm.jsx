@@ -49,7 +49,7 @@ const ComplainForm = () => {
     if (tentant.role === "resident" || tentant.role === "dev") {
         return (
 
-            <div className="container mt-5 p-5 w-75 shadow-md">
+            <div className="container mt-5 p-5 w-50 shadow-md">
                 <h1 className='text-center mb-5'>Submit complain</h1>
                 <form onSubmit={handleSubmit}>
 

@@ -6,8 +6,7 @@ export default function CategoryCombo() {
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
-        // Make an HTTP GET request to your Node.js server
-        fetch(`http://localhost:${PORT}/complain-form`) // Replace with the correct endpoint
+        fetch(`http://localhost:${PORT}/complain-form`)
             .then((response) => response.json())
             .then((responseData) => {
                 setData(responseData); // Update the component state with the data

@@ -38,8 +38,7 @@ const ComplaintDetail = () => {
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
-        // Make an HTTP GET request to fetch complaints data
-        fetch(`http://localhost:${PORT}/complaint-log`) // Replace with the correct endpoint
+        fetch(`http://localhost:${PORT}/complaint-log`)
             .then((response) => response.json())
             .then((responseData) => {
                 setDetail(responseData); // Update the complaints state with the fetched data
@@ -47,7 +46,7 @@ const ComplaintDetail = () => {
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
-                setLoading(false); // Handle any errors and set loading to false
+                setLoading(false);
             });
     }, []);
 

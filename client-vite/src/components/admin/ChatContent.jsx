@@ -1,4 +1,3 @@
-// ChatContent.js
 const ChatContent = () => {
     return (
         <div className="p-3 h-100">
