@@ -6,16 +6,13 @@ import tentant from '../../contexts/UserContext';
 
 const routes = [
   { userRequired: 'common', path: '/', label: 'Home' },
-  { userRequired: 'common', path: '/about', label: 'About' },
-  { userRequired: 'common', path: '/contact-me', label: 'Contact me' },
   { userRequired: 'common', path: '/profile', label: 'My profile' },
   { userRequired: 'resident', path: '/complain-form', label: 'Complain form' },
   { userRequired: 'resident', path: '/my-complaints', label: 'My complaints' },
   { userRequired: 'admin', path: '/complaint-log', label: 'Complaint log' },
   { userRequired: 'admin', path: '/stats', label: 'Stats' },
-  { userRequired: 'admin', path: '/filter-test', label: 'Filter' },
   { userRequired: 'admin', path: '/user-storage', label: 'Register User' },
-  { userRequired: 'admin', path: '/user-edition', label: 'UserEdition' },
+  { userRequired: 'admin', path: '/user-management', label: 'User management' },
 ];
 
 const Navbar = () => {

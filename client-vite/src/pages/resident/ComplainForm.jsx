@@ -31,7 +31,6 @@ const ComplainForm = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        // Parse value to an integer if the name is "category_id"
         setValues({
             ...values,
             [ name ]: name === 'category_id' ? parseInt(value, 10) : value,

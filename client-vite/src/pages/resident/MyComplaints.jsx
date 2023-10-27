@@ -1,6 +1,6 @@
 import ComplaintHeader from '../../components/common/ComplaintHeader';
 import ComplaintList from '../../components/common/ComplaintList';
-import Home from '../common/Home';
+import HomePage from '../common/HomePage';
 import tentant from '../../contexts/UserContext'
 
 const MyReports = () => {
@@ -22,7 +22,7 @@ const MyReports = () => {
     );
   }
   return (
-    <Home />
+    <HomePage />
   );
 };
 

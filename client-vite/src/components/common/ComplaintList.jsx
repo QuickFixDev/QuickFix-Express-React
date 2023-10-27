@@ -38,12 +38,12 @@ const ComplaintList = () => {
     fetch(`http://localhost:${PORT}/my-complaints`)
       .then((response) => response.json())
       .then((responseData) => {
-        setComplaints(responseData); // Update the complaints state with the fetched data
-        setLoading(false); // Set loading to false once data is fetched
+        setComplaints(responseData);
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        setLoading(false); // Handle any errors and set loading to false
+        setLoading(false);
       });
   }, []);
 

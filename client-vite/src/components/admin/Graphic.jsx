@@ -10,7 +10,7 @@ const Stats = () => {
 
             .then((response) => response.json())
             .then((responseData) => {
-                setData(responseData); // Update the component state with the fetched data
+                setData(responseData);
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);

@@ -5,8 +5,7 @@ function EditForm() {
     const [ tableAttributes, setTableAttributes ] = useState([]);
 
     useEffect(() => {
-        // Fetch table attributes from your backend API
-        // You can use axios or fetch for this.
+
         fetch('/api/getTableAttributes')
             .then((response) => response.json())
             .then((data) => setTableAttributes(data));

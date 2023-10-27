@@ -16,7 +16,6 @@ const QueryExecution = () => {
         })
         .then(response => response.json())
         .then(data => {
-            // Update the state with the query result
             setQueryResult(data);
         })
         .catch(error => {

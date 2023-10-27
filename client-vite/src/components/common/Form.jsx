@@ -9,8 +9,7 @@ function Form({ tableName, route, formName }) {
     console.log(tableName);
 
     useEffect(() => {
-        // Fetch attributes from your Node.js server based on the provided route
-        fetch(route) // Use the 'route' prop to fetch data
+        fetch(route)
             .then((response) => response.json())
             .then((data) => setAttributes(data))
             .catch((error) => console.error('Error fetching attributes:', error));
@@ -23,8 +22,8 @@ function Form({ tableName, route, formName }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Send the form data to your Node.js server to save it
-        fetch(route, { // Use the 'route' prop to send data
+
+        fetch(route, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

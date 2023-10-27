@@ -9,8 +9,7 @@ function UserStorage() {
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
     useEffect(() => {
-        // Fetch attributes from your Node.js server
-        fetch(`http://localhost:5000/${route}`) // Assuming this route returns attribute data
+        fetch(`http://localhost:5000/${route}`)
             .then((response) => response.json())
             .then((data) => setAttributes(data))
             .catch((error) => console.error('Error fetching attributes:', error));
@@ -23,7 +22,6 @@ function UserStorage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Send the form data to your Node.js server to save it
         fetch(`http://localhost:5000/${route}`, {
             method: 'POST',
             headers: {

@@ -9,12 +9,12 @@ export default function CategoryCombo() {
         fetch(`http://localhost:${PORT}/complain-form`)
             .then((response) => response.json())
             .then((responseData) => {
-                setData(responseData); // Update the component state with the data
-                setLoading(false); // Set loading to false once data is fetched
+                setData(responseData);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
-                setLoading(false); // Handle any errors and set loading to false
+                setLoading(false);
             });
     }, []);
 

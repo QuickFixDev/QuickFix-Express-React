@@ -1,12 +1,39 @@
 const express = require('express');
 const PORT = 5000;
-const pool = require('./dbConnection'); // Require the database connection pool
+const pool = require('./dbConnection');
 const cors = require('cors');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.get('/user-management', (req, res) => {
+    console.log('Server route is triggered');
+    const sqlQuery = 'SELECT * FROM users';
+
+    pool.query(sqlQuery, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Error fetching data' });
+        } else {
+            res.json(results);
+        }
+    });
+    console.log("diplay user server handling")
+});
+
+app.delete('/delete-user/:id', (req, res) => {
+    const userId = parseInt(req.params.id); 
+    const sqlQuery = 'DELETE FROM users WHERE user_id = ?';
+
+    pool.query(sqlQuery, userId, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Error deleting user' });
+        } else {
+            res.json({ message: 'User deleted successfully' });
+        }
+    });
+});
 
 app.get('/user-storage', (req, res) => {
     const tableName = 'users'
@@ -26,10 +53,8 @@ app.post('/user-storage', (req, res) => {
     const tableName = 'users'
     const formData = req.body;
 
-    // Construct an SQL query dynamically based on tableName
     const query = `INSERT INTO ${tableName} SET ?`;
 
-    // Execute the query to insert the data into the specified table
     pool.query(query, formData, (err, result) => {
         if (err) {
             console.error(err);
@@ -39,33 +64,6 @@ app.post('/user-storage', (req, res) => {
             res.status(200).json({ message: 'Form submitted successfully' });
         }
     });
-});
-// Assuming you have a user table in your database
-
-
-app.get('/user-edition', async (req, res) => {
-    try {
-        const connection = await mysql.createConnection(dbConfig);
-        const [ rows ] = await connection.query('DESCRIBE your_table_name');
-        connection.end();
-        res.json(rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to fetch table attributes' });
-    }
-});
-
-app.get('/user-edition', async (req, res) => {
-    const id = req.params.id;
-    try {
-        const connection = await mysql.createConnection(dbConfig);
-        const [ row ] = await connection.query('SELECT * FROM your_table_name WHERE id = ?', [ id ]);
-        connection.end();
-        res.json(row[ 0 ]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to fetch data' });
-    }
 });
 
 app.post('/filter-test', (req, res) => {

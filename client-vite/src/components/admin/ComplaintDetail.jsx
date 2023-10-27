@@ -41,8 +41,8 @@ const ComplaintDetail = () => {
         fetch(`http://localhost:${PORT}/complaint-log`)
             .then((response) => response.json())
             .then((responseData) => {
-                setDetail(responseData); // Update the complaints state with the fetched data
-                setLoading(false); // Set loading to false once data is fetched
+                setDetail(responseData);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
