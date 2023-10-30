@@ -14,16 +14,32 @@ app.get('/user-management', (req, res) => {
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
-            res.status(500).json({ error: 'Error fetching data' });
+            res.status(500).json({ error: 'Error fetching data'});
+            console.log(err);
         } else {
             res.json(results);
+            console.log("results: ", results);
         }
     });
-    console.log("diplay user server handling")
+    console.log("diplay user server handling");
 });
 
+function executeQuery(req, res, sqlQuery) {
+    const params = req.params;
+    console.log("executeQuery params:", params)
+    pool.query(sqlQuery, params, (error, results) => {
+        if (error) {
+            console.error('Error executing SQL query:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+        res.json(results);
+        console.log(results);
+    });
+}
+
 app.delete('/delete-user/:id', (req, res) => {
-    const userId = parseInt(req.params.id); 
+    const userId = parseInt(req.params.id);
     const sqlQuery = 'DELETE FROM users WHERE user_id = ?';
 
     pool.query(sqlQuery, userId, (err, results) => {
@@ -108,18 +124,6 @@ VALUES (NULL, ?, ?, ?, ?, ?, ?);
 
 
 
-function executeQuery(res, sqlQuery, params = []) {
-    console.log("executeQuery params:", params)
-    pool.query(sqlQuery, params, (error, results) => {
-        if (error) {
-            console.error('Error executing SQL query:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        res.json(results);
-        console.log(results);
-    });
-}
 
 const user = { id: 1 }
 const complaint = { id: 4 }

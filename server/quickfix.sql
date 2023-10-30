@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-10-2023 a las 11:23:49
+-- Tiempo de generación: 27-10-2023 a las 19:36:22
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -61,6 +61,7 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) DEFAULT NULL,
+  `role` varchar(255) NOT NULL DEFAULT 'resident',
   `street_name` varchar(255) NOT NULL,
   `house_number` int(11) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
@@ -71,8 +72,11 @@ CREATE TABLE `users` (
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `street_name`, `house_number`, `phone_number`, `email`) VALUES
-(1, 'Juan', 'Hernandez', 'Palma mexicana', 406, '4491882083', 'quickfix.dev1@gmail.com');
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `role`, `street_name`, `house_number`, `phone_number`, `email`) VALUES
+(1, 'Juan', 'Hernandez', 'resident', 'Palma mexicana', 406, '4491882083', 'quickfix.dev1@gmail.com'),
+(2, 'Test123456789', 'User', 'resident', 'No street', 0, '1234567890', 'test@test.com'),
+(5, 'admin', 'example', 'resident', 'street', 123, '123', 'muudev0@gmail.com'),
+(6, 'juan', 'hernandez', 'resident', 'street', 123, '123', 'usuario@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -99,13 +103,11 @@ INSERT INTO `user_complaints` (`complaint_id`, `user_id`, `complaint_title`, `co
 (3, 1, 'Water Supply Issue', 'There is a lack of water supply in my residence, and it has been ongoing for the past two days. We need an urgent solution to this problem.', '2023-10-08 00:50:09', 'Open', 1),
 (4, 1, 'Water supply issue', 'Residents in Apartment 304 have been experiencing low water pressure in their kitchen faucet for the past week. This issue affects their ability to perform daily tasks like washing dishes and cooking', '2023-10-08 09:58:22', 'In Progress', 1),
 (5, 1, 'Broken Window', 'One of the windows in my bedroom is broken, and it needs to be repaired to prevent rainwater from coming in.', '2023-10-08 12:07:15', 'Closed', 9),
-(6, NULL, 'Loud Music Next Door', 'The neighbors are playing loud music late at night, making it impossible to sleep.', '2023-10-08 12:08:47', 'In Progress', 10),
-(7, NULL, 'Broken lock', 'The front door lock is broken, and it poses a security risk to the residents. It needs immediate repair.', '2023-10-08 12:09:31', 'Open', 9),
+(6, 2, 'Loud Music Next Door', 'The neighbors are playing loud music late at night, making it impossible to sleep.', '2023-10-08 12:08:47', 'In Progress', 10),
+(7, 2, 'Broken lock', 'The front door lock is broken, and it poses a security risk to the residents. It needs immediate repair.', '2023-10-08 12:09:31', 'Open', 9),
 (8, 1, 'Ant Infestation', 'There\'s a severe infestation of ants in the kitchen. We need pest control services to address this issue.', '2023-10-08 12:11:13', 'Closed', 7),
 (9, 1, 'Air Conditioner Not Cooling', 'The air conditioner in the living room is not cooling properly, and it\'s uncomfortable during hot weather.', '2023-10-08 12:11:49', 'Closed', 4),
-(10, 1, 'Unauthorized Parking', 'Several cars are parked in the resident-only parking area without permits. It\'s causing inconvenience to residents.', '2023-10-08 12:12:44', 'Closed', 12),
-(27, 1, 'Some subject', 'Some desc', '0000-00-00 00:00:00', 'Open', 1),
-(38, 1, 'Damn it worked broooooo', 'Sheeeesh', '0000-00-00 00:00:00', 'Closed', 2);
+(10, 1, 'Unauthorized Parking', 'Several cars are parked in the resident-only parking area without permits. It\'s causing inconvenience to residents.', '2023-10-08 12:12:44', 'Closed', 12);
 
 --
 -- Índices para tablas volcadas
@@ -145,7 +147,7 @@ ALTER TABLE `complain_categories`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `user_complaints`
