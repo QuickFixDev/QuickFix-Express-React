@@ -1,5 +1,5 @@
 const express = require('express');
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const pool = require('./dbConnection');
 const cors = require('cors');
 
@@ -8,6 +8,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.send("hello world");
+});
+
 app.get('/user-management', (req, res) => {
     console.log('Server route is triggered');
     const sqlQuery = 'SELECT * FROM users';
@@ -15,7 +19,7 @@ app.get('/user-management', (req, res) => {
     pool.query(sqlQuery, (err, results) => {
         if (err) {
             res.status(500).json({ error: 'Error fetching data' });
-        } else {
+        } else { 
             res.json(results);
         }
     });
