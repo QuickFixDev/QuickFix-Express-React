@@ -8,10 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.get('/', (req, res) => {
-    res.send("hello world")
-});
+    res.send("hello world");
 
 app.get('/user-management', (req, res) => {
     console.log('Server route is triggered');
@@ -22,6 +20,7 @@ app.get('/user-management', (req, res) => {
             res.status(500).json({ error: 'Error fetching data'});
             console.log(err);
         } else {
+
             res.json(results);
             console.log("results: ", results);
         }

@@ -12,6 +12,10 @@ const dbConfig = {
     database: "quickfix",
     port: 3306,
 
+    ssl: {
+        ca: fs.readFileSync("DigiCertGlobalRootCA.crt.pem")
+    }
+
 };
 
 module.exports = dbConfig;
