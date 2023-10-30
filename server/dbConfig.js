@@ -13,5 +13,5 @@ const dbConfig = {
     port: 3306,
 
 };
-code
+
 module.exports = dbConfig;
