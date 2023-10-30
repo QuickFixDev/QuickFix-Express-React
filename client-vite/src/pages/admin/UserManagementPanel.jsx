@@ -86,7 +86,7 @@ function UserManagementPanel() {
     const [ selectedUser, setSelectedUser ] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:${PORT}/user-management`)
+        fetch(`https://quickfix-server.azurewebsites.net/user-management`)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(`HTTP error! Status: ${response.status}`);
