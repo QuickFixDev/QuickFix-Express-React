@@ -8,6 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+app.get('/', (req, res) => {
+    res.send("hello world")
+});
+
 app.get('/user-management', (req, res) => {
     console.log('Server route is triggered');
     const sqlQuery = 'SELECT * FROM users';

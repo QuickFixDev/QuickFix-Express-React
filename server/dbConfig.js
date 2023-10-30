@@ -11,9 +11,7 @@ const dbConfig = {
     password: "3xbr34nHmY?",
     database: "quickfix",
     port: 3306,
-    ssl: {
-        ca: fs.readFileSync("DigiCertGlobalRootCA.crt.pem")
-    }
+
 };
 
 module.exports = dbConfig;
