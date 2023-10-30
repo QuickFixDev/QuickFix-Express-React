@@ -65,3 +65,12 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8C2C6A7E170D4ADE907FAD3FACBF7DE6 }}
           package: .
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: npm run
+        run: |
+          npm run dev
