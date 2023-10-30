@@ -1,17 +1,19 @@
 const CategoryController = {};
-const Category = require('./models/Category');
+const pool = require('../dbConnection');
 
 CategoryController.createCategory = (req, res) => {
-    const newCategory = req.body;
+    const formData = req.body;
+    const query = `INSERT INTO users SET ?`;
 
-    Category.create(newCategory)
-        .then(result => {
-            res.status(201).json(result);
-        })
-        .catch(err => {
+    pool.query(query, formData, (err, result) => {
+        if (err) {
             console.error(err);
-            res.status(500).json({ error: 'Failed to create category' });
-        });
+            res.status(500).json({ error: 'Form submission failed' });
+        } else {
+            console.log('Form data inserted successfully');
+            res.status(200).json({ message: 'Form submitted successfully' });
+        }
+    });
 };
 
 CategoryController.getAllCategories = (req, res) => {
@@ -31,7 +33,7 @@ CategoryController.updateCategory = (req, res) => {
 
     Category.update(updatedCategory, { where: { id: categoryId } })
         .then(result => {
-            if (result[0] === 1) {
+            if (result[ 0 ] === 1) {
                 res.json({ message: 'Category updated successfully' });
             } else {
                 res.status(404).json({ error: 'Category not found' });

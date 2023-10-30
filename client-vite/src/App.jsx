@@ -14,24 +14,27 @@ import Auth0ProviderWithNavigate from './components/Auth0ProviderWithNavigate'
 import Navbar from './components/common/Navbar'
 import Footer from './components/common/Footer';
 
+import UserList from './routes/UserList';
+
 export default function App() {
   return (
     <BrowserRouter>
       <Auth0ProviderWithNavigate>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/complain-form" element={<ComplainForm />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/my-complaints" element={<MyComplaints />} />
-            <Route path="/complaint-log" element={<ComplaintLog />} />
-            <Route path="/stats" element={<Stats />} />
-            <Route path="/filter-test" element={<FilterTest/>} />
-            <Route path="/user-storage" element={<UserStorage/>} />
-            <Route path="/user-management" element={<UserManagementPanel/>} />
-          </Routes>
-          <Footer/>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/complain-form" element={<ComplainForm />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/my-complaints" element={<MyComplaints />} />
+          <Route path="/complaint-log" element={<ComplaintLog />} />
+          <Route path="/stats" element={<Stats />} />
+          <Route path="/filter-test" element={<FilterTest />} />
+          <Route path="/user-storage" element={<UserStorage />} />
+          <Route path="/user-management" element={<UserManagementPanel />} />
+          <Route path="/users" component={UserList} /> {/* Add the UserList route */}
+        </Routes>
+        <Footer />
       </Auth0ProviderWithNavigate>
     </BrowserRouter>
   );
