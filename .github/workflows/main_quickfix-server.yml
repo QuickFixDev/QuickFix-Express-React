@@ -70,7 +70,3 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-
-      - name: npm run
-        run: |
-          npm start
