@@ -4,5 +4,5 @@ const dbConfig = {
     password: '',
     database: 'quickfix'
 };
-code
+
 module.exports = dbConfig;
