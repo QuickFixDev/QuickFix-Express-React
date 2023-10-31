@@ -9,9 +9,8 @@ const routes = [
   { userRequired: 'common', path: '/profile', label: 'My profile' },
   { userRequired: 'resident', path: '/complain-form', label: 'Complain form' },
   { userRequired: 'resident', path: '/my-complaints', label: 'My complaints' },
-  { userRequired: 'admin', path: '/complaint-log', label: 'Complaint log' },
   { userRequired: 'admin', path: '/stats', label: 'Stats' },
-  { userRequired: 'admin', path: '/user-storage', label: 'Register User' },
+  { userRequired: 'admin', path: '/complaint-management', label: 'Complaint Management' },
   { userRequired: 'admin', path: '/user-management', label: 'User management' },
 ];
 
@@ -33,7 +32,7 @@ const Navbar = () => {
         {isAuthenticated ? (
           <img src={user.picture} className="mx-2" width="50px" alt="logo" />
         ) : (
-          <img src='/images/QuickFix_logo.png' className="mx-2" width="50px" alt="logo"/>
+          <img src='/images/QuickFix_logo.png' className="mx-2" width="50px" alt="logo" />
         )}
 
         <button className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-label="expand nav">

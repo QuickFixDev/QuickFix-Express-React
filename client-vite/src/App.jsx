@@ -4,7 +4,7 @@ import HomePage from './pages/common/HomePage';
 import Profile from './pages/common/Profile';
 import MyComplaints from './pages/resident/MyComplaints';
 import ComplainForm from './pages/resident/ComplainForm';
-import ComplaintLog from './pages/admin/ComplaintLog';
+import ComplaintManagement from './pages/admin/ComplaintManagement';
 import Stats from './pages/admin/Stats';
 import FilterTest from './pages/admin/FilterTest';
 import UserStorage from './pages/admin/UserStorage';
@@ -25,7 +25,7 @@ export default function App() {
             <Route path="/complain-form" element={<ComplainForm />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/my-complaints" element={<MyComplaints />} />
-            <Route path="/complaint-log" element={<ComplaintLog />} />
+            <Route path="/complaint-management" element={<ComplaintManagement />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/filter-test" element={<FilterTest/>} />
             <Route path="/user-storage" element={<UserStorage/>} />

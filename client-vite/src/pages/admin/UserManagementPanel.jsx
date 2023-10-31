@@ -1,16 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import PORT from '../../constants/constants';
+import ServerUrl from '../../constants/ServerUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function UserList({ users, setSelectedUser, deleteUser }) {
+
     return (
         <div className="user-list card border-0 shadow-md p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
                 <h3>User List</h3>
                 <button className="btn btn-primary mb-3">
-                    <FontAwesomeIcon icon={faUserPlus} /> Create New User
+                    <Link className='text-white text-decoration-none' to="/user-storage">
+                        <FontAwesomeIcon icon={faUserPlus} /> Create New User
+                    </Link>
                 </button>
             </div>
             <div className="card-body">
@@ -86,7 +90,7 @@ function UserManagementPanel() {
     const [ selectedUser, setSelectedUser ] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:${PORT}/user-management`)
+        fetch(`${ServerUrl}/user-management`)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(`HTTP error! Status: ${response.status}`);
@@ -102,7 +106,7 @@ function UserManagementPanel() {
     }, []);
 
     const deleteUser = (userId) => {
-        fetch(`http://localhost:${PORT}/delete-user/${userId}`, {
+        fetch(`${ServerUrl}/delete-user/${userId}`, {
             method: 'DELETE',
         })
             .then((response) => {

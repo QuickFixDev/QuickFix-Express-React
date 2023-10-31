@@ -1,17 +1,12 @@
 .main-heading {
-    font-size: 4rem;
+    font-size: 7rem;
     color: transparent;
     background-image: linear-gradient(to right,
             #ff6600,
-            #ff0000,
             #ff0055,
-            #ff0095,
-            #ff00d4,
-            #ff00d4,
-            #ff0095,
+            #ff009d,
             #ff0055,
-            #ff0000,
-            #ff6600
+            #ff6600 
         );
     background-size: 200% 100%;
     background-clip: text;
@@ -28,3 +23,4 @@
         background-position: -200% 0;
     }
 }
+

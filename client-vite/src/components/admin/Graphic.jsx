@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import PORT from '../../constants/constants';
-
+import ServerUrl from '../../constants/ServerUrl';
 const Stats = () => {
     const [ data, setData ] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:${PORT}/stats`)
+        fetch(`${ServerUrl}/stats`)
 
             .then((response) => response.json())
             .then((responseData) => {

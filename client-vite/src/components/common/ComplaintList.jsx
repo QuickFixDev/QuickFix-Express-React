@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import PORT from '../../constants/constants';
-
+import ServerUrl from '../../constants/ServerUrl';
 
 const ComplainItem = (props) => {
 
@@ -35,7 +34,7 @@ const ComplaintList = () => {
   const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:${PORT}/my-complaints`)
+    fetch(`${ServerUrl}/my-complaints`)
       .then((response) => response.json())
       .then((responseData) => {
         setComplaints(responseData);

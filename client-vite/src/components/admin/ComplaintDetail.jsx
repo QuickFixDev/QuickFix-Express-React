@@ -38,7 +38,7 @@ const ComplaintDetail = () => {
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:${PORT}/complaint-log`)
+        fetch(`http://localhost:${PORT}/complaint-management`)
             .then((response) => response.json())
             .then((responseData) => {
                 setDetail(responseData);

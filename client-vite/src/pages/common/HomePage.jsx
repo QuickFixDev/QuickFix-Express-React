@@ -2,9 +2,9 @@
 
 const HomeHeader = () => {
     return (
-        <div className="w-100 py-5 text-center my-5">
-            <h1 className="main-heading">WELCOME TO QUICKFIX</h1>
-        </div>
+            <div className="w-100 py-5 text-center my-5">
+                <h1 className="main-heading">QUICKFIX</h1>
+            </div>
     );
 };
 
@@ -24,6 +24,7 @@ const AboutStructure = ({ general, details }) => {
                         <ul>
                             <li>
                                 <h6>{item.subtitle}</h6>
+                                <p>{item.description}</p>
                             </li>
                         </ul>
                     </div>
@@ -44,7 +45,7 @@ const AboutContent = () => {
         details: [
             {
                 subtitle: "User Registration and Authentication:",
-                description: "Users can create accounts and log in securely via Auth0 authentication.        ",
+                description: "Users log in to their accounts securely via Auth0 authentication.",
             },
             {
                 subtitle: "User Profiles:",

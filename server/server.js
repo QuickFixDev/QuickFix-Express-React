@@ -132,26 +132,27 @@ app.get('/user-management', (req, res) => {
 });
 
 app.get('/my-complaints', (req, res) => {
-    sqlQuery: 'SELECT * FROM user_complaints WHERE user_id = ?';
-    params: user.id;
-    executeQuery(res, sqlQuery, params);
+    const sqlQuery = 'SELECT * FROM user_complaints WHERE user_id = 1';
+    const params = user.id;
+    executeQuery(params, res, sqlQuery);
 });
 
-app.get('/complaint-log', (req, res) => {
-    sqlQuery: 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?';
-    params: [ complaint.id ];
-    executeQuery(res, sqlQuery, params);
+app.get('/complaint-management', (req, res) => {
+    const sqlQuery = 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?';
+    const params = [ complaint.id ];
+    executeQuery(params, res, sqlQuery);
 });
 
 app.get('/profile', (req, res) => {
-    sqlQuery: 'SELECT * FROM users WHERE user_id = ?';
-    params: [ user.id ];
-    executeQuery(res, sqlQuery, params);
+    const sqlQuery = 'SELECT * FROM users WHERE user_id = ?';
+    const params = [ user.id ];
+    executeQuery(params, res, sqlQuery);
 });
 
 app.get('/stats', (req, res) => {
-    sqlQuery: 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
-    executeQuery(res, sqlQuery, params);
+    const sqlQuery = 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
+    console.log(sqlQuery)
+    executeQuery(req, res, sqlQuery);
 });
 
 app.listen(PORT, () => {

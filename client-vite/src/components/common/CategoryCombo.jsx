@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import PORT from '../../constants/constants';
-
+import ServerUrl from '../../constants/ServerUrl';
 export default function CategoryCombo() {
     const [ data, setData ] = useState([]);
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:${PORT}/complain-form`)
+        fetch(`${ServerUrl}/complain-form`)
             .then((response) => response.json())
             .then((responseData) => {
                 setData(responseData);
