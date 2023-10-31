@@ -10,24 +10,8 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send("hello world");
-}); 
-
-app.get('/user-management', (req, res) => {
-    console.log('Server route is triggered');
-    const sqlQuery = 'SELECT * FROM users';
-
-    pool.query(sqlQuery, (err, results) => {
-        if (err) {
-            res.status(500).json({ error: 'Error fetching data'});
-            console.log(err);
-        } else {
-
-            res.json(results);
-            console.log("results: ", results);
-        }
-    });
-    console.log("diplay user server handling");
 });
+
 
 function executeQuery(req, res, sqlQuery) {
     const params = req.params;
@@ -127,26 +111,47 @@ VALUES (NULL, ?, ?, ?, ?, ?, ?);
     });
 });
 
-
-
-
 const user = { id: 1 }
 const complaint = { id: 4 }
 
-const apiRoutes = [
-    { route: '/complain-form', sqlQuery: 'SELECT category_name FROM complain_categories ORDER BY category_name ASC' },
-    { route: '/my-complaints', sqlQuery: 'SELECT * FROM user_complaints WHERE user_id = ?', params: user.id },
-    { route: '/complaint-log', sqlQuery: 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?', params: [ complaint.id ] },
-    { route: '/profile', sqlQuery: 'SELECT * FROM users WHERE user_id = ?', params: [ user.id ] },
-    { route: '/stats', sqlQuery: 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name' },
-];
+app.get('/user-management', (req, res) => {
+    console.log('Server route is triggered');
+    const sqlQuery = 'SELECT * FROM users';
 
-// Loop through route configurations and set up routes
-apiRoutes.forEach(({ route, sqlQuery, params }) => {
-    app.get(route, (req, res) => {
-        console.log("params", params);
-        executeQuery(res, sqlQuery, params);
+    pool.query(sqlQuery, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Error fetching data' });
+            console.log(err);
+        } else {
+
+            res.json(results);
+            console.log("results: ", results);
+        }
     });
+    console.log("diplay user server handling");
+});
+
+app.get('/my-complaints', (req, res) => {
+    sqlQuery: 'SELECT * FROM user_complaints WHERE user_id = ?';
+    params: user.id;
+    executeQuery(res, sqlQuery, params);
+});
+
+app.get('/complaint-log', (req, res) => {
+    sqlQuery: 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?';
+    params: [ complaint.id ];
+    executeQuery(res, sqlQuery, params);
+});
+
+app.get('/profile', (req, res) => {
+    sqlQuery: 'SELECT * FROM users WHERE user_id = ?';
+    params: [ user.id ];
+    executeQuery(res, sqlQuery, params);
+});
+
+app.get('/stats', (req, res) => {
+    sqlQuery: 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
+    executeQuery(res, sqlQuery, params);
 });
 
 app.listen(PORT, () => {
