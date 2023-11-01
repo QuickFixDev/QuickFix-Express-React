@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ServerUrl from '../../constants/ServerUrl';
 
 const initialSqlQuery = 'SELECT * FROM user_complaints';
 const availableFilters = [
@@ -31,8 +32,9 @@ const FilterTest = () => {
     }, [ selectedFilters ]);
 
     const executeQuery = async (filterQuery) => {
-        const serverUrl = "quickfix-server.azurewebsites.net/filter-test";
-        const response = await fetch(serverUrl, {
+        const fetchUrl = `${ServerUrl}/filter-test`;
+        
+        const response = await fetch(fetchUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
