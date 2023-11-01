@@ -1,13 +1,13 @@
 import { useState } from 'react';
+import ServerUrl from '../../constants/ServerUrl';
 
 const QueryExecution = () => {
     const [queryResult, setQueryResult] = useState(null);
 
     function handleQueryExecution() {
         const sqlQuery = "SELECT * FROM users";
-        const serverUrl = "http://localhost:5000/filter-test";
 
-        fetch(serverUrl, {
+        fetch(`${ServerUrl}/filter-test`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

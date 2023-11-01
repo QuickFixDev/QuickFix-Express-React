@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import PORT from '../../constants/constants'
+import ServerUrl from '../../constants/ServerUrl';
 const ReportStructure = (props) => {
 
 
@@ -38,7 +38,7 @@ const ComplaintDetail = () => {
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:${PORT}/complaint-management`)
+        fetch(`${ServerUrl}/complaint-management`)
             .then((response) => response.json())
             .then((responseData) => {
                 setDetail(responseData);

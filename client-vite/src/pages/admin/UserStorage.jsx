@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ServerUrl from '../../constants/ServerUrl';
 
 function UserStorage() {
     const route = 'user-storage';
@@ -9,7 +10,7 @@ function UserStorage() {
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/${route}`)
+        fetch(`${ServerUrl}/${route}`)
             .then((response) => response.json())
             .then((data) => setAttributes(data))
             .catch((error) => console.error('Error fetching attributes:', error));
@@ -22,7 +23,7 @@ function UserStorage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:5000/${route}`, {
+        fetch(`${ServerUrl}/${route}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

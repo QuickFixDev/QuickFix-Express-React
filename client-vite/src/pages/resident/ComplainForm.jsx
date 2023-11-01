@@ -3,7 +3,7 @@ import axios from 'axios';
 import tentant from '../../contexts/UserContext'
 import AccessDenied from '../common/AccessDenied';
 import CategoryCombo from '../../components/common/CategoryCombo';
-
+import ServerUrl from '../../constants/ServerUrl';
 
 const ComplainForm = () => {
     const currentDate = new Date();
@@ -40,7 +40,7 @@ const ComplainForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         axios
-            .post('http://localhost:5173/complain-form', values)
+            .post(`${ServerUrl}/complain-form`, values)
             .then((res) => console.log('Successful storage', res))
             .catch((error) => console.log(error));
     };

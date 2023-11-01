@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
+import ServerUrl from '../../constants/ServerUrl';
 
 const initialSqlQuery = 'SELECT * FROM user_complaints';
 const availableFilters = [
@@ -33,8 +34,7 @@ const FilterTest = () => {
   }, [ selectedFilters ]);
 
   const executeQuery = async (filterQuery) => {
-    const serverUrl = "http://localhost:5000/filter-test";
-    const response = await fetch(serverUrl, {
+    const response = await fetch(`${ServerUrl}/filter-test`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
