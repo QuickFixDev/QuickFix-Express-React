@@ -8,7 +8,7 @@ const Auth0ProviderWithNavigate = ({ children }) => {
 
     const domain = "quick-fix.us.auth0.com"
     const clientId = "4Yc303ZSBiruXeidWvxgwbF0oE2a9MDy"
-    const redirectUri = "http://localhost:5173/";
+    const redirectUri = "https://wonderful-coast-00d3ea010.4.azurestaticapps.net/";
 
     const onRedirectCallback = (appState) => {
         navigate(appState?.returnTo || window.location.pathname);
