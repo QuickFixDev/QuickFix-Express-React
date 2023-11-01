@@ -3,7 +3,7 @@
 const HomeHeader = () => {
     return (
             <div className="w-100 py-5 text-center my-5">
-                <h1 className="main-heading">QUICKFIX</h1>
+                <h1 className="main-heading">wonderful-coast</h1>
             </div>
     );
 };

@@ -40,6 +40,19 @@ app.delete('/delete-user/:id', (req, res) => {
     });
 });
 
+app.delete('/delete-category/:id', (req, res) => {
+    const userId = parseInt(req.params.id);
+    const sqlQuery = 'DELETE FROM categories WHERE category_id = ?';
+
+    pool.query(sqlQuery, userId, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Error deleting user' });
+        } else {
+            res.json({ message: 'User deleted successfully' });
+        }
+    });
+});
+
 app.get('/user-storage', (req, res) => {
     const tableName = 'users'
     const query = `DESCRIBE ${tableName}`;
@@ -117,6 +130,23 @@ const complaint = { id: 4 }
 app.get('/user-management', (req, res) => {
     console.log('Server route is triggered');
     const sqlQuery = 'SELECT * FROM users';
+
+    pool.query(sqlQuery, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Error fetching data' });
+            console.log(err);
+        } else {
+
+            res.json(results);
+            console.log("results: ", results);
+        }
+    });
+    console.log("diplay user server handling");
+});
+
+app.get('/category-management', (req, res) => {
+    console.log('Server route is triggered');
+    const sqlQuery = 'SELECT * FROM categories';
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {

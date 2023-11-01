@@ -13,6 +13,7 @@ import UserManagementPanel from './pages/admin/UserManagementPanel';
 import Auth0ProviderWithNavigate from './components/Auth0ProviderWithNavigate'
 import Navbar from './components/common/Navbar'
 import Footer from './components/common/Footer';
+import CategoryManagementPanel from './pages/admin/CategoryManagementPanel';
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/filter-test" element={<FilterTest/>} />
             <Route path="/user-storage" element={<UserStorage/>} />
             <Route path="/user-management" element={<UserManagementPanel/>} />
+            <Route path="/category-management" element={<CategoryManagementPanel/>} />
           </Routes>
           <Footer/>
       </Auth0ProviderWithNavigate>

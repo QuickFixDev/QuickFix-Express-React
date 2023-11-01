@@ -10,8 +10,9 @@ const routes = [
   { userRequired: 'resident', path: '/complain-form', label: 'Complain form' },
   { userRequired: 'resident', path: '/my-complaints', label: 'My complaints' },
   { userRequired: 'admin', path: '/stats', label: 'Stats' },
-  { userRequired: 'admin', path: '/complaint-management', label: 'Complaint Management' },
+  { userRequired: 'admin', path: '/complaint-management', label: 'Complaint management' },
   { userRequired: 'admin', path: '/user-management', label: 'User management' },
+  // { userRequired: 'admin', path: '/category-management', label: 'Category management' },
 ];
 
 const Navbar = () => {
