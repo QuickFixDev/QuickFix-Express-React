@@ -2,13 +2,12 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
-
 const Auth0ProviderWithNavigate = ({ children }) => {
     const navigate = useNavigate();
 
-    const domain = "quick-fix.us.auth0.com"
-    const clientId = "4Yc303ZSBiruXeidWvxgwbF0oE2a9MDy"
-    const redirectUri = "https://wonderful-coast-00d3ea010.4.azurestaticapps.net/";
+    const domain = import.meta.env.VITE_AUTH0_DOMAIN;
+    const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_AUTH0_REDIRECT_URI;
 
     const onRedirectCallback = (appState) => {
         navigate(appState?.returnTo || window.location.pathname);
