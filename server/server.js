@@ -12,33 +12,17 @@ app.get('/', (req, res) => {
     res.send("hello world");
 });
 
+const UserRoutes = require('./routes/UserRoutes');
+const ComplaintRoutes = require('./routes/ComplaintRoutes');
+const ProfileRoutes = require('./routes/ProfileRoutes');
+const StatsRoutes = require('./routes/StatsRoutes');
+const ComplaintFormRoutes = require('./routes/ComplaintFormRoutes');
 
-function executeQuery(req, res, sqlQuery) {
-    const params = req.params;
-    console.log("executeQuery params:", params)
-    pool.query(sqlQuery, params, (error, results) => {
-        if (error) {
-            console.error('Error executing SQL query:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        res.json(results);
-        console.log(results);
-    });
-}
-
-app.delete('/delete-user/:id', (req, res) => {
-    const userId = parseInt(req.params.id);
-    const sqlQuery = 'DELETE FROM users WHERE user_id = ?';
-
-    pool.query(sqlQuery, userId, (err, results) => {
-        if (err) {
-            res.status(500).json({ error: 'Error deleting user' });
-        } else {
-            res.json({ message: 'User deleted successfully' });
-        }
-    });
-});
+app.use('/users', UserRoutes);
+app.use('/complaints', ComplaintRoutes);
+app.use('/profile', ProfileRoutes);
+app.use('/stats', StatsRoutes);
+app.use('/complain-form', ComplaintFormRoutes);
 
 app.delete('/delete-category/:id', (req, res) => {
     const userId = parseInt(req.params.id);
@@ -99,50 +83,9 @@ app.post('/filter-test', (req, res) => {
     });
 });
 
-app.post('/complain-form', (req, res) => {
-    const sqlQuery = `
-INSERT INTO user_complaints
-(complaint_id, user_id, complaint_title, complaint_description, complaint_date, status, category_id)
-VALUES (NULL, ?, ?, ?, ?, ?, ?);
-`
-
-    const values = [
-        req.body.user_id,
-        req.body.complaint_title,
-        req.body.complaint_description,
-        req.body.complaint_date,
-        req.body.status,
-        req.body.category_id
-    ]
-
-    pool.query(sqlQuery, values, (err, data) => {
-        if (err) {
-            console.error("MySQL Error:", err);
-            return res.status(500).json({ error: 'Internal Server Error' });
-        }
-        return res.json(data);
-    });
-});
 
 const user = { id: 1 }
 const complaint = { id: 4 }
-
-app.get('/user-management', (req, res) => {
-    console.log('Server route is triggered');
-    const sqlQuery = 'SELECT * FROM users';
-
-    pool.query(sqlQuery, (err, results) => {
-        if (err) {
-            res.status(500).json({ error: 'Error fetching data' });
-            console.log(err);
-        } else {
-
-            res.json(results);
-            console.log("results: ", results);
-        }
-    });
-    console.log("diplay user server handling");
-});
 
 app.get('/category-management', (req, res) => {
     console.log('Server route is triggered');
@@ -161,29 +104,43 @@ app.get('/category-management', (req, res) => {
     console.log("diplay user server handling");
 });
 
-app.get('/my-complaints', (req, res) => {
-    const sqlQuery = 'SELECT * FROM user_complaints WHERE user_id = 1';
-    const params = user.id;
-    executeQuery(params, res, sqlQuery);
-});
+function executeQuery(req, res, sqlQuery) {
+    const params = req.params;
+    console.log("executeQuery params:", params)
+    pool.query(sqlQuery, params, (error, results) => {
+        if (error) {
+            console.error('Error executing SQL query:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+        res.json(results);
+        console.log(results);
+    });
+}
 
-app.get('/complaint-management', (req, res) => {
-    const sqlQuery = 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?';
-    const params = [ complaint.id ];
-    executeQuery(params, res, sqlQuery);
-});
+// app.get('/complaints', (req, res) => {
+//     const sqlQuery = 'SELECT * FROM user_complaints WHERE user_id = 1';
+//     const params = user.id;
+//     executeQuery(params, res, sqlQuery);
+// });
 
-app.get('/profile', (req, res) => {
-    const sqlQuery = 'SELECT * FROM users WHERE user_id = ?';
-    const params = [ user.id ];
-    executeQuery(params, res, sqlQuery);
-});
+// app.get('/complaint-management', (req, res) => {
+//     const sqlQuery = 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?';
+//     const params = [ complaint.id ];
+//     executeQuery(params, res, sqlQuery);
+// });
 
-app.get('/stats', (req, res) => {
-    const sqlQuery = 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
-    console.log(sqlQuery)
-    executeQuery(req, res, sqlQuery);
-});
+// app.get('/profile', (req, res) => {
+//     const sqlQuery = 'SELECT * FROM users WHERE user_id = ?';
+//     const params = [ user.id ];
+//     executeQuery(params, res, sqlQuery);
+// });
+
+// app.get('/stats', (req, res) => {
+//     const sqlQuery = 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
+//     console.log(sqlQuery)
+//     executeQuery(req, res, sqlQuery);
+// });
 
 app.listen(PORT, () => {
     console.log('Server running on port', PORT);

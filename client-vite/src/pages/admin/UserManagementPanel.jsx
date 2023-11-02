@@ -90,7 +90,7 @@ function UserManagementPanel() {
     const [ selectedUser, setSelectedUser ] = useState(null);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/user-management`)
+        fetch(`${ServerUrl}/users`)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(`HTTP error! Status: ${response.status}`);
@@ -106,7 +106,7 @@ function UserManagementPanel() {
     }, []);
 
     const deleteUser = (userId) => {
-        fetch(`${ServerUrl}/delete-user/${userId}`, {
+        fetch(`${ServerUrl}/users/${userId}`, {
             method: 'DELETE',
         })
             .then((response) => {

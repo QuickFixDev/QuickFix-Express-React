@@ -1,136 +1,125 @@
-import { useState } from 'react';
-import axios from 'axios';
-import tentant from '../../contexts/UserContext'
-import AccessDenied from '../common/AccessDenied';
-import CategoryCombo from '../../components/common/CategoryCombo';
+import { useEffect, useState } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
+import { useAuth0 } from '@auth0/auth0-react';
+import AccessDenied from '../common/AccessDenied';
 
-const ComplainForm = () => {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate
-            .getHours()
-            .toString()
-            .padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate
-                .getSeconds()
-                .toString()
-                .padStart(2, '0')}`;
-    const data = {
-        complaint_date: formattedDate,
-    };
-    const [ values, setValues ] = useState({
-        user_id: '',
+function UserForm() {
+    const { user, isAuthenticated } = useAuth0();
+    const [ formData, setFormData ] = useState({
+        email: user.email,
+        status: 'Open',
+        category_id: 0,
+        complaint_date: '',
         complaint_title: '',
         complaint_description: '',
-        complaint_date: '',
-        status: '',
-        category_id: '',
     });
+    const [ categories, setCategories ] = useState([]); // State to store categories
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        setValues({
-            ...values,
-            [ name ]: name === 'category_id' ? parseInt(value, 10) : value,
-        });
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [ name ]: value });
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        axios
-            .post(`${ServerUrl}/complain-form`, values)
-            .then((res) => console.log('Successful storage', res))
-            .catch((error) => console.log(error));
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        fetch(`${ServerUrl}/complain-form`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('User registered:', data);
+            })
+            .catch((error) => console.error('Error registering user:', error));
     };
 
-    if (tentant.role === "resident" || tentant.role === "dev") {
+    useEffect(() => {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+        setFormData({ ...formData, complaint_date: formattedDate });
+    }, []);
+
+    useEffect(() => {
+        // Fetch categories when the component is mounted
+        fetch(`${ServerUrl}/complain-form`)
+            .then((response) => response.json())
+            .then((data) => {
+                setCategories(data);
+            })
+            .catch((error) => console.error('Error fetching categories:', error));
+    }, []);
+
+    if (!isAuthenticated) {
         return (
-
-            <div className="container mt-5 p-5 w-50 shadow-md">
-                <h1 className='text-center mb-5'>Submit complain</h1>
-                <form onSubmit={handleSubmit}>
-
-                    <div className="form-floating mb-3">
-                        <input
-                            placeholder="Complaint Date"
-                            onChange={handleChange}
-                            type="text"
-                            name="complaint_date"
-                            value={data.complaint_date}
-                            className="form-control"
-                            id="complaint_date"
-                            hidden
-                        />
-                    </div>
-
-                    <div className="form-floating mb-3">
-                        <input
-                            onChange={handleChange}
-                            type="number"
-                            name="user_id"
-                            className="form-control"
-                            id="user_id"
-                            value={tentant.id}
-                            hidden
-                        />
-                    </div>
-                    <div className="form-floating mb-3">
-                        <input
-                            placeholder="Complaint Title"
-                            onChange={handleChange}
-                            type="text"
-                            name="complaint_title"
-                            className="form-control"
-                            id="complaint_title"
-                        />
-                        <label htmlFor="complaint_title">Complaint Title</label>
-                    </div>
-
-                    <div className="form-group">
-                        <label className='mb-2' htmlFor="reportDescription">Description</label>
-                        <textarea
-                            type="text"
-                            className="form-control mb-3"
-                            name="complaint_description"
-                            id="reportDescription"
-                            rows="8"
-                            placeholder="Enter report description"
-                            onChange={handleChange}
-                        ></textarea>
-                    </div>
-
-                    <div className="form-floating mb-3">
-                        <select
-                            onChange={handleChange}
-                            name="status"
-                            className="form-control"
-                            id="status"
-                        >
-                            <option value="">Select</option>
-                            <option value="Closed">Closed</option>
-                            <option value="Open">Open</option>
-                        </select>
-                        <label htmlFor="status">Status</label>
-                    </div>
-                    <div className="form-floating mb-3">
-                        <CategoryCombo onChange={handleChange}
-                            name="category_id"
-                            className="form-control"
-                            id="category_id"
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary">
-                        Submit Complaint
-                    </button>
-                </form>
-            </div>
+            <AccessDenied></AccessDenied>
         );
     }
-    return (
-        <AccessDenied />
-    );
-};
 
-export default ComplainForm;
+    return (
+        <div className='container mt-5 shadow-md p-3 w-75'>
+
+            <form onSubmit={handleSubmit} className="container mt-4">
+                <h1 className='pb-4 text-center'>Tell us what happened</h1>
+                <input hidden type="email" name="email" value={formData.email} />
+                <input hidden type="text" name="status" value={formData.status} />
+                <input hidden type="text" name="complaint_date" value={formData.complaint_date} />
+
+                <div className="row">
+                    <div className="col">
+                        <div className="form-group">
+                            <label htmlFor="complaint_title">Complaint Title</label>
+                            <input
+                                type="text"
+                                name="complaint_title"
+                                value={formData.complaint_title}
+                                onChange={handleChange}
+                                className="form-control"
+                                id="complaint_title"
+                            />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label htmlFor="category_id">Select the complaint type</label>
+                            <select
+                                name="category_id"
+                                value={formData.category_id}
+                                onChange={handleChange}
+                                className="form-control"
+                                id="category_id"
+                            >
+                                <option value="0">Select a category</option>
+                                {categories.map((category) => (
+                                    <option key={category.category_id} value={category.category_id}>
+                                        {category.category_name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="complaint_title">Complaint description</label>
+                    <textarea
+                        type="text"
+                        name="complaint_description"
+                        value={formData.complaint_description}
+                        onChange={handleChange}
+                        className="form-control"
+                        id="complaint_description"
+                        rows={10}
+                    />
+                </div>
+
+                <button type="submit" className="w-100 my-4 btn btn-primary">Submit</button>
+            </form>
+        </div>
+    );
+}
+
+export default UserForm;

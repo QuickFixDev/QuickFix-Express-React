@@ -33,8 +33,10 @@
   height: 2px;
   background-color: rgb(0, 128, 255);
   bottom: 0;
-  left: 50%; /* Position from the center */
-  transform: translateX(-50%); /* Center horizontally */
+  left: 50%;
+  /* Position from the center */
+  transform: translateX(-50%);
+  /* Center horizontally */
   transition: width 0.3s ease-in-out;
 }
 

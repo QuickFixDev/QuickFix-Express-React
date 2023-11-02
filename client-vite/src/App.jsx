@@ -25,12 +25,12 @@ export default function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/complain-form" element={<ComplainForm />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/my-complaints" element={<MyComplaints />} />
+            <Route path="/complaints" element={<MyComplaints />} />
             <Route path="/complaint-management" element={<ComplaintManagement />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/filter-test" element={<FilterTest/>} />
             <Route path="/user-storage" element={<UserStorage/>} />
-            <Route path="/user-management" element={<UserManagementPanel/>} />
+            <Route path="/users" element={<UserManagementPanel/>} />
             <Route path="/category-management" element={<CategoryManagementPanel/>} />
           </Routes>
           <Footer/>

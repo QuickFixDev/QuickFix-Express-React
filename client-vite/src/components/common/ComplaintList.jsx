@@ -34,7 +34,7 @@ const ComplaintList = () => {
   const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
-    fetch(`${ServerUrl}/my-complaints`)
+    fetch(`${ServerUrl}/complaints`)
       .then((response) => response.json())
       .then((responseData) => {
         setComplaints(responseData);
