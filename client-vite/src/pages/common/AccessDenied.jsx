@@ -2,7 +2,7 @@
 const AccessDenied = () => {
     return (
         <div className="alert alert-danger" role="alert">
-            Access Denied. You don't have access to this page.
+            <span className="fw-bold">Access Denied.</span> You don't have access to this page.
         </div>
     );
 }

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const ComplainItem = (props) => {
 
@@ -32,19 +33,22 @@ const ComplainItem = (props) => {
 const ComplaintList = () => {
   const [ complaints, setComplaints ] = useState([]);
   const [ loading, setLoading ] = useState(true);
+  const { user } = useAuth0();
 
-  useEffect(() => {
-    fetch(`${ServerUrl}/complaints`)
-      .then((response) => response.json())
-      .then((responseData) => {
-        setComplaints(responseData);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
-  }, []);
+  const email = user.email;
+
+  fetch(`${ServerUrl}/my-complaints?email=${email}`, {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((responseData) => {
+      setComplaints(responseData);
+      console.log('', responseData);
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    });
 
   if (loading) {
     return (

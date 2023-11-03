@@ -85,7 +85,7 @@ function UserDetails({ user }) {
     );
 }
 
-function UserManagementPanel() {
+function UserManagement() {
     const [ users, setUsers ] = useState([]);
     const [ selectedUser, setSelectedUser ] = useState(null);
 
@@ -135,4 +135,4 @@ function UserManagementPanel() {
     );
 }
 
-export default UserManagementPanel;
+export default UserManagement;

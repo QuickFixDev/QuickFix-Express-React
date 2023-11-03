@@ -49,4 +49,18 @@ UserController.deleteUser = async (req, res) => {
     });
 };
 
+UserController.createUser = (req, res) => {
+    sqlQuery = 'INSERT INTO users (first_name, last_name, role, street_name, house_number, phone_number, email) VALUES (?, ?, ?, ?, ?, ?, ?)'
+
+    pool.query(sqlQuery, [ first_name, last_name, role, street_name, house_number, phone_number, email ], (err, results) => {
+        if (err) {
+            console.error('Error storing form data:', err);
+            res.status(500).json({ message: 'Internal server error' });
+        } else {
+            console.log('Form data saved with ID:', results.insertId);
+            res.json({ message: 'Form data saved successfully' });
+        }
+    });
+}
+
 module.exports = UserController;

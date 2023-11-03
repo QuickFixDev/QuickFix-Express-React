@@ -73,7 +73,7 @@ function CategoryDetails({ category }) {
     );
 }
 
-function CategoryManagementPanel() {
+function CategoryManagement() {
     const [ categories, setCategories ] = useState([]);
     const [ selectedCategory, setSelectedCategory ] = useState(null);
 
@@ -123,4 +123,4 @@ function CategoryManagementPanel() {
     );
 }
 
-export default CategoryManagementPanel;
+export default CategoryManagement;

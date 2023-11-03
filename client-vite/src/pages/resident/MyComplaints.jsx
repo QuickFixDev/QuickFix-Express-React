@@ -1,29 +1,21 @@
-import ComplaintHeader from '../../components/common/ComplaintHeader';
-import ComplaintList from '../../components/common/ComplaintList';
-import HomePage from '../common/HomePage';
-import tentant from '../../contexts/UserContext'
+import { useAuth0 } from "@auth0/auth0-react"
+import AccessDenied from '../common/AccessDenied';
 
-const MyReports = () => {
-  if (tentant.role === "resident" || tentant.role === "dev") {
-    return (
-      <>
-        <div className='container w-lg-50 shadow-md p-5 mt-5'>
-          <div className=' px-3'>
-            <ComplaintHeader />
-          </div>
-          <div className=' p-3 bg-light'>
-            <div id="scroll-container" className="scrollbar-hidden" style={{ maxHeight: "325", overflowY: "auto" }}>
-              <ComplaintList />
-            </div>
-          </div>
-        </div>
+const MyComplaints = () => {
+    const { user, isAuthenticated } = useAuth0();
 
-      </>
+    if (!isAuthenticated) {
+        return (
+            <AccessDenied />
+        );
+    }
+
+    const email = user.email
+
+    return(
+        <p>{email}</p>
     );
-  }
-  return (
-    <HomePage />
-  );
-};
 
-export default MyReports;
+}
+
+export default MyComplaints;

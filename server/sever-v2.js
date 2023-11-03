@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 app.use('/categories', categoryRoutes);
 app.use('/users', userRoutes);
-app.use('/complaints', complaintRoutes);
+app.use('/my-complaints', complaintRoutes);
 
 app.listen(PORT, () => {
     console.log('Server running on port', PORT);

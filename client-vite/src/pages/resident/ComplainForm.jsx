@@ -4,7 +4,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
 
 function UserForm() {
-    const { user, isAuthenticated } = useAuth0();
+    const { user } = useAuth0();
+
     const [ formData, setFormData ] = useState({
         email: user.email,
         status: 'Open',
@@ -53,12 +54,6 @@ function UserForm() {
             .catch((error) => console.error('Error fetching categories:', error));
     }, []);
 
-    if (!isAuthenticated) {
-        return (
-            <AccessDenied></AccessDenied>
-        );
-    }
-
     return (
         <div className='container mt-5 shadow-md p-3 w-75'>
 
@@ -71,7 +66,7 @@ function UserForm() {
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
-                            <label htmlFor="complaint_title">Complaint Title</label>
+                            <label className='my-2' htmlFor="complaint_title">Complaint Title</label>
                             <input
                                 type="text"
                                 name="complaint_title"
@@ -84,7 +79,7 @@ function UserForm() {
                     </div>
                     <div className="col">
                         <div className="form-group">
-                            <label htmlFor="category_id">Select the complaint type</label>
+                            <label className='my-2' htmlFor="category_id">Select the complaint type</label>
                             <select
                                 name="category_id"
                                 value={formData.category_id}
@@ -104,7 +99,7 @@ function UserForm() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="complaint_title">Complaint description</label>
+                    <label className='my-2' htmlFor="complaint_title">Complaint description</label>
                     <textarea
                         type="text"
                         name="complaint_description"
@@ -122,4 +117,18 @@ function UserForm() {
     );
 }
 
-export default UserForm;
+const ReturningComponent = () => {
+    const { isAuthenticated } = useAuth0();
+
+    if (!isAuthenticated) {
+        return (
+            <AccessDenied></AccessDenied>
+        );
+    }
+    
+    return (
+        <UserForm />
+    );
+}
+
+export default ReturningComponent;

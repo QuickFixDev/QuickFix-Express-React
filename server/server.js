@@ -17,12 +17,15 @@ const ComplaintRoutes = require('./routes/ComplaintRoutes');
 const ProfileRoutes = require('./routes/ProfileRoutes');
 const StatsRoutes = require('./routes/StatsRoutes');
 const ComplaintFormRoutes = require('./routes/ComplaintFormRoutes');
+const RoleRoutes = require('./routes/RoleRoutes');
 
 app.use('/users', UserRoutes);
-app.use('/complaints', ComplaintRoutes);
+app.use('/user-storage', UserRoutes);
+app.use('/my-complaints/:email', ComplaintRoutes);
 app.use('/profile', ProfileRoutes);
 app.use('/stats', StatsRoutes);
 app.use('/complain-form', ComplaintFormRoutes);
+app.use('/roles', RoleRoutes);
 
 app.delete('/delete-category/:id', (req, res) => {
     const userId = parseInt(req.params.id);
