@@ -1,4 +1,3 @@
-import './WhatsAppParallax.css'; // Create a CSS file for styling
 
 import { NavLink } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
