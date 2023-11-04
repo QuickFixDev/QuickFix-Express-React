@@ -44,3 +44,23 @@
 .centered-expand-underline:hover::before {
   width: 100%;
 }
+
+.custom-navlink {
+  display: flex;
+  color: black;
+  text-decoration: none; /* Remove underline from anchor elements */
+  transition: color 0.1s, background-color 0.1s; /* Define the transition properties */
+}
+
+.custom-navlink:hover {
+  background-color: #f0f0f0; /* Change the background color on hover */
+  color: rgb(0, 59, 223);
+}
+
+.custom-navlink:active {
+  background-color: #ddd; /* Change the background color on click */
+}
+
+.custom-navlink .navlink-text {
+  text-decoration: none; /* You can add this for extra specificity, although it's not always necessary */
+}

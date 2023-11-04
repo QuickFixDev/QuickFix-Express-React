@@ -8,11 +8,11 @@ const Footer = () => {
 
     return (
         <>
-            <div className='bg-black mt-5 py-5'>
+            <div className='bg-black py-5'>
                 <div className="text-center">
                     <p className='text-white'>&copy; 2023 QuickFix</p>
                 </div>
-                <div className='container d-flex flex-row w-25 align-items-center justify-content-around'>
+                <div className='container d-flex flex-row w-75 align-items-center justify-content-around'>
                     <FontAwesomeIcon icon={faDiscord} size="2x" style={whiteIconStyle} />
                     <FontAwesomeIcon icon={faFacebook} size="2x" style={whiteIconStyle} />
                     <FontAwesomeIcon icon={faLinkedin} size="2x" style={whiteIconStyle} />

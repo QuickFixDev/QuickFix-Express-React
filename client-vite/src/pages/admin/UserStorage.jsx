@@ -24,7 +24,7 @@ function UserStorage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch(`${ServerUrl}/user-storage`, {
+        fetch(`${ServerUrl}/admin/users/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function UserStorage() {
 
     useEffect(() => {
         // Fetch categories when the component is mounted
-        fetch(`${ServerUrl}/user-storage`)
+        fetch(`${ServerUrl}/admin/users/new`)
             .then((response) => response.json())
             .then((data) => {
                 setRoles(data);

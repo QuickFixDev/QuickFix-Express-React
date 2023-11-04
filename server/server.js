@@ -15,17 +15,14 @@ app.get('/', (req, res) => {
 const UserRoutes = require('./routes/UserRoutes');
 const ComplaintRoutes = require('./routes/ComplaintRoutes');
 const ProfileRoutes = require('./routes/ProfileRoutes');
-const StatsRoutes = require('./routes/StatsRoutes');
-const ComplaintFormRoutes = require('./routes/ComplaintFormRoutes');
 const RoleRoutes = require('./routes/RoleRoutes');
 
-app.use('/users', UserRoutes);
-app.use('/user-storage', UserRoutes);
-app.use('/my-complaints/:email', ComplaintRoutes);
+app.use('/admin/users', UserRoutes);
+app.use('/admin/complaints', ComplaintRoutes);
+app.use('/user/complaints', ComplaintRoutes);
+app.use('/user/complaints', ComplaintRoutes);
 app.use('/profile', ProfileRoutes);
-app.use('/stats', StatsRoutes);
-app.use('/complain-form', ComplaintFormRoutes);
-app.use('/roles', RoleRoutes);
+app.use('/admin/roles', RoleRoutes);
 
 app.delete('/delete-category/:id', (req, res) => {
     const userId = parseInt(req.params.id);
@@ -40,7 +37,7 @@ app.delete('/delete-category/:id', (req, res) => {
     });
 });
 
-app.get('/user-storage', (req, res) => {
+app.get('/admin/users/new', (req, res) => {
     const tableName = 'users'
     const query = `DESCRIBE ${tableName}`;
     pool.query(query, (err, results) => {
@@ -54,7 +51,7 @@ app.get('/user-storage', (req, res) => {
     });
 });
 
-app.post('/user-storage', (req, res) => {
+app.post('/admin/users/new', (req, res) => {
     const tableName = 'users'
     const formData = req.body;
 
@@ -127,7 +124,7 @@ function executeQuery(req, res, sqlQuery) {
 //     executeQuery(params, res, sqlQuery);
 // });
 
-// app.get('/complaint-management', (req, res) => {
+// app.get('/admin/complaints', (req, res) => {
 //     const sqlQuery = 'SELECT uc.*, cc.category_name, u.house_number, u.street_name FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id INNER JOIN users u ON uc.user_id = u.user_id WHERE uc.complaint_id = ?';
 //     const params = [ complaint.id ];
 //     executeQuery(params, res, sqlQuery);
@@ -139,7 +136,7 @@ function executeQuery(req, res, sqlQuery) {
 //     executeQuery(params, res, sqlQuery);
 // });
 
-// app.get('/stats', (req, res) => {
+// app.get('/admin/complaints/stats', (req, res) => {
 //     const sqlQuery = 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
 //     console.log(sqlQuery)
 //     executeQuery(req, res, sqlQuery);

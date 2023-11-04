@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
-import { useAuth0 } from "@auth0/auth0-react";
 
 const ComplainItem = (props) => {
 
@@ -33,11 +32,8 @@ const ComplainItem = (props) => {
 const ComplaintList = () => {
   const [ complaints, setComplaints ] = useState([]);
   const [ loading, setLoading ] = useState(true);
-  const { user } = useAuth0();
 
-  const email = user.email;
-
-  fetch(`${ServerUrl}/my-complaints?email=${email}`, {
+  fetch(`${ServerUrl}/user/complaints`, {
     method: 'GET',
   })
     .then((response) => response.json())
