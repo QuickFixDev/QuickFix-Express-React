@@ -42,7 +42,7 @@ UserController.deleteUser = async (req, res) => {
             console.error(err);
             res.status(500).json({ error: 'Failed to delete user' });
         } else if (result.affectedRows === 0) {
-            res.status(404).json({ error: 'User not found' });
+            res.status(404).json({ error: 'damn bro, User not found' });
         } else {
             res.json({ message: 'User deleted successfully' });
         }

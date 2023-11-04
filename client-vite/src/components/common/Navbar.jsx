@@ -7,12 +7,12 @@ import tentant from '../../contexts/UserContext';
 const routes = [
   { userRequired: 'common', path: '/', label: 'Home' },
   { userRequired: 'common', path: '/profile', label: 'My profile' },
-  { userRequired: 'resident', path: '/complain-form', label: 'Complain form' },
-  { userRequired: 'resident', path: '/my-complaints', label: 'My complaints' },
-  { userRequired: 'admin', path: '/stats', label: 'Stats' },
-  { userRequired: 'admin', path: '/complaint-management', label: 'Complaint management' },
-  { userRequired: 'admin', path: '/users', label: 'User management' },
-  { userRequired: 'admin', path: '/roles', label: 'Role management' },
+  { userRequired: 'resident', path: '/user/complaints/new', label: 'Complain form' },
+  { userRequired: 'resident', path: '/user/complaints', label: 'My complaints' },
+  { userRequired: 'admin', path: '/admin/complaints/stats', label: 'Stats' },
+  { userRequired: 'admin', path: '/admin/complaints', label: 'Complaint management' },
+  { userRequired: 'admin', path: '/admin/users', label: 'User management' },
+  { userRequired: 'admin', path: '/admin/roles', label: 'Role management' },
   { userRequired: 'common', path: '/use-context-test', label: 'Context' },
   // { userRequired: 'admin', path: '/category-management', label: 'Category management' },
 ];

@@ -5,7 +5,7 @@ const Stats = () => {
     const [ data, setData ] = useState([]);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/stats`)
+        fetch(`${ServerUrl}/admin/complaints/stats`)
 
             .then((response) => response.json())
             .then((responseData) => {

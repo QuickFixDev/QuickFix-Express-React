@@ -24,7 +24,7 @@ function UserForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch(`${ServerUrl}/complain-form`, {
+        fetch(`${ServerUrl}/user/complaints/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function UserForm() {
 
     useEffect(() => {
         // Fetch categories when the component is mounted
-        fetch(`${ServerUrl}/complain-form`)
+        fetch(`${ServerUrl}/user/complaints/new`)
             .then((response) => response.json())
             .then((data) => {
                 setCategories(data);
@@ -59,9 +59,9 @@ function UserForm() {
 
             <form onSubmit={handleSubmit} className="container mt-4">
                 <h1 className='pb-4 text-center'>Tell us what happened</h1>
-                <input hidden type="email" name="email" value={formData.email} />
-                <input hidden type="text" name="status" value={formData.status} />
-                <input hidden type="text" name="complaint_date" value={formData.complaint_date} />
+                <input hidden onChange={handleChange} type="email" name="email" value={formData.email} />
+                <input hidden onChange={handleChange} type="text" name="status" value={formData.status} />
+                <input hidden onChange={handleChange} type="text" name="complaint_date" value={formData.complaint_date} />
 
                 <div className="row">
                     <div className="col">

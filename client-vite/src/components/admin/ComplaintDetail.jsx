@@ -38,7 +38,7 @@ const ComplaintDetail = () => {
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/complaint-management`)
+        fetch(`${ServerUrl}/admin/complaints`)
             .then((response) => response.json())
             .then((responseData) => {
                 setDetail(responseData);

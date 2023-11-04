@@ -22,7 +22,7 @@ function CreateRole() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch(`${ServerUrl}/roles`, {
+        fetch(`${ServerUrl}/admin/roles`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

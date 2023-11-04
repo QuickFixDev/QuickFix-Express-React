@@ -12,7 +12,7 @@ function UserList({ users, setSelectedUser, deleteUser }) {
             <div className="container d-flex flex-row justify-content-between align-items-center">
                 <h3>User List</h3>
                 <button className="btn btn-primary mb-3">
-                    <Link className='text-white text-decoration-none' to="/user-storage">
+                    <Link className='text-white text-decoration-none' to="/admin/users/new">
                         <FontAwesomeIcon icon={faUserPlus} /> Create New User
                     </Link>
                 </button>
@@ -90,7 +90,7 @@ function UserManagement() {
     const [ selectedUser, setSelectedUser ] = useState(null);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/users`)
+        fetch(`${ServerUrl}/admin/users`)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(`HTTP error! Status: ${response.status}`);
@@ -106,7 +106,7 @@ function UserManagement() {
     }, []);
 
     const deleteUser = (userId) => {
-        fetch(`${ServerUrl}/users/${userId}`, {
+        fetch(`${ServerUrl}/admin/users/${userId}`, {
             method: 'DELETE',
         })
             .then((response) => {
