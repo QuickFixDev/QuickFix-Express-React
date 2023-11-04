@@ -1,0 +1,25 @@
+.whatsapp-parallax-container {
+    position: relative;
+    overflow: hidden;
+    background-image: url(background.jpg);
+    /* Set your background image here */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+.fixed-column {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+}
+
+.scrolling-column {
+    margin-left: 33.3333%;
+    /* Ensure this matches the width of the fixed column */
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+}   

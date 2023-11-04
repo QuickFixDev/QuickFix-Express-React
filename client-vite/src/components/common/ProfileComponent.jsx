@@ -14,9 +14,15 @@ const Profile = () => {
     return (
         isAuthenticated && (
             <div className="d-flex flex-column justify-content-center align-items-center">
-                <img src={user.picture} alt={user.name} />
-                <h2>{user.name}</h2>
-                <p>{user.email}</p>
+                <div className="d-flex justify-content-center w-100 py-4">
+                    <img className="rounded-circle" src={user.picture} alt={user.name} />
+                </div>
+                <div className="d-flex justify-content-center w-100 py-4">
+                    <h2>{user.name}</h2>
+                </div>
+                <div className="d-flex justify-content-center w-100 py-4">
+                    <p>{user.email}</p>
+                </div>
             </div>
         )
     );

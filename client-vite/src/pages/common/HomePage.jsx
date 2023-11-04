@@ -2,34 +2,32 @@
 
 const HomeHeader = () => {
     return (
-            <div className="w-100 py-5 text-center my-5">
-                <h1 className="main-heading">QuickFix</h1>
-            </div>
+        <div className="w-100 py-5 text-center my-5">
+            <h1 className="main-heading">QuickFix</h1>
+        </div>
     );
 };
 
 const AboutStructure = ({ general, details }) => {
     return (
-        <div className="container-fluid bg-light py-3">
-            <div className="container w-75 mt-4 mb-4">
-                {general.map((item, index) => (
-                    <div className="container" key={index}>
-                        <h3 className="mt-4 mb-3">About QuickFix</h3>
-                        <p>{item.generalDescription}</p>
-                        <h3 className="mt-4 mb-3">Features:</h3>
-                    </div>
-                ))}
-                {details.map((item, index) => (
-                    <div className="container" key={index}>
-                        <ul>
-                            <li>
-                                <h6>{item.subtitle}</h6>
-                                <p>{item.description}</p>
-                            </li>
-                        </ul>
-                    </div>
-                ))}
-            </div>
+        <div className="container-fluid bg-light p-lg-3 p-1">
+            {general.map((item, index) => (
+                <div className="container" key={index}>
+                    <h3 className="mt-4 mb-3">About QuickFix</h3>
+                    <p>{item.generalDescription}</p>
+                    <h3 className="mt-4 mb-3">Features:</h3>
+                </div>
+            ))}
+            {details.map((item, index) => (
+                <div className="container" key={index}>
+                    <ul>
+                        <li>
+                            <h6>{item.subtitle}</h6>
+                            <p>{item.description}</p>
+                        </li>
+                    </ul>
+                </div>
+            ))}
         </div>
     );
 };
