@@ -71,11 +71,11 @@ const Sidebar = () => {
               <NavLink to={route.path} className="custom-navlink px-2 py-4">
                 <div className="container">
                   <div className="row">
-                    <div className="col-12 col-md-2 text-end">
+                    <div className="col-xl-3 col-12 text-center">
                       <FontAwesomeIcon icon={iconMapping[ route.iconName ]} />
                     </div>
-                    {/* This div will be hidden on screens smaller than md */}
-                    <div className="col-0 col-md-10 d-none d-md-block navlink-text">
+                    {/* This div will be hidden on screens smaller than xl */}
+                    <div className="col-xl-9 col-0 d-xl-block d-none navlink-text">
                       {route.label}
                     </div>
                   </div>

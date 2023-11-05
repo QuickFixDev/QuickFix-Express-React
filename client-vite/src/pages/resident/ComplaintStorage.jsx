@@ -55,15 +55,14 @@ function UserForm() {
     }, []);
 
     return (
-        <div className='container mt-5 shadow-md p-3 w-75'>
-
-            <form onSubmit={handleSubmit} className="container mt-4">
-                <h1 className='pb-4 text-center'>Tell us what happened</h1>
+        <div className='container bg-white mt-md-5 mt-0 p-3 col-xl-8 col-md-10 col-12 shadow-md'>
+            <form onSubmit={handleSubmit} className="container">
+                <h1 className='py-4 text-center'>Tell us what happened</h1>
                 <input hidden onChange={handleChange} type="email" name="email" value={formData.email} />
                 <input hidden onChange={handleChange} type="text" name="status" value={formData.status} />
                 <input hidden onChange={handleChange} type="text" name="complaint_date" value={formData.complaint_date} />
 
-                <div className="row">
+                <div className="row row-cols-md-2 row-cols-1">
                     <div className="col">
                         <div className="form-group">
                             <label className='my-2' htmlFor="complaint_title">Complaint Title</label>
@@ -72,7 +71,7 @@ function UserForm() {
                                 name="complaint_title"
                                 value={formData.complaint_title}
                                 onChange={handleChange}
-                                className="form-control"
+                                className="form-control bg-light"
                                 id="complaint_title"
                             />
                         </div>
@@ -84,7 +83,7 @@ function UserForm() {
                                 name="category_id"
                                 value={formData.category_id}
                                 onChange={handleChange}
-                                className="form-control"
+                                className="form-control bg-light"
                                 id="category_id"
                             >
                                 <option value="0">Select a category</option>
@@ -105,7 +104,7 @@ function UserForm() {
                         name="complaint_description"
                         value={formData.complaint_description}
                         onChange={handleChange}
-                        className="form-control"
+                        className="form-control bg-light"
                         id="complaint_description"
                         rows={10}
                     />
@@ -125,7 +124,7 @@ const ReturningComponent = () => {
             <AccessDenied></AccessDenied>
         );
     }
-    
+
     return (
         <UserForm />
     );

@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/common/SideNavbar';
 import Footer from './components/common/Footer';
 import Auth0ProviderWithNavigate from './components/Auth0ProviderWithNavigate';
-import HomePage from './pages/common/HomePage';
+import HomePage from './pages/common/AboutPage';
 import Profile from './pages/common/Profile';
 import MyComplaints from './pages/resident/MyComplaints';
 import ComplainForm from './pages/resident/ComplaintStorage';
@@ -23,10 +23,10 @@ export default function App() {
         <TopNavbar></TopNavbar>
         <div className="container-fluid m-0">
           <div className="row full-height p-0">
-            <div className="col-md-2 bg-danger col-1 bg-light position-sticky p-0">
+            <div className="col-xl-2 col-md-1 col-2 bg-danger bg-light position-sticky p-0 border border-1 border-end">
               <Navbar />
             </div>
-            <main className="col-md-10 col-11 col-lg-10 p-0">
+            <main className="col-xl-10 col-md-11 col-10 p-0">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/home" element={<HomePage />} />
