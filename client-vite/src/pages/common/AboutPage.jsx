@@ -2,9 +2,11 @@
 
 const AboutHeader = () => {
     return (
-        <div className="w-100 py-5 text-center my-5">
-            <h1 className="main-heading">QuickFix</h1>
-        </div>
+        <>
+            <div className="w-100 py-5 text-center my-5">
+                <img src="/svg/QuickFixGray.svg" alt="" width={'200px'} />
+            </div>
+        </>
     );
 };
 
@@ -20,10 +22,10 @@ const AboutStructure = ({ general, details }) => {
             ))}
             {details.map((item, index) => (
                 <div className="container" key={index}>
-                        <p>
-                            <h6>{item.subtitle}</h6>
-                            <p>{item.description}</p>
-                        </p>
+                    <p>
+                        <h6>{item.subtitle}</h6>
+                        <p>{item.description}</p>
+                    </p>
                 </div>
             ))}
         </div>

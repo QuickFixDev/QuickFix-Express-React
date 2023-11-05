@@ -11,8 +11,8 @@ const Stats = () => {
             return (
                 <div className="row">
 
-                    <div className='container col-xl-6 col-lg-8 col-md-10 col-12 text-center p-lg-5 p-4 mt-md-5 mt-0 shadow-md'>
-                        <h1 className='py-4'>Statistics</h1>
+                    <div className='container col-xl-6 col-lg-8 col-md-10 col-11 text-center p-lg-5 p-md-4 p-2 mt-md-5 mt-0 shadow-md'>
+                        <h1 className='py-4'>Complaint statistics</h1>
                         <Graphic />
                     </div>
                 </div>

@@ -1,0 +1,20 @@
+.svg-container {
+    width: 150px;
+    /* Change the container width */
+    height: 150px;
+    /* Change the container height */
+    background-color: lightgray;
+    /* Add a background color to the container */
+}
+
+.svg-container svg {
+    fill: blue;
+    /* Change the circle's fill color */
+    stroke: green;
+    /* Change the circle's stroke color */
+}
+
+.svg-container:hover svg {
+    transform: scale(1.2);
+    /* Apply a scale transform on hover */
+}
