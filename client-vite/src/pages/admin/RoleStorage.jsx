@@ -45,71 +45,73 @@ function CreateRole() {
     }
 
     return (
-        <div className="container mt-5">
-            <form onSubmit={handleSubmit} className="container mt-4">
-                <h1 className="pb-4 text-center">Create new role</h1>
+        <div className="container-fluid d-flex flex-column align-items-center justify-content-center h-100 p-0">
+            <div className="container shadow-md p-lg-5 p-md-3 p-1 col-xl-6 col-lg-10 col-12">
+                <form onSubmit={handleSubmit} className="container mt-4">
+                    <h1 className="pb-4 text-center">Create new role</h1>
 
-                <div className="form-group">
-                    <label className="my-2" htmlFor="role_name">
-                        Role name
-                    </label>
-                    <input
-                        type="text"
-                        name="role_name"
-                        value={formData.role_name}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="role_name"
-                    />
-                </div>
+                    <div className="form-group">
+                        <label className="my-2" htmlFor="role_name">
+                            Role name
+                        </label>
+                        <input
+                            type="text"
+                            name="role_name"
+                            value={formData.role_name}
+                            onChange={handleChange}
+                            className="form-control bg-light"
+                            id="role_name"
+                        />
+                    </div>
 
-                <button type="submit" className="w-100 my-4 btn btn-primary">
-                    Submit
-                </button>
-            </form>
+                    <button type="submit" className="w-100 my-4 btn btn-primary">
+                        Submit
+                    </button>
+                </form>
 
-            <div
-                className={`w-100 gray-overlay modal fade ${showModal ? 'show' : ''}`}
-                tabIndex="-1"
-                role="dialog"
-                style={showModal ? { display: 'block' } : {}}
-            >
-                <div className="h-75 modal-dialog modal-dialog-centered" role="document">
-                    <div className="p-3 modal-content p-2">
-                        <div className={`modal-body`}>
-                            {formData.role_name ? (
-                                <>
-                                    <div className="alert alert-primary">
-                                        <h4>Role registered successfully</h4>
-                                        <p>New system role: {formData.role_name}</p>
+                <div
+                    className={`w-100 gray-overlay modal fade ${showModal ? 'show' : ''}`}
+                    tabIndex="-1"
+                    role="dialog"
+                    style={showModal ? { display: 'block' } : {}}
+                >
+                    <div className="h-75 modal-dialog modal-dialog-centered" role="document">
+                        <div className="p-3 modal-content p-2">
+                            <div className={`modal-body`}>
+                                {formData.role_name ? (
+                                    <>
+                                        <div className="alert alert-primary">
+                                            <h4>Role registered successfully</h4>
+                                            <p>New system role: {formData.role_name}</p>
 
-                                    </div>
-                                    <button
-                                        type="button"
-                                        className="w-100 btn btn-primary mt-3"
-                                        data-dismiss="modal"
-                                        onClick={handleCloseModal}
-                                    >
-                                        Close
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="alert alert-danger">
-                                        <h4>Error registering role</h4>
-                                        <p>No name provided</p>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        className="w-100 btn btn-danger mt-3"
-                                        data-dismiss="modal"
-                                        onClick={handleCloseModal}
-                                    >
-                                        Close
-                                    </button>
-                                </>
-                            )}
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className="w-100 btn btn-primary mt-3"
+                                            data-dismiss="modal"
+                                            onClick={handleCloseModal}
+                                        >
+                                            Close
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="alert alert-danger">
+                                            <h4>Error registering role</h4>
+                                            <p>No name provided</p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className="w-100 btn btn-danger mt-3"
+                                            data-dismiss="modal"
+                                            onClick={handleCloseModal}
+                                        >
+                                            Close
+                                        </button>
+                                    </>
+                                )}
 
+                            </div>
                         </div>
                     </div>
                 </div>

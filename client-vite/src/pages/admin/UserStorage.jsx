@@ -61,59 +61,69 @@ function UserStorage() {
     }
 
     return (
-        <div className='container mt-5 shadow-md p-3 w-75'>
+        <div className='container mt-md-5 mt-0 shadow-md p-3 col-xl-8 col-md-10 col-12'>
 
-            <form onSubmit={handleSubmit} className="container mt-4">
-                <h1 className='pb-4 text-center'>Submit new user</h1>
-                
-                <div className="form-group">
-                    <label className='my-2' htmlFor="first_name">first_name</label>
-                    <input
-                        type="text"
-                        name="first_name"
-                        value={formData.first_name}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="first_name"
-                    />
-                </div>
-                
-                <div className="form-group">
-                    <label className='my-2' htmlFor="last_name">last_name</label>
-                    <input
-                        type="text"
-                        name="last_name"
-                        value={formData.last_name}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="last_name"
-                    />
-                </div>
-                
-                <div className="form-group">
-                    <label className='my-2' htmlFor="street_name">street_name</label>
-                    <input
-                        type="text"
-                        name="street_name"
-                        value={formData.street_name}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="street_name"
-                    />
+            <form onSubmit={handleSubmit} className="container">
+                <h1 className='py-4 text-center'>Create new user</h1>
+
+                <div className="row row-cols-lg-2 row-cols-1">
+                    <div className="col">
+                        <div className="form-group">
+                            <label className='my-2' htmlFor="first_name">first_name</label>
+                            <input
+                                type="text"
+                                name="first_name"
+                                value={formData.first_name}
+                                onChange={handleChange}
+                                className="form-control bg-light"
+                                id="first_name"
+                            />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label className='my-2' htmlFor="last_name">last_name</label>
+                            <input
+                                type="text"
+                                name="last_name"
+                                value={formData.last_name}
+                                onChange={handleChange}
+                                className="form-control bg-light"
+                                id="last_name"
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                <div className="form-group">
-                    <label className='my-2' htmlFor="house_number">house_number</label>
-                    <input
-                        type="number"
-                        name="house_number"
-                        value={formData.house_number}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="house_number"
-                    />
+                <div className="row row-cols-lg-2 row-cols-1">
+                    <div className="col">
+                        <div className="form-group">
+                            <label className='my-2' htmlFor="street_name">street_name</label>
+                            <input
+                                type="text"
+                                name="street_name"
+                                value={formData.street_name}
+                                onChange={handleChange}
+                                className="form-control bg-light"
+                                id="street_name"
+                            />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label className='my-2' htmlFor="house_number">house_number</label>
+                            <input
+                                type="number"
+                                name="house_number"
+                                value={formData.house_number}
+                                onChange={handleChange}
+                                className="form-control bg-light"
+                                id="house_number"
+                            />
+                        </div>
+                    </div>
                 </div>
-                
+
                 <div className="form-group">
                     <label className='my-2' htmlFor="phone_number">phone_number</label>
                     <input
@@ -121,39 +131,44 @@ function UserStorage() {
                         name="phone_number"
                         value={formData.phone_number}
                         onChange={handleChange}
-                        className="form-control"
+                        className="form-control bg-light"
                         id="phone_number"
                     />
                 </div>
-                
-                <div className="form-group">
-                    <label className='my-2' htmlFor="email">email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="email"
-                    />
-                </div>
 
-                <div className="form-group">
-                    <label className='my-2' htmlFor="role">Select role</label>
-                    <select
-                        name="role"
-                        value={formData.role}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="role"
-                    >
-                        <option value="0">Select a role</option>
-                        {roles.map((roles) => (
-                            <option key={roles.role} value={roles.role}>
-                                {roles.role}
-                            </option>
-                        ))}
-                    </select>
+                <div className="row row-cols-lg-2 row-cols-1">
+                    <div className="col">
+                        <div className="form-group">
+                            <label className='my-2' htmlFor="email">email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="form-control bg-light"
+                                id="email"
+                            />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label className='my-2' htmlFor="role">Select role</label>
+                            <select
+                                name="role"
+                                value={formData.role}
+                                onChange={handleChange}
+                                className="form-control bg-light"
+                                id="role"
+                            >
+                                <option value="0">Select a role</option>
+                                {roles.map((roles) => (
+                                    <option key={roles.role} value={roles.role}>
+                                        {roles.role}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" className="w-100 my-4 btn btn-primary">Submit</button>
