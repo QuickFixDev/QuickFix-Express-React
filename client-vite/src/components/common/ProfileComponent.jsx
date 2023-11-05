@@ -13,7 +13,7 @@ const Profile = () => {
 
     return (
         isAuthenticated && (
-            <div className="d-flex flex-column justify-content-center align-items-center">
+            <div className="d-flex flex-column justify-content-center align-items-center text-center">
                 <div className="d-flex justify-content-center w-100 py-4">
                     <img className="rounded-circle" src={user.picture} alt={user.name} />
                 </div>

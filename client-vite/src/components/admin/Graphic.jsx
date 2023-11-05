@@ -17,8 +17,7 @@ const Stats = () => {
     }, []);
 
     return (
-        <div className="container mt-5">
-            <span className="text-center fw-bold">Complaints by category</span>
+        <div className="container">
             <ResponsiveContainer width="100%" height={400}>
                 <BarChart
                     data={data}
@@ -34,7 +33,7 @@ const Stats = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="category_count" fill="#8884d8" />
+                    <Bar dataKey="category_count" fill="#0D6EFD" />
                 </BarChart>
             </ResponsiveContainer>
         </div>

@@ -4,15 +4,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 
-function App() {
+function TopNavbar() {
     const { user, isAuthenticated } = useAuth0();
 
     return (
         <nav className="container-fluid bg-dark">
             <div className="row py-3">
                 <div className="d-flex col justify-content-start align-items-center">
-                    <img src="/images/QuickFix_logo.png" alt="User Photo" className="user-photo mx-3" width={'50px'} />
+                    <img src="/svg/QuickFixWhite.svg" alt="System Photo" className="user-photo mx-3" width={'50px'} />
                     <span className="nav-link text-white user-username">Quickfix</span>
+
                 </div>
                 <div className="d-flex col justify-content-end align-items-center">
 
@@ -47,4 +48,4 @@ function App() {
     );
 }
 
-export default App;
+export default TopNavbar;
