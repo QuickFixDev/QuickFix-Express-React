@@ -1,36 +1,17 @@
-    import { useAuth } from "../../Contexts/AuthContext";
+import { useAuth } from "../../Contexts/AuthContext";
+import LoginButton from "./LoginButton";
 
-    const Dashboard = () => {
-        const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+const Dashboard = () => {
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-        const logIn = (e) => {
-            e.preventDefault();
-            setIsLoggedIn(true);
-            setAuthUser({
-                Name: 'John Doe'
-            })
-        }
+    return (
+        <>
+            <h1> User is {isLoggedIn ? ('loggedIn') : ('loggedOut')} </h1>
+            <h1> Username: {isLoggedIn ? (authUser.Name) : (null)} </h1>
 
-        const logOut = (e) => {
-            e.preventDefault();
-            setIsLoggedIn(false);
-            setAuthUser(null);
-        }
+            <LoginButton></LoginButton>
+        </>
+    );
+}
 
-        return (
-            <>
-                <h1> User is {isLoggedIn ? ('loggedIn') : ('loggedOut')} </h1>
-                <h1> Username: {isLoggedIn ? (authUser.Name) : (null)} </h1>
-
-                {!isLoggedIn ?
-                    (<button onClick={(e) => { logIn(e) }}>Log in</button>)
-                    :
-                    (<button onClick={(e) => { logOut(e) }}>Log Out</button>)
-                }
-
-
-            </>
-        );
-    }
-
-    export default Dashboard;
+export default Dashboard;

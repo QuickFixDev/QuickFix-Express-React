@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom';
-import LoginButton from "../../components/common/LoginButton";
 
 const HomePage = () => {
     return (

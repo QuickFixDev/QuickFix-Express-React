@@ -17,6 +17,9 @@ import CreateRole from './pages/admin/RoleStorage';
 import TopNavbar from './components/common/TopNavbar';
 import Residences from './pages/admin/Residences';
 
+import { AuthProvider } from './Contexts/AuthContext';
+import Dashboard from './components/common/DashBoard';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -43,6 +46,9 @@ export default function App() {
                 <Route path="/category-management" element={<CategoryManagement />} />
                 <Route path="/admin/residences" element={<Residences />} />
               </Routes>
+              <AuthProvider>
+                <Dashboard></Dashboard>
+              </AuthProvider>
             </main>
           </div>
         </div>
