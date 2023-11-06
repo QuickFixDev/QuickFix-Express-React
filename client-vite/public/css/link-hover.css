@@ -48,19 +48,50 @@
 .custom-navlink {
   display: flex;
   color: black;
-  text-decoration: none; /* Remove underline from anchor elements */
-  transition: color 0.1s, background-color 0.1s; /* Define the transition properties */
+  text-decoration: none;
+  transition: color 0.1s, background-color 0.1s;
 }
 
 .custom-navlink:hover {
-  background-color: #f0f0f0; /* Change the background color on hover */
+  background-color: #f0f0f0;
   color: rgb(0, 59, 223);
 }
 
 .custom-navlink:active {
-  background-color: #ddd; /* Change the background color on click */
+  background-color: #ddd;
 }
 
 .custom-navlink .navlink-text {
-  text-decoration: none; /* You can add this for extra specificity, although it's not always necessary */
+  text-decoration: none;
+}
+
+
+@keyframes colorLoop {
+  0% {
+    color: rgb(0, 117, 226);
+  }
+
+  50% {
+    color: rgb(162, 0, 255);
+  }
+
+  100% {
+    color: rgb(0, 117, 226)
+  }
+}
+
+.hover-navlink {
+  color: black;
+  text-decoration: none;
+  transition: color ease-in-out 1s;
+  transition: transform 0.3s;
+}
+
+.hover-navlink:hover {
+  animation: colorLoop 5s linear infinite;
+  transform: scale(1.02);
+}
+
+.hover-navlink .navlink-text {
+  text-decoration: none;
 }
