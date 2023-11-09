@@ -1,14 +1,23 @@
-import { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useEffect, useState } from 'react';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import ServerUrl from '../../constants/ServerUrl';
+
 const Stats = () => {
-    const [ data, setData ] = useState([]);
+    const [data, setData] = useState([]);
+    const COLORS = [
+        "#09A7FF",
+        "#7E09FF",
+        "#D009FF",
+        "#FF09BF",
+        "#FF097E",
+        "#FF8A09"
+    ];
 
     useEffect(() => {
         fetch(`${ServerUrl}/admin/complaints/stats`)
-
             .then((response) => response.json())
             .then((responseData) => {
+                // Assuming the response data has a structure like [{ category_name: 'CategoryA', category_count: 5 }, ...]
                 setData(responseData);
             })
             .catch((error) => {
@@ -17,26 +26,34 @@ const Stats = () => {
     }, []);
 
     return (
-        <div className="container">
-            <ResponsiveContainer width="100%" height={400}>
-                <BarChart
+        <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+                <Pie
                     data={data}
-                    margin={{
-                        top: 20,
-                        right: 30,
-                        left: 20,
-                        bottom: 20,
-                    }}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    paddingAngle={5}
+                    dataKey="category_count"
+                    label
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="category_name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="category_count" fill="#0D6EFD" />
-                </BarChart>
-            </ResponsiveContainer>
-        </div>
+                    {data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                </Pie>
+                <Tooltip />
+                {/* Legend inside the PieChart */}
+                <Legend
+                    layout="horizontal"  // Set layout to "vertical" for column display
+                    align="top"  // Align the legend to the center
+                    formatter={(value, entry) => entry.payload.category_name}
+                    wrapperStyle={{ padding: '0 0 50px 0 ' }}  // Add top margin of 20 pixels
+
+                />
+            </PieChart>
+        </ResponsiveContainer>
     );
 };
 

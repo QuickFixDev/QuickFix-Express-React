@@ -23,4 +23,16 @@ RoleController.createRole = (req, res) => {
     });
 }
 
+    RoleController.getAllRoles = (req, res) => {
+        const sqlQuery = `SELECT * FROM roles`
+        console.log('entered role retrieving')
+
+        pool.query(sqlQuery, (err, results) => {
+            if (err) {
+                console.error(err)
+            }
+            res.json(results)
+        })
+    }
+
 module.exports = RoleController;

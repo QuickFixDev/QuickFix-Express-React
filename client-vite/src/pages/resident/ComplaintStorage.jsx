@@ -1,24 +1,32 @@
 import { useEffect, useState } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth } from '../../contexts/AuthContext';
 import AccessDenied from '../common/AccessDenied';
+import { getCategories } from '../../contexts/CategoryContext';
+
 
 function UserForm() {
+    const { authUser, isLoggedIn } = useAuth();
+    const { categories, loading } = getCategories();
     const { user } = useAuth0();
 
-    const [ formData, setFormData ] = useState({
-        email: user.email,
+    console.log('----------------- auth id ----------------- : ', authUser.Id)
+
+    const [formData, setFormData] = useState({
+        user_id: authUser.Id,
         status: 'Open',
         category_id: 0,
         complaint_date: '',
         complaint_title: '',
         complaint_description: '',
     });
-    const [ categories, setCategories ] = useState([]); // State to store categories
+
+    console.log('form data: ', formData)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [ name ]: value });
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = (e) => {
@@ -38,27 +46,19 @@ function UserForm() {
             .catch((error) => console.error('Error registering user:', error));
     };
 
+    console.log('string', JSON.stringify(formData))
+
     useEffect(() => {
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
         setFormData({ ...formData, complaint_date: formattedDate });
     }, []);
 
-    useEffect(() => {
-        // Fetch categories when the component is mounted
-        fetch(`${ServerUrl}/user/complaints/new`)
-            .then((response) => response.json())
-            .then((data) => {
-                setCategories(data);
-            })
-            .catch((error) => console.error('Error fetching categories:', error));
-    }, []);
-
     return (
         <div className='container bg-white mt-md-5 mt-0 p-3 col-xl-8 col-md-10 col-12 shadow-md'>
             <form onSubmit={handleSubmit} className="container">
                 <h1 className='py-4 text-center'>Tell us what happened</h1>
-                <input hidden onChange={handleChange} type="email" name="email" value={formData.email} />
+                <input hidden onChange={handleChange} type="number" name="user_id" value={formData.user_id} id='user_id' />
                 <input hidden onChange={handleChange} type="text" name="status" value={formData.status} />
                 <input hidden onChange={handleChange} type="text" name="complaint_date" value={formData.complaint_date} />
 
@@ -117,17 +117,13 @@ function UserForm() {
 }
 
 const ReturningComponent = () => {
-    const { isAuthenticated } = useAuth0();
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (!isAuthenticated) {
-        return (
-            <AccessDenied></AccessDenied>
-        );
+    if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev') {
+        return <UserForm />
+    } else {
+        return <AccessDenied />
     }
-
-    return (
-        <UserForm />
-    );
 }
 
 export default ReturningComponent;

@@ -2,17 +2,18 @@ import { useState } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
+import { useAuth } from "../../contexts/AuthContext";
 
-function CreateRole() {
+function CreateRoleComponent() {
     const { isAuthenticated } = useAuth0();
-    const [ formData, setFormData ] = useState({
+    const [formData, setFormData] = useState({
         role_name: '',
     });
-    const [ showModal, setShowModal ] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [ name ]: value });
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleCloseModal = () => {
@@ -22,7 +23,7 @@ function CreateRole() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch(`${ServerUrl}/admin/roles`, {
+        fetch(`${ServerUrl}/admin/roles/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,6 +119,16 @@ function CreateRole() {
             </div>
         </div>
     );
+}
+
+const CreateRole = () => {
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+
+    if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev') {
+        return <CreateRoleComponent />
+    } else {
+        return <AccessDenied />
+    }
 }
 
 export default CreateRole;

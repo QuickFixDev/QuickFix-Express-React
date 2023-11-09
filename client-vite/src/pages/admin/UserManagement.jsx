@@ -4,6 +4,8 @@ import ServerUrl from '../../constants/ServerUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../../contexts/AuthContext";
+import AccessDenied from '../common/AccessDenied';
 
 function UserList({ users, setSelectedUser, deleteUser }) {
 
@@ -86,8 +88,10 @@ function UserDetails({ user }) {
 }
 
 function UserManagement() {
-    const [ users, setUsers ] = useState([]);
-    const [ selectedUser, setSelectedUser ] = useState(null);
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         fetch(`${ServerUrl}/admin/users`)
@@ -121,18 +125,22 @@ function UserManagement() {
             });
     };
 
-    return (
-        <div className="container mt-4">
-            <div className="row">
-                <div className="col-lg-6">
-                    <UserList users={users} setSelectedUser={setSelectedUser} deleteUser={deleteUser} />
-                </div>
-                <div className="col-lg-6">
-                    {selectedUser && <UserDetails user={selectedUser} />}
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+        return (
+            <div className="container mt-4">
+                <div className="row">
+                    <div className="col-lg-6">
+                        <UserList users={users} setSelectedUser={setSelectedUser} deleteUser={deleteUser} />
+                    </div>
+                    <div className="col-lg-6">
+                        {selectedUser && <UserDetails user={selectedUser} />}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return <AccessDenied />
+    }
 }
 
 export default UserManagement;
