@@ -18,6 +18,8 @@ const routes = [
 ];
 
 const Navbar = () => {
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+
     const { user, isAuthenticated, isLoading } = useAuth0();
 
     if (isLoading) {
@@ -44,12 +46,12 @@ const Navbar = () => {
 
                 <div className="collapse navbar-collapse" id="nav">
                     <ul className="navbar-nav">
-                        <li className="nav-link fw-bold"> {tentant.role} view </li>
+                        <li className="nav-link fw-bold"> {authUser.Role} view </li>
                         <div className="border-end mx-2"></div>
 
                         {routes.map((route) => (
                             // if permissions                      if common                           if dev
-                            (tentant.role === route.userRequired || route.userRequired === "common" || tentant.role === "dev") ? (
+                            (authUser.Role === route.userRequired || route.userRequired === "common" || authUser.Role === "dev") ? (
                                 <li key={route.path} >
                                     <NavLink to={route.path} className="btn-outline-primary nav-link underline-on-hover">
                                         {route.label}

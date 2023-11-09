@@ -1,4 +1,4 @@
-import { useAuth } from "../../Contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import LoginButton from "./LoginButton";
 
 const Dashboard = () => {

@@ -2,10 +2,15 @@ import { useEffect, useState } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
+import { useAuth } from "../../contexts/AuthContext";
+import { getRoles } from "../../contexts/RoleContext";
 
-function UserStorage() {
+
+function UserStorageComponent() {
+    const { authUser, isLoggedIn } = useAuth();
+
     const { isAuthenticated } = useAuth0();
-    const [ formData, setFormData ] = useState({
+    const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
         role: '',
@@ -14,13 +19,13 @@ function UserStorage() {
         phone_number: 0,
         email: ''
     });
-    const [ roles, setRoles ] = useState([]); // State to store categories
+    const { roles } = getRoles();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [ name ]: value });
+        setFormData({ ...formData, [name]: value });
     };
-
+    authUser
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -33,7 +38,7 @@ function UserStorage() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('User registered:', data);
+                console.log('User registered damn:', data);
             })
             .catch((error) => console.error('Error registering user:', error));
     };
@@ -44,15 +49,6 @@ function UserStorage() {
         setFormData({ ...formData, complaint_date: formattedDate });
     }, []);
 
-    useEffect(() => {
-        // Fetch categories when the component is mounted
-        fetch(`${ServerUrl}/admin/users/new`)
-            .then((response) => response.json())
-            .then((data) => {
-                setRoles(data);
-            })
-            .catch((error) => console.error('Error fetching categories:', error));
-    }, []);
 
     if (!isAuthenticated) {
         return (
@@ -61,7 +57,7 @@ function UserStorage() {
     }
 
     return (
-        <div className='container mt-md-5 mt-0 shadow-md p-3 col-xl-8 col-md-10 col-12'>
+        <div className='container mt-md-5 mt-0 p-3 col-xl-8 col-md-10 col-12'>
 
             <form onSubmit={handleSubmit} className="container">
                 <h1 className='py-4 text-center'>Create new user</h1>
@@ -125,16 +121,31 @@ function UserStorage() {
                 </div>
 
                 <div className="form-group">
-                    <label className='my-2' htmlFor="phone_number">phone_number</label>
-                    <input
-                        type="number"
-                        name="phone_number"
-                        value={formData.phone_number}
-                        onChange={handleChange}
-                        className="form-control bg-light"
-                        id="phone_number"
-                    />
+                    <label className='my-2' htmlFor="role">Select role</label>
+
+                    {roles && roles.length > 0 ?
+                        (<select
+                            name="role"
+                            value={formData.role}
+                            onChange={handleChange}
+                            className="form-control bg-light"
+                            id="role"
+                        >
+                            <option value="">Select role</option>
+                            {roles.map((role, index) => (
+                                <option key={index} value={role.role_name} onChange={handleChange}>
+                                    {role.role_name}
+                                </option>
+                            ))}
+                        </select>)
+                        :
+                        ('No roles available')
+                    }
+
+
                 </div>
+
+
 
                 <div className="row row-cols-lg-2 row-cols-1">
                     <div className="col">
@@ -152,21 +163,15 @@ function UserStorage() {
                     </div>
                     <div className="col">
                         <div className="form-group">
-                            <label className='my-2' htmlFor="role">Select role</label>
-                            <select
-                                name="role"
-                                value={formData.role}
+                            <label className='my-2' htmlFor="phone_number">phone_number</label>
+                            <input
+                                type="number"
+                                name="phone_number"
+                                value={formData.phone_number}
                                 onChange={handleChange}
                                 className="form-control bg-light"
-                                id="role"
-                            >
-                                <option value="0">Select a role</option>
-                                {roles.map((roles) => (
-                                    <option key={roles.role} value={roles.role}>
-                                        {roles.role}
-                                    </option>
-                                ))}
-                            </select>
+                                id="phone_number"
+                            />
                         </div>
                     </div>
                 </div>
@@ -175,6 +180,16 @@ function UserStorage() {
             </form>
         </div>
     );
+}
+
+const UserStorage = () => {
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+        return <UserStorageComponent />
+    } else {
+        <AccessDenied />
+    }
 }
 
 export default UserStorage;

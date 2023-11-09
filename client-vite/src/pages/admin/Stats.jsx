@@ -1,28 +1,30 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import Graphic from '../../components/admin/Graphic';
-import tentant from '../../contexts/UserContext'
 import AccessDenied from '../common/AccessDenied';
+import { useAuth } from "../../contexts/AuthContext";
 
 const Stats = () => {
-    const { isAuthenticated } = useAuth0();
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (isAuthenticated) {
-        if (tentant.role === "admin" || tentant.role === "dev") {
-            return (
-                <div className="row">
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+        return (
+            <div className="row">
 
-                    <div className='container col-xl-6 col-lg-8 col-md-10 col-11 text-center p-lg-5 p-md-4 p-2 mt-md-5 mt-0 shadow-md'>
-                        <h1 className='py-4'>Complaint statistics</h1>
+                <div className='container p-lg-5 p-md-4 p-2 mt-md-5 mt-0'>
+                    <div className="p-4 mb-4">
+                        <h1>Stats</h1>
+                    </div>
+                    <div className="border rounded-3">
                         <Graphic />
                     </div>
                 </div>
-            );
-        }
+            </div>
+        );
+    } else {
+        return <AccessDenied />
     }
 
-    return (
-        <AccessDenied />
-    );
+
 }
 
 export default Stats;

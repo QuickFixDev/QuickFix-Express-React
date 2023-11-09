@@ -16,11 +16,16 @@ const UserRoutes = require('./routes/UserRoutes');
 const ComplaintRoutes = require('./routes/ComplaintRoutes');
 const ProfileRoutes = require('./routes/ProfileRoutes');
 const RoleRoutes = require('./routes/RoleRoutes');
+const CategoryRoutes = require('./routes/CategoryRoutes');
+
+app.use('/categories', CategoryRoutes);
+app.use('/roles', RoleRoutes);
 
 app.use('/admin/users', UserRoutes);
 app.use('/admin/complaints', ComplaintRoutes);
 app.use('/user/complaints', ComplaintRoutes);
-app.use('/user/complaints', ComplaintRoutes);
+app.use('/user', UserRoutes);
+
 app.use('/profile', ProfileRoutes);
 app.use('/admin/roles', RoleRoutes);
 
@@ -37,36 +42,9 @@ app.delete('/delete-category/:id', (req, res) => {
     });
 });
 
-app.get('/admin/users/new', (req, res) => {
-    const tableName = 'users'
-    const query = `DESCRIBE ${tableName}`;
-    pool.query(query, (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Failed to fetch attributes' });
-        } else {
-            const attributes = results.map((row) => row.Field);
-            res.json(attributes);
-        }
-    });
-});
 
-app.post('/admin/users/new', (req, res) => {
-    const tableName = 'users'
-    const formData = req.body;
 
-    const query = `INSERT INTO ${tableName} SET ?`;
 
-    pool.query(query, formData, (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Form submission failed' });
-        } else {
-            console.log('Form data inserted successfully');
-            res.status(200).json({ message: 'Form submitted successfully' });
-        }
-    });
-});
 
 app.post('/filter-test', (req, res) => {
     console.log("posted app in server side")

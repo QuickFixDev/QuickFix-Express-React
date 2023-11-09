@@ -1,20 +1,36 @@
-import tentant from '../../contexts/UserContext'
-import AccessDenied from '../common/AccessDenied';
+import { useAuth } from "../../contexts/AuthContext";
 
 const ResidentPanel = () => {
-  if (tentant.role === "resident" || tentant.role === "dev") {
-    return (
-      <div className='container w-lg-50 shadow-md py-5 px-3 mt-5'>
-        <h1>
-          hello world
-        </h1>
+  const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+
+  return (
+    <div className="list container-fluid p-md-5 p-3">
+      <div className="p-4 mb-4 text-center">
+        <h1>Welcome {authUser.FirstName}!</h1>
+        <span>How can we assist you today?</span>
+      </div>
+      <div className="row d-flex flex-row row-cols-1  g-3">
+        <div className="col">
+          <button className="btn btn-outline-primary rounded-4 p-4 w-100">
+            <span className="">Search for Avaiable properties</span>
+          </button>
+        </div>
+        <div className="col">
+          <button className="btn btn-outline-primary rounded-4 p-4 w-100">
+            <span className="">Submit a new report</span>
+          </button>
+        </div>
+        <div className="col">
+          <button className="btn btn-outline-primary rounded-4 p-4 w-100">
+            <span className="">View previous reports</span>
+          </button>
+        </div>
+
       </div>
 
-    );
-  }
-  return (
-    <AccessDenied />
+    </div>
   );
+
 };
 
 export default ResidentPanel;

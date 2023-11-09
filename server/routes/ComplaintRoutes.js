@@ -9,6 +9,7 @@ router.get('/new', CategoryController.getAllCategories);
 router.post('/new', ComplaintController.createComplaint);
 router.get('/stats', ComplaintController.getComplaintsInGraphic);
 
+router.get('/:id', ComplaintController.getComplaintById)
 
 
 module.exports = router;

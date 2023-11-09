@@ -4,6 +4,9 @@ import ServerUrl from '../../constants/ServerUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../../contexts/AuthContext";
+import AccessDenied from '../common/AccessDenied';
+
 
 function CategoryList({ categories, setSelectedCategory, deleteCategory }) {
     return (
@@ -74,8 +77,9 @@ function CategoryDetails({ category }) {
 }
 
 function CategoryManagement() {
-    const [ categories, setCategories ] = useState([]);
-    const [ selectedCategory, setSelectedCategory ] = useState(null);
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     useEffect(() => {
         fetch(`${ServerUrl}/category-management`)
@@ -109,18 +113,28 @@ function CategoryManagement() {
             });
     };
 
-    return (
-        <div className="container mt-4">
-            <div className="row">
-                <div className="col-lg-6">
-                    <CategoryList categories={categories} setSelectedCategory={setSelectedCategory} deleteCategory={deleteCategory} />
-                </div>
-                <div className="col-lg-6">
-                    {selectedCategory && <CategoryDetails category={selectedCategory} />}
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+
+        return (
+            <div className="container mt-4">
+                <div className="row">
+                    <div className="col-lg-6">
+                        <CategoryList categories={categories} setSelectedCategory={setSelectedCategory} deleteCategory={deleteCategory} />
+                    </div>
+                    <div className="col-lg-6">
+                        {selectedCategory && <CategoryDetails category={selectedCategory} />}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+
+    } else {
+
+        return (
+            <AccessDenied />
+        )
+
+    }
 }
 
 export default CategoryManagement;

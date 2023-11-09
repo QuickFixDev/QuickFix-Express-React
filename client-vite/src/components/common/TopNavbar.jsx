@@ -3,8 +3,10 @@ import LoginButton from './LoginButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from "../../contexts/AuthContext";
 
 function TopNavbar() {
+    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
     const { user, isAuthenticated } = useAuth0();
 
     return (
@@ -12,7 +14,19 @@ function TopNavbar() {
             <div className="row py-3">
                 <div className="d-flex col justify-content-start align-items-center">
                     <img src="/svg/QuickFixWhite.svg" alt="System Photo" className="user-photo mx-3" width={'50px'} />
-                    <span className="nav-link text-white user-username">Quickfix</span>
+
+                    {isLoggedIn ? (
+                        <span className="nav-link text-white user-username">
+                            Quickfix
+                            <span className='badge bg-secondary mx-3'>
+                                {authUser.Role}
+                            </span>
+                        </span>
+                    ) : (
+                        <span className="nav-link text-white user-username">
+                            Quickfix
+                        </span>
+                    )}
 
                 </div>
                 <div className="d-flex col justify-content-end align-items-center">
@@ -44,7 +58,7 @@ function TopNavbar() {
 
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 }
 
