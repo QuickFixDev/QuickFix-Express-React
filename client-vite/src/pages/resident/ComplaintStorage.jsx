@@ -55,7 +55,7 @@ function UserForm() {
     }, []);
 
     return (
-        <div className='container bg-white mt-md-5 mt-0 p-3 col-xl-8 col-md-10 col-12 shadow-md'>
+        <div className='container bg-white mt-md-5 mt-0 p-3 col-xl-8 col-md-10 col-12'>
             <form onSubmit={handleSubmit} className="container">
                 <h1 className='py-4 text-center'>Tell us what happened</h1>
                 <input hidden onChange={handleChange} type="number" name="user_id" value={formData.user_id} id='user_id' />

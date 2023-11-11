@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from "../../contexts/AuthContext";
 import AccessDenied from '../common/AccessDenied';
-
-
+import { Modal, Button, Table } from 'react-bootstrap';
 
 const initialSqlQuery = 'SELECT * FROM user_complaints';
 const availableFilters = [
@@ -16,8 +15,16 @@ const FilterTest = () => {
   const [queryResult, setQueryResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
-  const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+  const { authUser, isLoggedIn } = useAuth();
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalClose = () => setShowModal(false);
+
+  const selectComplaint = (complaint) => {
+    setSelectedComplaint(complaint);
+    setShowModal(true);
+  };
 
   useEffect(() => {
     const fetchQueryResult = async () => {
@@ -79,92 +86,115 @@ const FilterTest = () => {
     setSelectedFilters(updatedFilters);
   };
 
-  const selectComplaint = (complaint) => {
-    setSelectedComplaint(complaint);
-  };
-
-console.log(isLoggedIn)
-console.log(authUser.role)
+  console.log(isLoggedIn)
+  console.log(authUser.role)
 
   if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+
+
     return (
       <div className="container-fluid h-100">
-        <div className="row h-100">
-          <div className="col-md-5 bg-light p-4" style={{ height: '100vh' }}>
-            <div className="filters">
-              <h3>Filters</h3>
-              {availableFilters.map((filter, index) => (
-                <div key={index} className="form-group col">
-                  <label>{filter.name}:</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => toggleFilter(filter.name, e.target.value)}
-                    value={selectedFilters.find(selectedFilter => selectedFilter.name === filter.name)?.value || ''}
-                  >
-                    <option value="">Select</option>
-                    {filter.options.map((option, optionIndex) => (
-                      <option key={optionIndex} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ))}
+        <div className='my-3 p-md-4 p-1'>
+          <div className="row my-4">
+            <div className="col">
+              <h3>Complaints</h3>
             </div>
 
-            <div className='bg-light my-3 overflow-y-auto' style={{ maxHeight: 'calc(100vh - 100px)' }}>
-              <h3>Complains</h3>
-              {queryResult ? (
+            {availableFilters.map((filter, index) => (
+              <div key={index} className="col">
+                <select
+                  className="form-control"
+                  onChange={(e) => toggleFilter(filter.name, e.target.value)}
+                  value={
+                    selectedFilters.find(
+                      (selectedFilter) => selectedFilter.name === filter.name
+                    )?.value || ''
+                  }
+                >
+                  <option value="">{filter.name}</option>
+                  {filter.options.map((option, optionIndex) => (
+                    <option key={optionIndex} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+
+              </div>
+            ))}
+          </div>
+          {queryResult ? (
+            <div>
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                queryResult.length === 0 ? (
+                  <p>No data found with the selected filter criteria.</p>
+                ) : (
+                  <div style={{ maxHeight: 'calc(100vh - 250px)', overflowY: 'auto' }}>
+                    <Table bordered={false} hover>
+                      <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Role</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {queryResult.map((complaint, index) => (
+                          <tr
+                            key={index}
+                            onClick={() => selectComplaint(complaint)}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <td>
+                              {complaint.complaint_title}:
+                            </td>
+                            <td>
+                              {complaint.status}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  </div>
+                )
+              )}
+            </div>
+          ) : (
+            loading && <p>Loading...</p>
+          )}
+          {!queryResult && !loading && (
+            <p>No data found with the selected filter criteria.</p>
+          )}
+        </div>
+
+        <Modal show={showModal} onHide={handleModalClose} size="lg" centered>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {selectedComplaint ? selectedComplaint.complaint_title : 'No Complaint Selected'}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="container p-xl-5 p-3">
+              {selectedComplaint ? (
                 <div>
-                  {loading ? (
-                    <p>Loading...</p>
-                  ) : (
-                    queryResult.length === 0 ? (
-                      <p>No data found with the selected filter criteria.</p>
-                    ) : (
-                      <div>
-                        <div style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
-                          {queryResult.map((complaint, index) => (
-                            <div className="container my-2 p-3 pb-1 bg-white complaint"
-                              key={index}
-                              onClick={() => selectComplaint(complaint)}
-                              style={{ cursor: 'pointer' }}>
-                              <h5>{complaint.complaint_title}</h5>
-                              <p>{complaint.status}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )
-                  )}
+                  <p>{selectedComplaint.status}</p>
+                  <div className='bg-light p-3'>
+                    {selectedComplaint.complaint_description || 'No details available for this complaint.'}
+                  </div>
                 </div>
               ) : (
-                loading && <p>Loading...</p>
-              )}
-              {!queryResult && !loading && (
-                <p>No data found with the selected filter criteria.</p>
+                <div className="container d-flex flex-column justify-content-center align-items-center h-100">
+                  <h3>No Complaint Selected</h3>
+                </div>
               )}
             </div>
-          </div>
-
-          <div className="col-md-7 bg-white p-4" style={{ height: '100vh' }}>
-            {selectedComplaint ? (
-              <div className="container d-flex flex-column align-content-center p-xl-5 p-3">
-                <h1>{selectedComplaint.complaint_title}</h1>
-                <p>{selectedComplaint.status}</p>
-                <div className='bg-light p-3 overflow-y-auto' style={{ maxHeight: 'calc(100vh - 100px)' }}>
-                  {selectedComplaint.complaint_description || 'No details available for this complaint.'}
-                </div>
-              </div>
-            ) : (
-              <div className="container d-flex flex-column align-content-center justify-content-center align-items-center p-xl-5 p-3 h-100">
-                <h3>No Complaint Selected</h3>
-              </div>
-            )}
-          </div>
-        </div>
+          </Modal.Body>
+        </Modal>
       </div>
     );
+
+
+
   } else {
     return (
       <AccessDenied />

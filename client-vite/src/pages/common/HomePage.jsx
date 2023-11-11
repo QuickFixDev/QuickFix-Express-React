@@ -1,6 +1,8 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { NavLink } from 'react-router-dom';
 import LoginButton from "../../components/common/LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { getCategories } from "../../contexts/CategoryContext";
 import { useEffect, useState } from "react";
 import ResidentPanel from "../resident/ResidentPanel";
@@ -8,6 +10,7 @@ import ResidentPanel from "../resident/ResidentPanel";
 const WelcomePage = () => {
   const { authUser, isLoggedIn } = useAuth();
   const { categories, loading } = getCategories();
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <>
@@ -22,7 +25,7 @@ const WelcomePage = () => {
               </div>
             </div>
           </div>
-          <NavLink className="col-md-6 col-12 hover-navlink">
+          <NavLink to={'/user/request'} className="col-md-6 col-12 hover-navlink">
             <div className="container bg-light text-center rounded-4 p-5">
               <div className="my-3">
                 <h3>New around here?</h3>
@@ -32,15 +35,15 @@ const WelcomePage = () => {
               </div>
             </div>
           </NavLink>
-          <NavLink className="col-md-6 col-12 hover-navlink">
-            <div className="container bg-light text-center rounded-4 p-5">
-              <div className="my-3">
-                <h3>Do you have an account?</h3>
+          <NavLink className="col-md-6 col-12 hover-navlink" onClick={() => loginWithRedirect()}>
+              <div className="container bg-light text-center rounded-4 p-5">
+                <div className="my-3">
+                  <h3>Do you have an account?</h3>
+                </div>
+                <div className="my-3">
+                  <p>Sign into your account</p>
+                </div>
               </div>
-              <div className="my-3">
-                <p>Sign into your account</p>
-              </div>
-            </div>
           </NavLink>
         </div>
 
@@ -55,7 +58,7 @@ const HomePage = () => {
   if (!isLoggedIn) {
     return <WelcomePage />
   }
-  
+
   if (authUser.Role === 'resident' || authUser.Role === 'dev') {
     return <ResidentPanel />
   }
