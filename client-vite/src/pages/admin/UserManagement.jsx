@@ -1,112 +1,207 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from '../../contexts/AuthContext';
 import AccessDenied from '../common/AccessDenied';
+import { getRoles } from "../../contexts/RoleContext";
 
-function UserList({ users, setSelectedUser, deleteUser }) {
+import { Table } from 'react-bootstrap';
 
+const NewRequestNotification = ({ count }) => {
     return (
-        <div className="user-list card border-0 shadow-md p-3">
+        <div>
+            {count > 0 ? (
+                <div className="alert alert-success">
+                    <div className="container d-flex justify-content-between align-items-center">
+                        <div>
+                            You have {count} access {count === 1 ? 'request' : 'requests'}!
+                        </div>
+                        <button className="btn btn-success">Manage requests</button>
+                    </div>
+                </div>
+            ) : (
+                <div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+
+function UserList({ users, setSelectedUser, deleteUser, showModal }) {
+    return (
+        <div className="user-list card border-0 p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
                 <h3>User List</h3>
                 <button className="btn btn-primary mb-3">
-                    <Link className='text-white text-decoration-none' to="/admin/users/new">
+                    <Link className="text-white text-decoration-none" to="/admin/users/new">
                         <FontAwesomeIcon icon={faUserPlus} /> Create New User
                     </Link>
                 </button>
             </div>
             <div className="card-body">
-
-                {/* Map over the user data and generate list items */}
-                <ul className="list-group mt-3">
-                    {users.map((user) => (
-                        <li key={user.user_id} className="list-group-item d-flex justify-content-between align-items-center">
-                            <div className="d-flex align-items-center">
-                                <span className="me-3">{user.first_name + ' ' + user.last_name}</span>
-                                <span className="badge bg-secondary">{user.role}</span>
-                            </div>
-                            <div>
-                                <button
-                                    className="btn btn-outline-primary me-2"
-                                    onClick={() => setSelectedUser(user)}
-                                >
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </button>
-                                <button
-                                    className="btn btn-outline-danger"
-                                    onClick={() => deleteUser(user.user_id)}
-                                >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </button>
-                                {/* Additional user actions */}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                {/* Use Table component from react-bootstrap */}
+                <Table bordered={false} hover>
+                    <thead style={{ backgroundColor: '#f2f2f2' }}>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th className="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map((user) => (
+                            <tr key={user.user_id}>
+                                <td>{user.first_name} {user.last_name}</td>
+                                <td>{user.role}</td>
+                                <td className="text-end">
+                                    <Button
+                                        variant="outline-primary"
+                                        className="me-2"
+                                        onClick={() => {
+                                            setSelectedUser(user);
+                                            showModal();
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faEdit} />
+                                    </Button>
+                                    <Button
+                                        variant="outline-danger"
+                                        onClick={() => deleteUser(user.user_id)}
+                                    >
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
             </div>
         </div>
     );
 }
 
-function UserDetails({ user }) {
-    return (
-        <div className="user-details card border-0 shadow-md p-3">
-            <div className="card-header bg-white border-0">
-                <h3>User Details</h3>
-            </div>
-            <div className="card-body">
-                <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="first_name_input" value={user.first_name} />
-                    <label htmlFor="first_name_input">First name</label>
-                </div>
-                <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="last_name_input" value={user.last_name} />
-                    <label htmlFor="last_name_input">Last name</label>
-                </div>
-                <div className="form-floating mb-3">
-                    <select className="form-select" id="roleSelect" value={user.first_name}>
-                        <option value="admin">Admin</option>
-                        <option value="moderator">Moderator</option>
-                        <option value="user">User</option>
-                    </select>
-                    <label htmlFor="roleSelect">Role</label>
-                </div>
+function UserDetails({ user, handleClose, handleSave }) {
+    const { roles } = getRoles();
+    const [editedUser, setEditedUser] = useState({ ...user });
 
-                <div className="button-group">
-                    <div className="d-flex flex-column my-3">
-                        <button className="btn btn-primary my-1">Save Changes</button>
-                        <button className="btn btn-outline-primary my-1">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setEditedUser((prevUser) => ({
+            ...prevUser,
+            [name]: value,
+        }));
+    };
+
+    return (
+        <Modal show={true} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Edit User</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group className="mb-3" controlId="formFirstName">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="first_name"
+                            value={editedUser.first_name}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formLastName">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="last_name"
+                            value={editedUser.last_name}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formResidence">
+                        <Form.Label>Residence</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="residence"
+                            value={editedUser.residence}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formPhoneNumber">
+                        <Form.Label>PhoneNumber</Form.Label>
+                        <Form.Control
+                            type="number"
+                            name="phone_number"
+                            value={editedUser.phone_number}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            type="email"
+                            name="email"
+                            value={editedUser.email}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formRole">
+                        <Form.Label>Role</Form.Label>
+                        <Form.Control
+                            as="select"
+                            name="role"
+                            value={editedUser.role}
+                            onChange={handleChange}
+                        >
+
+                            <option value="">Select role</option>
+                            {roles.map((role, index) => (
+                                <option key={index} value={role.role_name} onChange={handleChange}>
+                                    {role.role_name}
+                                </option>
+                            ))}
+
+                        </Form.Control>
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={() => handleSave(editedUser)}>
+                    Save Changes
+                </Button>
+            </Modal.Footer>
+        </Modal>
     );
 }
 
 function UserManagement() {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
-
+    const { authUser, isLoggedIn } = useAuth();
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [show, setShow] = useState(false);
+
+    const showModal = () => setShow(true);
+    const handleClose = () => {
+        setShow(false);
+        setSelectedUser(null);
+    };
 
     useEffect(() => {
         fetch(`${ServerUrl}/admin/users`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setUsers(data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
+            .then((response) => response.json())
+            .then((data) => setUsers(data))
+            .catch((error) => console.error('Error fetching data:', error));
     }, []);
 
     const deleteUser = (userId) => {
@@ -114,26 +209,32 @@ function UserManagement() {
             method: 'DELETE',
         })
             .then((response) => {
-                if (!response.ok) {
-                    throw Error(`HTTP error! Status: ${response.status}`);
+                if (response.ok) {
+                    const updatedUsers = users.filter((user) => user.user_id !== userId);
+                    setUsers(updatedUsers);
                 }
-                const updatedUsers = users.filter((user) => user.user_id !== userId);
-                setUsers(updatedUsers);
             })
-            .catch((error) => {
-                console.error('Error deleting user:', error);
-            });
+            .catch((error) => console.error('Error deleting user:', error));
     };
 
-    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+    const handleSave = (editedUser) => {
+        console.log('Saving changes:', editedUser);
+        // Logic to save changes to the server
+        handleClose();
+    };
+
+    if (isLoggedIn && (authUser.Role === 'admin' || authUser.Role === 'dev')) {
         return (
             <div className="container mt-4">
-                <div className="row">
-                    <div className="col-lg-6">
-                        <UserList users={users} setSelectedUser={setSelectedUser} deleteUser={deleteUser} />
+                <div className="row row-cols-1">
+                    <div className="col">
+                        <NewRequestNotification count={2} />
                     </div>
-                    <div className="col-lg-6">
-                        {selectedUser && <UserDetails user={selectedUser} />}
+                    <div className="col">
+                        <UserList users={users} setSelectedUser={setSelectedUser} deleteUser={deleteUser} showModal={showModal} />
+                    </div>
+                    <div className="col">
+                        {selectedUser && <UserDetails user={selectedUser} handleClose={handleClose} handleSave={handleSave} />}
                     </div>
                 </div>
             </div>
