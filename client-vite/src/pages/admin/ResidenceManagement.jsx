@@ -11,7 +11,7 @@ function ResidenceList({ residences, setSelectedResidence, deleteResidence, show
     return (
         <div className="residence-list card border-0 p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
-                <h3>Residence List</h3>
+                <h3>Residence manager</h3>
                 <button className="btn btn-primary mb-3">
                     <Link className="text-white text-decoration-none" to="/admin/residences/new">
                         <FontAwesomeIcon icon={faPlus} /> Create New Residence
@@ -77,29 +77,105 @@ function ResidenceDetails({ residence, handleClose, handleSave }) {
             <Modal.Header closeButton>
                 <Modal.Title>Edit Residence</Modal.Title>
             </Modal.Header>
+
+
             <Modal.Body>
                 <Form>
-                    <Form.Group className="mb-3" controlId="formName">
-                        <Form.Label>Name</Form.Label>
+                    <Form.Group className="mb-3" controlId="formResidentialId" style={{ display: 'none' }}>
+                        <Form.Label>Residence ID</Form.Label>
                         <Form.Control
                             type="text"
-                            name="name"
-                            value={editedResidence.name}
+                            name="residence_id"
+                            value={editedResidence.residence_id}
                             onChange={handleChange}
                         />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formLocation">
-                        <Form.Label>Location</Form.Label>
+                    <Form.Group className="mb-3" controlId="formResidentialId">
+                        <Form.Label>Residential ID</Form.Label>
                         <Form.Control
                             type="text"
-                            name="location"
-                            value={editedResidence.location}
+                            name="residential_id"
+                            value={editedResidence.residential_id}
                             onChange={handleChange}
                         />
                     </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formOwnerUserId">
+                        <Form.Label>Owner User ID</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="owner_user_id"
+                            value={editedResidence.owner_user_id}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formTenantUserId">
+                        <Form.Label>Tenant User ID</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="tenant_user_id"
+                            value={editedResidence.tenant_user_id}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formZipCode">
+                        <Form.Label>ZIP Code</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="zip_code"
+                            value={editedResidence.zip_code}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formStreetName">
+                        <Form.Label>Street Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="street_name"
+                            value={editedResidence.street_name}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formStreetNumber">
+                        <Form.Label>Street Number</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="street_number"
+                            value={editedResidence.street_number}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formDetails">
+                        <Form.Label>Details</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            name="details"
+                            value={editedResidence.details}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formStatus">
+                        <Form.Label>Status</Form.Label>
+                        <Form.Control
+                            as="select"
+                            name="status"
+                            value={editedResidence.status}
+                            onChange={handleChange}
+                        >
+                            <option value="available">Available</option>
+                            <option value="occupied">Occupied</option>
+                        </Form.Control>
+                    </Form.Group>
                 </Form>
-            </Modal.Body>
+            </Modal.Body>;
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close

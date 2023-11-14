@@ -57,7 +57,7 @@ const MyComplaints = () => {
                                     <div className="col bg-light mb-3 mr-3" key={complaint.complaint_id}>
                                         <div className="m-2">
                                             <h4>{complaint.complaint_title}</h4>
-                                            <p>Status: {complaint.status}</p>
+                                            <p>Status: {complaint.complaint_status}</p>
                                             <p>{complaint.complaint_description}</p>
                                         </div>
                                     </div>

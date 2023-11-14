@@ -34,7 +34,7 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
     return (
         <div className="user-list card border-0 p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
-                <h3>User List</h3>
+                <h3>User manager</h3>
                 <button className="btn btn-primary mb-3">
                     <Link className="text-white text-decoration-none" to="/admin/users/new">
                         <FontAwesomeIcon icon={faUserPlus} /> Create New User

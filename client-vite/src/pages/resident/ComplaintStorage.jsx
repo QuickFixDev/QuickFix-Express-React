@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAuth } from '../../contexts/AuthContext';
 import AccessDenied from '../common/AccessDenied';
 import { getCategories } from '../../contexts/CategoryContext';
 
-
 function UserForm() {
     const { authUser, isLoggedIn } = useAuth();
     const { categories, loading } = getCategories();
     const { user } = useAuth0();
-
-    console.log('----------------- auth id ----------------- : ', authUser.Id)
 
     const [formData, setFormData] = useState({
         user_id: authUser.Id,
@@ -22,11 +20,15 @@ function UserForm() {
         complaint_description: '',
     });
 
-    console.log('form data: ', formData)
+    const [showModal, setShowModal] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    const handleModalClose = () => {
+        setShowModal(false);
     };
 
     const handleSubmit = (e) => {
@@ -42,11 +44,10 @@ function UserForm() {
             .then((response) => response.json())
             .then((data) => {
                 console.log('User registered:', data);
+                setShowModal(true);
             })
             .catch((error) => console.error('Error registering user:', error));
     };
-
-    console.log('string', JSON.stringify(formData))
 
     useEffect(() => {
         const currentDate = new Date();
@@ -112,6 +113,19 @@ function UserForm() {
 
                 <button type="submit" className="w-100 my-4 btn btn-primary">Submit</button>
             </form>
+
+            <Modal show={showModal} onHide={handleModalClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Complaint Submitted Successfully</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your complaint has been submitted successfully!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleModalClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
         </div>
     );
 }
