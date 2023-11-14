@@ -19,6 +19,7 @@ import UserManagement from './pages/admin/UserManagement';
 import CategoryManagement from './pages/admin/CategoryManagement';
 import CreateRole from './pages/admin/RoleStorage';
 import Residences from './pages/admin/Residences';
+import ResidenceManagement from './pages/admin/ResidenceManagement';
 
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Dashboard from './components/common/DashBoard';
@@ -56,7 +57,8 @@ export default function App() {
                   <Route path="/admin/roles/new" element={<CreateRole />} />
                   <Route path="/filter-test" element={<FilterTest />} />
                   <Route path="/category-management" element={<CategoryManagement />} />
-                  <Route path="/admin/residences" element={<Residences />} />
+                  <Route path="/user/residences" element={<Residences />} />
+                  <Route path="/admin/residences" element={<ResidenceManagement />} />
                   <Route path="/context-test" element={<ContextTest />} />
                   <Route path="/resident-panel" element={<ResidentPanel />} />
                 </Routes>

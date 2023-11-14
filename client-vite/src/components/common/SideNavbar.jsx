@@ -38,14 +38,15 @@ const iconMapping = {
 
 const routes = [
   { userRequired: 'common', path: '/', label: 'Home', iconName: 'faHome' },
+  { userRequired: 'resident', path: '/user/complaints/new', label: 'Submit report', iconName: 'faPlusCircle' },
+  { userRequired: 'resident', path: '/user/complaints', label: 'My reports', iconName: 'faList' },
   { userRequired: 'common', path: '/profile', label: 'Profile', iconName: 'faUser' },
-  { userRequired: 'resident', path: '/user/complaints/new', label: 'Complain form', iconName: 'faPlusCircle' },
-  { userRequired: 'resident', path: '/user/complaints', label: 'My complaints', iconName: 'faList' },
+  { userRequired: 'resident', path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
   { userRequired: 'admin', path: '/admin/complaints/stats', label: 'Stats', iconName: 'faChartBar' },
+  { userRequired: 'admin', path: '/admin/users', label: 'Manage users', iconName: 'faUsers' },
+  { userRequired: 'admin', path: '/admin/residences', label: 'Manage residences', iconName: 'faCrown' },
   { userRequired: 'admin', path: '/admin/complaints', label: 'User complaints', iconName: 'faClipboard' },
-  { userRequired: 'admin', path: '/admin/users', label: 'Users', iconName: 'faUsers' },
   { userRequired: 'admin', path: '/admin/roles/new', label: 'Roles', iconName: 'faCrown' },
-  { userRequired: 'admin', path: '/admin/residences', label: 'Residences', iconName: 'faHouseChimneyUser' },
   { userRequired: 'common', path: '/context-test', label: 'Context', iconName: 'faCog' },
   // { userRequired: 'admin', path: '/category-management', label: 'Category management' },
 ];

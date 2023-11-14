@@ -4,7 +4,7 @@ const CategoryController = {};
 const pool = require('../dbConnection');
 
 CategoryController.getAllCategories = (req, res) => {
-    const sqlQuery = "SELECT * FROM complain_categories"
+    const sqlQuery = "SELECT * FROM categories"
 
     pool.query(sqlQuery, (err, results) => {
         if(err) {

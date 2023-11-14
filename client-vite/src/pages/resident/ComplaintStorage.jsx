@@ -15,7 +15,7 @@ function UserForm() {
 
     const [formData, setFormData] = useState({
         user_id: authUser.Id,
-        status: 'Open',
+        complaint_status: 'Open',
         category_id: 0,
         complaint_date: '',
         complaint_title: '',
@@ -59,7 +59,7 @@ function UserForm() {
             <form onSubmit={handleSubmit} className="container">
                 <h1 className='py-4 text-center'>Tell us what happened</h1>
                 <input hidden onChange={handleChange} type="number" name="user_id" value={formData.user_id} id='user_id' />
-                <input hidden onChange={handleChange} type="text" name="status" value={formData.status} />
+                <input hidden onChange={handleChange} type="text" name="complaint_status" value={formData.complaint_status} />
                 <input hidden onChange={handleChange} type="text" name="complaint_date" value={formData.complaint_date} />
 
                 <div className="row row-cols-md-2 row-cols-1">

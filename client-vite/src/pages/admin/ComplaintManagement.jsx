@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import AccessDenied from '../common/AccessDenied';
 import { Modal, Button, Table } from 'react-bootstrap';
 
-const initialSqlQuery = 'SELECT * FROM user_complaints';
+const initialSqlQuery = 'SELECT * FROM complaints';
 const availableFilters = [
   { name: 'User id', key: 'user_id', options: [1, 2] },
   { name: 'Category ID', key: 'category_id', options: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
@@ -135,7 +135,7 @@ const FilterTest = () => {
                       <thead>
                         <tr>
                           <th>Title</th>
-                          <th>Role</th>
+                          <th>Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -146,10 +146,10 @@ const FilterTest = () => {
                             style={{ cursor: 'pointer' }}
                           >
                             <td>
-                              {complaint.complaint_title}:
+                              {complaint.complaint_title}
                             </td>
                             <td>
-                              {complaint.status}
+                              {complaint.complaint_status}
                             </td>
                           </tr>
                         ))}

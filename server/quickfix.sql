@@ -24,20 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `complain_categories`
+-- Estructura de tabla para la tabla `categories`
 --
 
-CREATE TABLE `complain_categories` (
+CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(255) NOT NULL,
   `category_description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `complain_categories`
+-- Volcado de datos para la tabla `categories`
 --
 
-INSERT INTO `complain_categories` (`category_id`, `category_name`, `category_description`) VALUES
+INSERT INTO `categories` (`category_id`, `category_name`, `category_description`) VALUES
 (1, 'Water Supply', 'Lack of water supply in the residence.'),
 (2, 'Electrical Failures', 'Persistent electrical failures in the residence\'s wiring.'),
 (3, 'Heating System', 'Malfunction in the residence\'s heating system.'),
@@ -114,9 +114,9 @@ INSERT INTO `user_complaints` (`complaint_id`, `user_id`, `complaint_title`, `co
 --
 
 --
--- Indices de la tabla `complain_categories`
+-- Indices de la tabla `categories`
 --
-ALTER TABLE `complain_categories`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`);
 
 --
@@ -138,9 +138,9 @@ ALTER TABLE `user_complaints`
 --
 
 --
--- AUTO_INCREMENT de la tabla `complain_categories`
+-- AUTO_INCREMENT de la tabla `categories`
 --
-ALTER TABLE `complain_categories`
+ALTER TABLE `categories`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
@@ -164,7 +164,7 @@ ALTER TABLE `user_complaints`
 --
 ALTER TABLE `user_complaints`
   ADD CONSTRAINT `user_complaints_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `user_complaints_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `complain_categories` (`category_id`);
+  ADD CONSTRAINT `user_complaints_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

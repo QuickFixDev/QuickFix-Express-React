@@ -24,7 +24,7 @@ export function AuthProvider({ children }) {
     const [role, setRole] = useState('');
     const [streetName, setStreetName] = useState('');
     const [picture, setPicture] = useState('');
-
+useEffect
     // Validation of existing user in database based on auth0's provided user
     if (isAuthenticated) {
 
@@ -50,7 +50,6 @@ export function AuthProvider({ children }) {
                 setHouseNumber(responseData.house_number);
                 setLastName(responseData.last_name);
                 setPhoneNumber(responseData.phone_number);
-                setRole(responseData.role);
                 setStreetName(responseData.street_name);
                 setPicture(user.picture)
 
@@ -59,6 +58,28 @@ export function AuthProvider({ children }) {
                 console.error('Error fetching data:', error);
                 setLoading(false);
             });
+
+
+
+            fetch(`${ServerUrl}/roles/${userId}`, {
+                method: 'GET',
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((responseData) => {
+                    console.log('response data:', responseData);
+                    console.log(responseData)
+                    setRole(responseData);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                    setLoading(false);
+                });
 
         if (loading) {
             return (
@@ -117,7 +138,8 @@ export function AuthProvider({ children }) {
         user,
         isAuthenticated,
         isLoading,
-        userId
+        userId,
+        role
     ]);
 
     return (

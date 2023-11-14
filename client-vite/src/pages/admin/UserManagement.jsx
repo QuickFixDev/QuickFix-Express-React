@@ -30,7 +30,6 @@ const NewRequestNotification = ({ count }) => {
     );
 };
 
-
 function UserList({ users, setSelectedUser, deleteUser, showModal }) {
     return (
         <div className="user-list card border-0 p-3">

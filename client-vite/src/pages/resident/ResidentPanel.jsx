@@ -12,11 +12,6 @@ const ResidentPanel = () => {
       </div>
       <div className="row d-flex flex-row row-cols-1  g-3">
         <div className="col">
-          <button className="btn btn-outline-primary rounded-4 p-4 w-100">
-            <span className="">Search for Avaiable properties</span>
-          </button>
-        </div>
-        <div className="col">
           <Link to="/user/complaints/new">
             <button className="btn btn-outline-primary rounded-4 p-4 w-100">
               <span className="">Submit a new report</span>
@@ -30,7 +25,13 @@ const ResidentPanel = () => {
             </button>
           </Link>
         </div>
-
+        <div className="col">
+          <Link to="/user/residences">
+            <button className="btn btn-outline-primary rounded-4 p-4 w-100">
+              <span className="">Search for available properties</span>
+            </button>
+          </Link>
+        </div>
       </div>
 
     </div>

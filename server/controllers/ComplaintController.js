@@ -8,7 +8,7 @@ ComplaintController.getUserComplaints = (req, res) => {
 }
 
 ComplaintController.getAllComplaints = (req, res) => {
-    const sqlQuery = 'SELECT * FROM user_complaints';
+    const sqlQuery = 'SELECT * FROM complaints';
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
@@ -22,7 +22,7 @@ ComplaintController.getAllComplaints = (req, res) => {
 
 ComplaintController.getComplaintById = (req, res) => {
     const userId = req.params.id;
-    const sqlQuery = 'SELECT * FROM user_complaints WHERE user_id = ?';
+    const sqlQuery = 'SELECT * FROM complaints WHERE user_id = ?';
 
     pool.query(sqlQuery, userId, (err, result) => {
         if (err) {
@@ -38,13 +38,13 @@ ComplaintController.getComplaintById = (req, res) => {
 ComplaintController.createComplaint = async (req, res) => {
     const formData = req.body;
     console.log('form data in query: ', formData)
-    const { user_id, status, category_id, complaint_date, complaint_title, complaint_description } = formData;
+    const { user_id, complaint_status, category_id, complaint_date, complaint_title, complaint_description } = formData;
     const sqlQuery = `
-        INSERT INTO user_complaints (user_id, status, category_id, complaint_date, complaint_title, complaint_description)
+        INSERT INTO complaints (user_id, complaint_status, category_id, complaint_date, complaint_title, complaint_description)
         VALUES (?, ?, ?, ?, ?, ?)
         `;
 
-    pool.query(sqlQuery, [user_id, status, category_id, complaint_date, complaint_title, complaint_description], (err, results) => {
+    pool.query(sqlQuery, [user_id, complaint_status, category_id, complaint_date, complaint_title, complaint_description], (err, results) => {
         if (err) {
             console.error('Error storing form data:', err);
             res.status(500).json({ message: 'Internal server error' });
@@ -57,7 +57,7 @@ ComplaintController.createComplaint = async (req, res) => {
 
 ComplaintController.getComplaintsInGraphic = (req, res) => {
     console.log("Fetching all complaints");
-    const sqlQuery = 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM user_complaints uc INNER JOIN complain_categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
+    const sqlQuery = 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM complaints uc INNER JOIN categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {

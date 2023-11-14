@@ -44,7 +44,7 @@ const MyComplaints = () => {
         <>
             <div className="list container-fluid p-md-5 p-3">
                 <div className="p-4 mb-4 border-start border-3 border-primary">
-                    <h1>Your complaint history</h1>
+                    <h1>Your reports</h1>
                 </div>
                 <div className="row d-flex flex-row  row-cols-md-2 row-cols-1  g-3">
 

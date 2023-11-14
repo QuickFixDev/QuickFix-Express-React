@@ -70,10 +70,7 @@ UserController.createUser = (req, res) => {
 
 UserController.getUserId = (req, res) => {
     const sqlQuery = 'SELECT * FROM users WHERE email = ?';
-
-    console.log('entered get user id')
     const userEmail = req.params.id;
-    console.log(userEmail)
 
     pool.query(sqlQuery, userEmail, (err, results) => {
         if (err) {
@@ -88,7 +85,6 @@ UserController.getUserId = (req, res) => {
         }
 
         const user_id = results[0].user_id; // Extract the user_id from the first result
-        console.log('yo here are your results: ', user_id)
         res.json(results[0]);
     }); 
 };

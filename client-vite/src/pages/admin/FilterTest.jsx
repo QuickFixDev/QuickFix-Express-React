@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import ServerUrl from '../../constants/ServerUrl';
 
-const initialSqlQuery = 'SELECT * FROM user_complaints';
+const initialSqlQuery = 'SELECT * FROM complaints';
 const availableFilters = [
   { name: 'User id', key: 'user_id', options: [ 1, 2 ] },
   { name: 'Category ID', key: 'category_id', options: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] },
