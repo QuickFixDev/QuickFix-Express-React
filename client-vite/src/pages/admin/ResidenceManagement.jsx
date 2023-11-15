@@ -6,17 +6,19 @@ import AccessDenied from '../common/AccessDenied';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import ServerUrl from '../../constants/ServerUrl';
+import { getResidentials } from '../../contexts/ResidentialContext';
+import { getResidences } from '../../contexts/ResidenceContext';
 
 function ResidenceList({ residences, setSelectedResidence, deleteResidence, showModal }) {
     return (
         <div className="residence-list card border-0 p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
                 <h3>Residence manager</h3>
-                <button className="btn btn-primary mb-3">
-                    <Link className="text-white text-decoration-none" to="/admin/residences/new">
+                <Link className="text-white text-decoration-none" to="/admin/residences/new">
+                    <button className="btn btn-primary mb-3">
                         <FontAwesomeIcon icon={faPlus} /> Create New Residence
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
             <div className="card-body">
                 <Table bordered={false} hover>
@@ -60,9 +62,11 @@ function ResidenceList({ residences, setSelectedResidence, deleteResidence, show
         </div>
     );
 }
-
+'Gerardo', 'Díaz', 'gerardo.diaz@cetis155.edu.mx', '+52 1 449 100 8056'
 function ResidenceDetails({ residence, handleClose, handleSave }) {
     const [editedResidence, setEditedResidence] = useState({ ...residence });
+    const { residentials } = getResidentials();
+    const { residences } = getResidences();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,24 +85,39 @@ function ResidenceDetails({ residence, handleClose, handleSave }) {
 
             <Modal.Body>
                 <Form>
-                    <Form.Group className="mb-3" controlId="formResidentialId" style={{ display: 'none' }}>
-                        <Form.Label>Residence ID</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="residence_id"
-                            value={editedResidence.residence_id}
-                            onChange={handleChange}
-                        />
+                    <Form.Group className="mb-3" controlId="formResidentialId">
+                        <Form.Label>Residential</Form.Label>
+                        {residentials && residentials.length > 0 ? (
+                            <select
+                                className="form-select"
+                                name="residence_id"
+                                value={editedResidence.residence_id}
+                                onChange={handleChange}
+                            >
+                                {residentials.map((residential, index) => (
+                                    <option key={index} value={residential.residential_id}>
+                                        {residential.residential_name}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            'No residentials available'
+                        )}
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formResidentialId">
-                        <Form.Label>Residential ID</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="residential_id"
-                            value={editedResidence.residential_id}
-                            onChange={handleChange}
-                        />
+                    <Form.Group className="mb-3" controlId="formResidenceSelect">
+                        <Form.Label>Select Residence</Form.Label>
+                        {residences && residences.length > 0 ? (
+                            <Form.Control as="select" className="form-select">
+                                {residences.map((residence, index) => (
+                                    <option key={index} value={residence.residence_id}>
+                                        {residence.street_name} #{residence.street_number}
+                                    </option>
+                                ))}
+                            </Form.Control>
+                        ) : (
+                            'No residences available'
+                        )}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formOwnerUserId">

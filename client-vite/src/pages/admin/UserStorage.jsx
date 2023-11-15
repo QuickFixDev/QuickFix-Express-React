@@ -4,12 +4,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
 import { useAuth } from "../../contexts/AuthContext";
 import { getRoles } from "../../contexts/RoleContext";
+import { getResidences } from "../../contexts/ResidenceContext";
 
 
 function UserStorageComponent() {
     const { authUser, isLoggedIn } = useAuth();
-
     const { isAuthenticated } = useAuth0();
+    const { residences } = getResidences();
+
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -91,35 +93,6 @@ function UserStorageComponent() {
                     </div>
                 </div>
 
-                <div className="row row-cols-lg-2 row-cols-1">
-                    <div className="col">
-                        <div className="form-group">
-                            <label className='my-2' htmlFor="street_name">street_name</label>
-                            <input
-                                type="text"
-                                name="street_name"
-                                value={formData.street_name}
-                                onChange={handleChange}
-                                className="form-control bg-light"
-                                id="street_name"
-                            />
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="form-group">
-                            <label className='my-2' htmlFor="house_number">house_number</label>
-                            <input
-                                type="number"
-                                name="house_number"
-                                value={formData.house_number}
-                                onChange={handleChange}
-                                className="form-control bg-light"
-                                id="house_number"
-                            />
-                        </div>
-                    </div>
-                </div>
-
                 <div className="form-group">
                     <label className='my-2' htmlFor="role">Select role</label>
 
@@ -131,7 +104,7 @@ function UserStorageComponent() {
                             className="form-control bg-light"
                             id="role"
                         >
-                            <option value="">Select role</option>
+                            <option value="">Role list</option>
                             {roles.map((role, index) => (
                                 <option key={index} value={role.role_name} onChange={handleChange}>
                                     {role.role_name}
@@ -141,11 +114,30 @@ function UserStorageComponent() {
                         :
                         ('No roles available')
                     }
-
-
                 </div>
 
+                <div className="form-group">
+                    <label className='my-2' htmlFor="residence">Select </label>
 
+                    {residences && residences.length > 0 ?
+                        (<select
+                            name="residence"
+                            value={formData.residence}
+                            onChange={handleChange}
+                            className="form-control bg-light"
+                            id="residence"
+                        >
+                            <option value="">Residence list</option>
+                            {residences.map((residence, index) => (
+                                <option key={index} value={residence.residence_id}>
+                                    {residence.street_name} #{residence.street_number}
+                                </option>
+                            ))}
+                        </select>)
+                        :
+                        ('No residences available')
+                    }
+                </div>
 
                 <div className="row row-cols-lg-2 row-cols-1">
                     <div className="col">

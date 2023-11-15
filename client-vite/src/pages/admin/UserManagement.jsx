@@ -35,11 +35,11 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
         <div className="user-list card border-0 p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
                 <h3>User manager</h3>
-                <button className="btn btn-primary mb-3">
-                    <Link className="text-white text-decoration-none" to="/admin/users/new">
+                <Link className="text-white text-decoration-none" to="/admin/users/new">
+                    <button className="btn btn-primary mb-3">
                         <FontAwesomeIcon icon={faUserPlus} /> Create New User
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
             <div className="card-body">
                 {/* Use Table component from react-bootstrap */}

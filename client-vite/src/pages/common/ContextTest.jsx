@@ -3,12 +3,16 @@ import { NavLink } from 'react-router-dom';
 import LoginButton from "../../components/common/LoginButton";
 import { getCategories } from "../../contexts/CategoryContext";
 import { getRoles } from "../../contexts/RoleContext";
+import { getResidences } from "../../contexts/ResidenceContext";
+import { getResidentials } from "../../contexts/ResidentialContext";
 import { useEffect, useState } from "react";
 
 const ContextTest = () => {
     const { authUser, isLoggedIn } = useAuth();
     const { categories } = getCategories();
     const { roles } = getRoles();
+    const { residences } = getResidences();
+    const { residentials } = getResidentials();
 
     const userFields = [
         { name: 'User Status', value: isLoggedIn ? 'loggedIn' : 'loggedOut' },
@@ -74,6 +78,42 @@ const ContextTest = () => {
                         </select>
                     ) : (
                         'No roles available'
+                    )}
+                </div>
+            </div>
+
+            <div className="row border round">
+                <div className="p-4">
+                    <h2>Residences context</h2>
+                    <p>Residences:</p>
+                    {residences && residences.length > 0 ? (
+                        <select className="form-select">
+                            {residences.map((residence, index) => (
+                                <option key={index} value={residence.residence_id}>
+                                    {residence.street_name} #{residence.street_number}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        'No residences available'
+                    )}
+                </div>
+            </div>
+
+            <div className="row border round">
+                <div className="p-4">
+                    <h2>Residentials context</h2>
+                    <p>Residentials:</p>
+                    {residentials && residentials.length > 0 ? (
+                        <select className="form-select">
+                            {residentials.map((residential, index) => (
+                                <option key={index} value={residential.residential_id}>
+                                    {residential.residential_name}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        'No residentials available'
                     )}
                 </div>
             </div>
