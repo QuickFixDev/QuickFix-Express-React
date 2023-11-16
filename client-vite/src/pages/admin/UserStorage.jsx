@@ -15,11 +15,10 @@ function UserStorageComponent() {
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
-        role: '',
-        street_name: '',
-        house_number: 0,
-        phone_number: 0,
-        email: ''
+        email: '',
+        phone: 0,
+        role_id: 0,
+        residence: 0,
     });
     const { roles } = getRoles();
 
@@ -98,15 +97,15 @@ function UserStorageComponent() {
 
                     {roles && roles.length > 0 ?
                         (<select
-                            name="role"
-                            value={formData.role}
+                            name="role_id"
+                            value={formData.role_id}
                             onChange={handleChange}
                             className="form-control bg-light"
-                            id="role"
+                            id="role_id"
                         >
                             <option value="">Role list</option>
                             {roles.map((role, index) => (
-                                <option key={index} value={role.role_name} onChange={handleChange}>
+                                <option key={index} value={role.role_id} onChange={handleChange}>
                                     {role.role_name}
                                 </option>
                             ))}
@@ -155,14 +154,14 @@ function UserStorageComponent() {
                     </div>
                     <div className="col">
                         <div className="form-group">
-                            <label className='my-2' htmlFor="phone_number">phone_number</label>
+                            <label className='my-2' htmlFor="phone">phone_number</label>
                             <input
                                 type="number"
-                                name="phone_number"
-                                value={formData.phone_number}
+                                name="phone"
+                                value={formData.phone}
                                 onChange={handleChange}
                                 className="form-control bg-light"
-                                id="phone_number"
+                                id="phone"
                             />
                         </div>
                     </div>

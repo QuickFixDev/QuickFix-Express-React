@@ -17,7 +17,7 @@ const RegisterRequest = () => {
         role: 'resident',
         street_name: '',
         house_number: 0,
-        phone_number: 0,
+        phone: 0,
         email: ''
     });
     const { roles } = getRoles();
@@ -137,14 +137,14 @@ const RegisterRequest = () => {
                     </div>
                     <div className="col">
                         <div className="form-group">
-                            <label className='my-2' htmlFor="phone_number">phone_number</label>
+                            <label className='my-2' htmlFor="phone">phone_number</label>
                             <input
                                 type="number"
-                                name="phone_number"
-                                value={formData.phone_number}
+                                name="phone"
+                                value={formData.phone}
                                 onChange={handleChange}
                                 className="form-control bg-light"
-                                id="phone_number"
+                                id="phone"
                             />
                         </div>
                     </div>

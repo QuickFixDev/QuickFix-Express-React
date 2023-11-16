@@ -49,7 +49,7 @@ useEffect
                 setFirstName(responseData.first_name);
                 setHouseNumber(responseData.house_number);
                 setLastName(responseData.last_name);
-                setPhoneNumber(responseData.phone_number);
+                setPhoneNumber(responseData.phone);
                 setStreetName(responseData.street_name);
                 setPicture(user.picture)
 

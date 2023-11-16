@@ -41,9 +41,9 @@ function TopNavbar() {
                                 <span className="text-white d-none d-md-block text-white user-username fw-bold">{user.name}</span>
                                 <span className="text-white d-none d-md-block text-white user-email ">{user.email}</span>
                             </div>
-                            <div className='px-md-3 px-2 d-none d-sm-block text-white'>
+                            {/* <div className='px-md-3 px-2 d-none d-sm-block text-white'>
                                 <img src={user.picture} alt="User Photo" className="user-photo" width={'50px'} />
-                            </div>
+                            </div> */}
 
                             <div className="px-md-3 px-2" >
                                 <LoginButton />

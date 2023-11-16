@@ -9,6 +9,7 @@ import AccessDenied from '../common/AccessDenied';
 import { getRoles } from "../../contexts/RoleContext";
 
 import { Table } from 'react-bootstrap';
+import { getResidences } from '../../contexts/ResidenceContext';
 
 const NewRequestNotification = ({ count }) => {
     return (
@@ -86,6 +87,8 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
 function UserDetails({ user, handleClose, handleSave }) {
     const { roles } = getRoles();
     const [editedUser, setEditedUser] = useState({ ...user });
+    const { residences } = getResidences();
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -122,22 +125,44 @@ function UserDetails({ user, handleClose, handleSave }) {
                         />
                     </Form.Group>
 
+
                     <Form.Group className="mb-3" controlId="formResidence">
                         <Form.Label>Residence</Form.Label>
                         <Form.Control
-                            type="text"
+                            as="select"
                             name="residence"
                             value={editedUser.residence}
                             onChange={handleChange}
-                        />
+                        >
+
+                            <option value="">Select residence</option>
+                            {residences.map((residence, index) => (
+                                <option key={index} value={residence.residence_id}>
+                                    {residence.street_name} #{residence.street_number}
+                                </option>
+                            ))}
+
+                        </Form.Control>
                     </Form.Group>
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <Form.Group className="mb-3" controlId="formPhoneNumber">
                         <Form.Label>PhoneNumber</Form.Label>
                         <Form.Control
                             type="number"
-                            name="phone_number"
-                            value={editedUser.phone_number}
+                            name="phone"
+                            value={editedUser.phone}
                             onChange={handleChange}
                         />
                     </Form.Group>

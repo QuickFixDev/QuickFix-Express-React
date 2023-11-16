@@ -62,7 +62,7 @@ function ResidenceList({ residences, setSelectedResidence, deleteResidence, show
         </div>
     );
 }
-'Gerardo', 'Díaz', 'gerardo.diaz@cetis155.edu.mx', '+52 1 449 100 8056'
+
 function ResidenceDetails({ residence, handleClose, handleSave }) {
     const [editedResidence, setEditedResidence] = useState({ ...residence });
     const { residentials } = getResidentials();

@@ -36,7 +36,7 @@ export default function App() {
           <TopNavbar></TopNavbar>
           <div className="container-fluid m-0">
             <div className="row full-height p-0">
-              <div className="col-xl-2 col-md-1 col-2 bg-danger bg-light position-sticky p-0 border border-1 border-end">
+              <div className="col-xl-2 col-md-1 col-2 bg-danger bg-light position-sticky p-0">
                 <Navbar />
               </div>
               <main className="col-xl-10 col-md-11 col-10 p-0">
@@ -68,7 +68,7 @@ export default function App() {
           </div>
         </AuthProvider>
       </Auth0ProviderWithNavigate>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 }
