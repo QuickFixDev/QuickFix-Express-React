@@ -48,7 +48,7 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
                     <thead style={{ backgroundColor: '#f2f2f2' }}>
                         <tr>
                             <th>Name</th>
-                            <th>Role</th>
+                            {/* <th>Role</th> */}
                             <th className="text-end">Actions</th>
                         </tr>
                     </thead>
@@ -56,7 +56,7 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
                         {users.map((user) => (
                             <tr key={user.user_id}>
                                 <td>{user.first_name} {user.last_name}</td>
-                                <td>{user.role}</td>
+                                {/* <td>{user.role}</td> */}
                                 <td className="text-end">
                                     <Button
                                         variant="outline-primary"
@@ -144,18 +144,6 @@ function UserDetails({ user, handleClose, handleSave }) {
 
                         </Form.Control>
                     </Form.Group>
-
-
-
-
-
-
-
-
-
-
-
-
 
                     <Form.Group className="mb-3" controlId="formPhoneNumber">
                         <Form.Label>PhoneNumber</Form.Label>

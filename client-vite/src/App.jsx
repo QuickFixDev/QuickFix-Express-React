@@ -27,6 +27,7 @@ import Dashboard from './components/common/DashBoard';
 import { useAuth0 } from '@auth0/auth0-react';
 import ContextTest from './pages/common/ContextTest';
 import RegisterRequest from './pages/resident/RegisterRequest';
+import ResidenceStorage from './pages/admin/ResidenceStorage';
 
 export default function App() {
   return (
@@ -55,10 +56,11 @@ export default function App() {
                   <Route path="/admin/users" element={<UserManagement />} />
                   <Route path="/admin/users/new" element={<UserStorage />} />
                   <Route path="/admin/roles/new" element={<CreateRole />} />
+                  <Route path="/admin/residences" element={<ResidenceManagement />} />
+                  <Route path="/admin/residences/new" element={<ResidenceStorage />} />
                   <Route path="/filter-test" element={<FilterTest />} />
                   <Route path="/category-management" element={<CategoryManagement />} />
                   <Route path="/user/residences" element={<Residences />} />
-                  <Route path="/admin/residences" element={<ResidenceManagement />} />
                   <Route path="/context-test" element={<ContextTest />} />
                   <Route path="/resident-panel" element={<ResidentPanel />} />
                 </Routes>
