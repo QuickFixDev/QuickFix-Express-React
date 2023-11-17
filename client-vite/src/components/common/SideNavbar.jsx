@@ -16,7 +16,9 @@ import {
   faUsers,
   faCrown,
   faCog,
-  faHouseChimneyUser
+  faHouseChimneyUser,
+  faCity,
+  faHouseChimney,
 }
   from '@fortawesome/free-solid-svg-icons';
 
@@ -33,6 +35,8 @@ const iconMapping = {
   faCrown: faCrown,
   faCog: faCog,
   faHouseChimneyUser: faHouseChimneyUser,
+  faCity: faCity,
+  faHouseChimney: faHouseChimney,
   // Add more icons as needed
 };
 
@@ -44,8 +48,9 @@ const routes = [
   { userRequired: 'resident', path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
   { userRequired: 'admin', path: '/admin/complaints/stats', label: 'Stats', iconName: 'faChartBar' },
   { userRequired: 'admin', path: '/admin/users', label: 'Manage users', iconName: 'faUsers' },
-  { userRequired: 'admin', path: '/admin/residences', label: 'Manage residences', iconName: 'faCrown' },
   { userRequired: 'admin', path: '/admin/complaints', label: 'Manage complaints', iconName: 'faClipboard' },
+  { userRequired: 'admin', path: '/admin/residences', label: 'Manage residences', iconName: 'faHouseChimney' },
+  { userRequired: 'admin', path: '/admin/residentials', label: 'Manage residentials', iconName: 'faCity' },
   { userRequired: 'admin', path: '/admin/roles/new', label: 'Roles', iconName: 'faCrown' },
   { userRequired: 'common', path: '/context-test', label: 'Context', iconName: 'faCog' },
   // { userRequired: 'admin', path: '/category-management', label: 'Category management' },

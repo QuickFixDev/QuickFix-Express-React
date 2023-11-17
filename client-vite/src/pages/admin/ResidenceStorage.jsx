@@ -158,7 +158,8 @@ function ResidenceStorageComponent() {
                         className="form-control bg-light"
                         id="status"
                     >
-                        <option selected value="available">Available</option>
+                        <option value="">Select status</option>
+                        <option value="available">Available</option>
                         <option value="occupied">Occupied</option>
                     </select>
                 </div>

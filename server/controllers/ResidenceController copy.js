@@ -1,11 +1,11 @@
-// controllers/ResidentialController.js
+// controllers/ResidenceController.js
 
-const ResidentialController = {};
+const ResidenceController = {};
 const pool = require('../dbConnection');
 
-ResidentialController.getAllResidentials = (req, res) => {
-    console.log("Fetching the residentials");
-    const sqlQuery = 'SELECT * FROM residentials';
+ResidenceController.getAllResidences = (req, res) => {
+    console.log("Fetching the residences");
+    const sqlQuery = 'SELECT * FROM residences';
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
@@ -18,9 +18,9 @@ ResidentialController.getAllResidentials = (req, res) => {
     });
 };
 
-ResidentialController.deleteResidential = async (req, res) => {
+ResidenceController.deleteResidence = async (req, res) => {
     const residenceId = req.params.id;
-    const sqlQuery = 'DELETE FROM residentials WHERE residence_id = ?';
+    const sqlQuery = 'DELETE FROM residences WHERE residence_id = ?';
 
     pool.query(sqlQuery, residenceId, (err, result) => {
         if (err) {
@@ -34,14 +34,14 @@ ResidentialController.deleteResidential = async (req, res) => {
     });
 };
 
-ResidentialController.createResidential = (req, res) => {
+ResidenceController.createResidence = (req, res) => {
     const formData = req.body;
     console.log('form data in query: ', formData)
-    const { residential_name, country, state, city } = formData;
+    const { residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details } = formData;
 
-    sqlQuery = 'INSERT INTO residentials ( residential_name, country, state, city ) VALUES ( ?, ?, ?, ? )'
+    sqlQuery = 'INSERT INTO residences (residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details) VALUES (?, ?, ?, ?, ?, ?, ?)'
 
-    pool.query(sqlQuery, [ residential_name, country, state, city ], (err, results) => {
+    pool.query(sqlQuery, [residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details], (err, results) => {
         if (err) {
             console.error('Error storing form data:', err);
             res.status(500).json({ message: 'Internal server error' });
@@ -52,7 +52,7 @@ ResidentialController.createResidential = (req, res) => {
     });
 }
 
-// ResidentialController.getUserId = (req, res) => {
+// ResidenceController.getUserId = (req, res) => {
 //     const sqlQuery = 'SELECT * FROM users WHERE email = ?';
 //     const userEmail = req.params.id;
 
@@ -74,7 +74,7 @@ ResidentialController.createResidential = (req, res) => {
 // };
 
 
-// ResidentialController.getUserByEmail = (req, res) => {
+// ResidenceController.getUserByEmail = (req, res) => {
 //     console.log("Fetching the users");
 //     const sqlQuery = 'SELECT * FROM users WHERE email = {auth0 email}';
 
@@ -88,7 +88,7 @@ ResidentialController.createResidential = (req, res) => {
 //     });
 // };
 
-module.exports = ResidentialController;
+module.exports = ResidenceController;
 
 
 
