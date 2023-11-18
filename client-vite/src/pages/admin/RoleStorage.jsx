@@ -124,7 +124,7 @@ function CreateRoleComponent() {
 const CreateRole = () => {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'test') {
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
         return <CreateRoleComponent />
     } else {
         return <AccessDenied />

@@ -89,7 +89,7 @@ const FilterTest = () => {
   console.log(isLoggedIn)
   console.log(authUser.role)
 
-  if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'test') {
+  if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
 
 
     return (

@@ -211,7 +211,7 @@ function ResidenceStorageComponent() {
 const ResidenceStorage = () => {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'test') {
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
         return <ResidenceStorageComponent />
     } else {
         <AccessDenied />

@@ -247,7 +247,7 @@ function ResidenceManagement() {
         handleClose();
     };
 
-    if (isLoggedIn && (authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'test')) {
+    if (isLoggedIn && (authUser.Role === 'admin' || authUser.Role === 'dev')) {
         return (
             <div className="container mt-4">
                 <div className="row row-cols-1">

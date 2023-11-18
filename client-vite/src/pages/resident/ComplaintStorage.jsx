@@ -133,7 +133,7 @@ function UserForm() {
 const ReturningComponent = () => {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev' || authUser.Role === 'test') {
+    if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev') {
         return <UserForm />
     } else {
         return <AccessDenied />

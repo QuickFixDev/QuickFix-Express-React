@@ -9,16 +9,16 @@ export function getCategories() {
         fetch(`${ServerUrl}/get/categories`, {
             method: 'GET',
         })
-            .then((response) => response.json())
-            .then((responseData) => {
-                const categoriesData = responseData;
-                setCategories(categoriesData);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            });
+        .then((response) => response.json())
+        .then((responseData) => {
+            const categoriesData = responseData;
+            setCategories(categoriesData);
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        });
     }, []);
 
     return { categories, loading };

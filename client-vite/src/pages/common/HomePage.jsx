@@ -59,7 +59,7 @@ const HomePage = () => {
     return <WelcomePage />
   }
 
-  if (authUser.Role === 'resident' || authUser.Role === 'dev' || authUser.Role === 'test') {
+  if (authUser.Role === 'resident' || authUser.Role === 'dev') {
     return <ResidentPanel />
   }
 

@@ -176,7 +176,7 @@ function UserStorageComponent() {
 const UserStorage = () => {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'test') {
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
         return <UserStorageComponent />
     } else {
         <AccessDenied />
