@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 const Stats = () => {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'test') {
         return (
             <div className="row">
 

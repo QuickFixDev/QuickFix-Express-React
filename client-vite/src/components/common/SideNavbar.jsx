@@ -41,6 +41,10 @@ const iconMapping = {
   faSearch: faSearch,
   // Add more icons as needed
 };
+// { userRequired: 'resident', path: '/user/complaints/new', label: 'Submit report', iconName: 'faPlusCircle' },
+// { userRequired: 'resident', path: '/user/complaints', label: 'My reports', iconName: 'faList' },
+// { userRequired: 'resident', path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
+
 
 const routes = [
   { userRequired: 'common', path: '/', label: 'Home', iconName: 'faHome' },
@@ -94,7 +98,7 @@ const Sidebar = () => {
         ) : (
           <>
             {routes.map((route) =>
-              (authUser.Role === route.userRequired || route.userRequired === "common" || authUser.Role === "dev") && (
+              (authUser.Role === route.userRequired || route.userRequired === "common" || authUser.Role === "dev" || authUser.Role === "test") && (
                 <div key={route.path}>
                   <NavLink to={route.path} className="custom-navlink px-2 py-4">
                     <div className="container">

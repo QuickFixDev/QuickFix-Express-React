@@ -113,7 +113,7 @@ function CategoryManagement() {
             });
     };
 
-    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
+    if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'test' || authUser.Role === 'test') {
 
         return (
             <div className="container mt-4">

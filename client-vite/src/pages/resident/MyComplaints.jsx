@@ -80,7 +80,7 @@ const MyComplaints = () => {
 const ReturningComponent = () => {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
 
-    if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev') {
+    if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev' || authUser.Role === 'test') {
         return <MyComplaints />
     } else {
         return <AccessDenied />
