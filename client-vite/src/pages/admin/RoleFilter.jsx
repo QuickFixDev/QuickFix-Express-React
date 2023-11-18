@@ -3,10 +3,18 @@ import React, { useState, useEffect } from "react";
 import ServerUrl from "../../constants/ServerUrl";
 import { getRoles } from "../../contexts/RoleContext";
 import SearchBar from "../../components/common/SearchBar";
+import FilterComponent from "../../components/common/FilterComponent";
+
+const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
 
 const RoleFilter = () => {
   const { roles } = getRoles();
   const [search, setSearch] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('All');
+
+  const handleSelectFilter = (filter) => {
+    setSelectedFilter(filter);
+  };
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -24,7 +32,18 @@ const RoleFilter = () => {
 
   return (
     <div className="container mt-4">
-      <SearchBar onSearch={handleSearch} searchType='roles' />
+      <div className="row">
+        <div className="col">
+          <SearchBar onSearch={handleSearch} searchType='roles' />
+
+        </div>
+        <div className="col">
+          <div className="container">
+          <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
+
+          </div>
+        </div>
+      </div>
 
       <table className="table table-hover mt-4">
         <thead>
