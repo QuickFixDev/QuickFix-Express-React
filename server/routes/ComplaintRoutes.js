@@ -3,13 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const ComplaintController = require('../controllers/ComplaintController');
-const CategoryController = require('../controllers/CategoryController');
 
-router.get('/new', CategoryController.getAllCategories);
+router.get('/', ComplaintController.getAllComplaints);
 router.post('/new', ComplaintController.createComplaint);
 router.get('/stats', ComplaintController.getComplaintsInGraphic);
-
 router.get('/:id', ComplaintController.getComplaintById)
-
 
 module.exports = router;

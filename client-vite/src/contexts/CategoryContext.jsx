@@ -6,7 +6,7 @@ export function getCategories() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/categories`, {
+        fetch(`${ServerUrl}/get/categories`, {
             method: 'GET',
         })
             .then((response) => response.json())

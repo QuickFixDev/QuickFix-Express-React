@@ -19,6 +19,7 @@ import {
   faHouseChimneyUser,
   faCity,
   faHouseChimney,
+  faSearch,
 }
   from '@fortawesome/free-solid-svg-icons';
 
@@ -37,6 +38,7 @@ const iconMapping = {
   faHouseChimneyUser: faHouseChimneyUser,
   faCity: faCity,
   faHouseChimney: faHouseChimney,
+  faSearch: faSearch,
   // Add more icons as needed
 };
 
@@ -53,6 +55,8 @@ const routes = [
   { userRequired: 'admin', path: '/admin/residentials', label: 'Manage residentials', iconName: 'faCity' },
   { userRequired: 'admin', path: '/admin/roles/new', label: 'Roles', iconName: 'faCrown' },
   { userRequired: 'common', path: '/context-test', label: 'Context', iconName: 'faCog' },
+  { userRequired: 'common', path: '/complaint-filter', label: 'Complaint filter', iconName: 'faSearch' },
+  { userRequired: 'common', path: '/role-filter', label: 'Role filter', iconName: 'faSearch' },
   // { userRequired: 'admin', path: '/category-management', label: 'Category management' },
 ];
 
@@ -84,7 +88,7 @@ const Sidebar = () => {
                 <div className="col-xl-9 col-0 d-xl-block d-none navlink-text">
                   Home
                 </div>
-              </div>
+              </div>  
             </div>
           </NavLink>
         ) : (

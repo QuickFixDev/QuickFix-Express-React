@@ -1,49 +1,73 @@
-import { useEffect, useState } from "react";
+// ComplaintFilter.js
+import React, { useState, useEffect } from "react";
 import ServerUrl from "../../constants/ServerUrl";
-import { getRoles } from "../../contexts/RoleContext";
+import { getComplaints } from "../../contexts/ComplaintContext";
+import SearchBar from "../../components/common/SearchBar";
 
 const ComplaintFilter = () => {
-    const { roles } = getRoles();
-    const [search, setSearch] = useState('')
+  const { complaints } = getComplaints();
+  const [search, setSearch] = useState('');
 
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
-    }
+  const handleSearch = (value) => {
+    setSearch(value);
+  }
 
-    useEffect(() => {
-        console.log(search);
-    }, [search]);
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
 
-    return (
-        <>
-        
-            <input
-                type="text"
-                placeholder="search here"
-                onChange={handleSearch}
-            />
+  const filteredComplaints = complaints.filter((item) => {
+    return search.toLowerCase() === '' ||
+      item.complaint_description.toLowerCase().includes(search.toLowerCase()) ||
+      item.complaint_title.toLowerCase().includes(search.toLowerCase()) ||
 
-            <table>
-                <tbody>
+      item.complaint_id.toString().includes(search.toLowerCase());
+  });
 
-                    {roles
-                        .filter((item) => {
-                            return search.toLowerCase() === ''
-                                ? item
-                                : item.role_name.toLowerCase().includes(search)
-                        })
-                        .map((item) => (
-                            <tr key={item.role_id}>
-                                <td>{item.role_id}</td>
-                                <td>{item.role_name}</td>
-                            </tr>
-                        ))}
+  const truncateText = (text, limit) => {
+    const words = text.split(' ');
+    const truncated = words.slice(0, limit).join(' ');
+    return truncated + (words.length > limit ? '...' : '');
+  };
 
-                </tbody>
-            </table>
+  return (
+    <div className="container mt-4">
+      <div className="row">
+        <div className="col">
+          <SearchBar onSearch={handleSearch} searchType='complaints' />
+        </div>
+        <div className="col">
+          <div className="container">filters</div>
+        </div>
+      </div>
 
-        </>
-    );
+      <table className="table table-hover mt-4">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Complaint</th>
+            <th>status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredComplaints.map((item) => (
+            <tr key={item.complaint_id}>
+              <td>{item.complaint_id}</td>
+              <td>
+                <div>
+                  <strong>{item.complaint_title}</strong>
+                </div>
+                <div className="d-md-block d-none">{truncateText(item.complaint_description, 15)}</div>
+              </td>
+              <td>
+                {item.complaint_status}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 export default ComplaintFilter;

@@ -6,6 +6,7 @@ import { getRoles } from "../../contexts/RoleContext";
 import { getResidences } from "../../contexts/ResidenceContext";
 import { getResidentials } from "../../contexts/ResidentialContext";
 import { useEffect, useState } from "react";
+import { getComplaints } from "../../contexts/ComplaintContext";
 
 const ContextTest = () => {
     const { authUser, isLoggedIn } = useAuth();
@@ -13,6 +14,7 @@ const ContextTest = () => {
     const { roles } = getRoles();
     const { residences } = getResidences();
     const { residentials } = getResidentials();
+    const { complaints } = getComplaints();
 
     const userFields = [
         { name: 'User Status', value: isLoggedIn ? 'loggedIn' : 'loggedOut' },
@@ -114,6 +116,24 @@ const ContextTest = () => {
                         </select>
                     ) : (
                         'No residentials available'
+                    )}
+                </div>
+            </div>
+
+            <div className="row border round">
+                <div className="p-4">
+                    <h2>Complaints context</h2>
+                    <p>complaints:</p>
+                    {complaints && complaints.length > 0 ? (
+                        <select className="form-select">
+                            {complaints.map((complaint, index) => (
+                                <option key={index} value={complaint.complaint_id}>
+                                    {complaint.complaint_title}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        'No complaints available'
                     )}
                 </div>
             </div>

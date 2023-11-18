@@ -1,18 +1,18 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function getResidentials() {
-    const [residentials, setResidentials] = useState([]);
+export function getComplaints() {
+    const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/get/residentials`, {
+        fetch(`${ServerUrl}/get/complaints`, {
             method: 'GET',
         })
             .then((response) => response.json())
             .then((responseData) => {
-                const residentialsData = responseData;
-                setResidentials(residentialsData);
+                const complaintsData = responseData;
+                setComplaints(complaintsData);
                 setLoading(false);
             })
             .catch((error) => {
@@ -21,5 +21,5 @@ export function getResidentials() {
             });
     }, []);
 
-    return { residentials, loading };
+    return { complaints, loading };
 }

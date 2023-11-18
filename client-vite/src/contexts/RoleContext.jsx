@@ -6,7 +6,7 @@ export function getRoles() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/roles`, {
+        fetch(`${ServerUrl}/get/roles`, {
             method: 'GET',
         })
             .then((response) => response.json())

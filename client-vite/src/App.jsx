@@ -31,6 +31,7 @@ import ResidenceStorage from './pages/admin/ResidenceStorage';
 import ResidentialsManagement from './pages/admin/ResidentialsManagement';
 import ResidentialStorage from './pages/admin/ResidentialStorage';
 import ComplaintFilter from './pages/admin/ComplaintFilter';
+import RoleFilter from './pages/admin/RoleFilter';
 
 export default function App() {
   return (
@@ -54,6 +55,7 @@ export default function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/role-filter" element={<RoleFilter />} />
                   <Route path="/complaint-filter" element={<ComplaintFilter />} />
 
                   <Route path="/admin/complaints" element={<ComplaintManagement />} />

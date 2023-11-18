@@ -61,7 +61,7 @@ useEffect
 
 
 
-            fetch(`${ServerUrl}/roles/${userId}`, {
+            fetch(`${ServerUrl}/get/roles/${userId}`, {
                 method: 'GET',
             })
                 .then((response) => {
