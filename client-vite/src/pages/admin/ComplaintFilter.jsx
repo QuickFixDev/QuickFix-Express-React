@@ -3,10 +3,18 @@ import React, { useState, useEffect } from "react";
 import ServerUrl from "../../constants/ServerUrl";
 import { getComplaints } from "../../contexts/ComplaintContext";
 import SearchBar from "../../components/common/SearchBar";
+import FilterComponent from "../../components/common/FilterComponent";
+
+const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
 
 const ComplaintFilter = () => {
   const { complaints } = getComplaints();
   const [search, setSearch] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('All');
+
+  const handleSelectFilter = (filter) => {
+    setSelectedFilter(filter);
+  };
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -35,9 +43,13 @@ const ComplaintFilter = () => {
       <div className="row">
         <div className="col">
           <SearchBar onSearch={handleSearch} searchType='complaints' />
+
         </div>
         <div className="col">
-          <div className="container">filters</div>
+          <div className="container">
+          <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
+
+          </div>
         </div>
       </div>
 
