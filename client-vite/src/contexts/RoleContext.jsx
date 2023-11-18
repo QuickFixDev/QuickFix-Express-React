@@ -11,7 +11,6 @@ export function getRoles() {
         })
             .then((response) => response.json())
             .then((responseData) => {
-                console.log('response -----------------', responseData)
                 const rolesData = responseData;
                 setroles(rolesData);
                 setLoading(false);
@@ -22,6 +21,5 @@ export function getRoles() {
             });
     }, []);
 
-    console.log('roles log', roles)
     return { roles, loading };
 }
