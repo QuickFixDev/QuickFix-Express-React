@@ -61,7 +61,7 @@ function UserStorageComponent() {
         <div className='container mt-md-5 mt-0 p-3 col-xl-8 col-md-10 col-12'>
 
             <form onSubmit={handleSubmit} className="container">
-                <h1 className='py-4 text-center'>Create new user</h1>
+                <h2 className='py-4 text-center fw-bold'>Create new user</h2>
 
                 <div className="row row-cols-lg-2 row-cols-1">
                     <div className="col">

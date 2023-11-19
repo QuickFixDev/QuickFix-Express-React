@@ -47,7 +47,7 @@ const Stats = () => {
                 {/* Legend inside the PieChart */}
                 <Legend
                     layout="horizontal"  // Set layout to "vertical" for column display
-                    align="top"  // Align the legend to the center
+                    align="center"  // Align the legend to the center
                     formatter={(value, entry) => entry.payload.category_name}
                     wrapperStyle={{ padding: '0 0 50px 0 ' }}  // Add top margin of 20 pixels
 

@@ -9,12 +9,11 @@ const Stats = () => {
     if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
         return (
             <div className="row">
-
-                <div className='container p-lg-5 p-md-4 p-2 mt-md-5 mt-0'>
+                <div className="list container-fluid p-md-5 p-3">
                     <div className="p-4 mb-4">
-                        <h1>Stats</h1>
+                        <h2 className='fw-bold'>Stats</h2>
                     </div>
-                    <div className="border rounded-3">
+                    <div className="d-flex flex-column justify-content-center align-items-center shadow-md">
                         <Graphic />
                     </div>
                 </div>

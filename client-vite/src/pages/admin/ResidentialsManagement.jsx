@@ -11,7 +11,7 @@ function ResidentialList({ residentials, setSelectedResidential, deleteResidenti
     return (
         <div className="residential-list card border-0 p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
-                <h3>Residential manager</h3>
+                <h2 className='fw-bold'>Residential manager</h2>
                 <Link className="text-white text-decoration-none" to="/admin/residentials/new">
                     <button className="btn btn-primary mb-3">
                         <FontAwesomeIcon icon={faPlus} /> Create New Residential

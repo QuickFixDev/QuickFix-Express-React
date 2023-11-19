@@ -6,7 +6,7 @@ export function getComplaints() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/get/complaints`, {
+        fetch(`${ServerUrl}/api/complaints`, {
             method: 'GET',
         })
             .then((response) => response.json())

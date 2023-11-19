@@ -46,7 +46,7 @@ function ResidentialStorageComponent() {
     return (
         <div className="container mt-md-5 mt-0 mb-md-5 mb-0 p-3 col-xl-8 col-md-10 col-12">
             <form onSubmit={handleSubmit} className="container">
-                <h1 className="py-4 text-center">Create new residential</h1>
+                <h2 className="py-4 text-center fw-bold">Create new residential</h2>
 
                 <div className="form-group">
                     <label className="my-2" htmlFor="residential_name">

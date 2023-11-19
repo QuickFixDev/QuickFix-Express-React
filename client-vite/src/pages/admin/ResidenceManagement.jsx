@@ -13,7 +13,7 @@ function ResidenceList({ residences, setSelectedResidence, deleteResidence, show
     return (
         <div className="residence-list card border-0 p-3">
             <div className="container d-flex flex-row justify-content-between align-items-center">
-                <h3>Residence manager</h3>
+                <h2 className='fw-bold'>Residence manager</h2>
                 <Link className="text-white text-decoration-none" to="/admin/residences/new">
                     <button className="btn btn-primary mb-3">
                         <FontAwesomeIcon icon={faPlus} /> Create New Residence

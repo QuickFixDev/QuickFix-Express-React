@@ -43,26 +43,27 @@ const MyComplaints = () => {
     return (
         <>
             <div className="list container-fluid p-md-5 p-3">
-                <div className="p-4 mb-4 border-start border-3 border-primary">
-                    <h1>Your reports</h1>
+                <div className="p-4 mb-4 ">
+                    <h2 className="fw-bold">Your reports</h2>
                 </div>
                 <div className="row d-flex flex-row  row-cols-md-2 row-cols-1  g-3">
 
                     {complaints.map((complaint) => (
                         <div className="col">
-                            <div className="container bg-light rounded-4 p-3">
+                            <div className="container shadow-md rounded-4 p-3">
 
-                                <span className="badge bg-secondary">ID: {complaint.complaint_id}</span>
                                 <div className="my-3">
-                                    <div className="col bg-light mb-3 mr-3" key={complaint.complaint_id}>
+                                    <div className="col  mb-3 mr-3" key={complaint.complaint_id}>
                                         <div className="m-2">
-                                            <h4>{complaint.complaint_title}</h4>
-                                            {complaint.complaint_status === 'Open' ? (
-                                                <p className="text-primary">Status: {complaint.complaint_status}</p>
-                                            ) : (
-                                                <p>Status: {complaint.complaint_status}</p>
-                                            )}
+                                            <h5>
+                                                <strong>
+                                                    {complaint.complaint_title}
+                                                </strong>
+                                            </h5>
+
+                                            <p>Status: {complaint.complaint_status}</p>
                                             <p>{complaint.complaint_description}</p>
+
                                         </div>
                                     </div>
                                 </div>

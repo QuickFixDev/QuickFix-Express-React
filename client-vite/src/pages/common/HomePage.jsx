@@ -26,7 +26,7 @@ const WelcomePage = () => {
             </div>
           </div>
           <NavLink to={'/user/request'} className="col-md-6 col-12 hover-navlink">
-            <div className="container bg-light text-center rounded-4 p-5">
+            <div className="container text-center rounded-4 p-5 shadow-md">
               <div className="my-3">
                 <h3>New around here?</h3>
               </div>
@@ -36,7 +36,7 @@ const WelcomePage = () => {
             </div>
           </NavLink>
           <NavLink className="col-md-6 col-12 hover-navlink" onClick={() => loginWithRedirect()}>
-              <div className="container bg-light text-center rounded-4 p-5">
+              <div className="container text-center rounded-4 p-5 shadow-md">
                 <div className="my-3">
                   <h3>Do you have an account?</h3>
                 </div>

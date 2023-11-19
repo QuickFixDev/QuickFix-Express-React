@@ -6,7 +6,7 @@ export function getResidentials() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${ServerUrl}/get/residentials`, {
+        fetch(`${ServerUrl}/api/residentials`, {
             method: 'GET',
         })
             .then((response) => response.json())

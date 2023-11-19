@@ -97,7 +97,7 @@ const FilterTest = () => {
         <div className='my-3 p-md-4 p-1'>
           <div className="row my-4">
             <div className="col">
-              <h3>Complaint manager</h3>
+              <h2 className='fw-bold'>Complaint manager</h2>
             </div>
 
             {availableFilters.map((filter, index) => (

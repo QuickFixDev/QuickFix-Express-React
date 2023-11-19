@@ -20,11 +20,11 @@ const CategoryRoutes = require('./routes/CategoryRoutes');
 const ResidenceRoutes = require('./routes/ResidenceRoutes');
 const ResidentialRoutes = require('./routes/ResidentialRoutes');
 
-app.use('/get/categories', CategoryRoutes);
-app.use('/get/roles', RoleRoutes);
-app.use('/get/residences', ResidenceRoutes);
-app.use('/get/residentials', ResidentialRoutes);
-app.use('/get/complaints', ComplaintRoutes);
+app.use('/api/categories', CategoryRoutes);
+app.use('/api/roles', RoleRoutes);
+app.use('/api/residences', ResidenceRoutes);
+app.use('/api/residentials', ResidentialRoutes);
+app.use('/api/complaints', ComplaintRoutes);
     
 app.use('/admin/users', UserRoutes);
 app.use('/admin/complaints', ComplaintRoutes);

@@ -7,7 +7,7 @@ const Profile = () => {
 console.log(isLoggedIn)
   if (isLoggedIn) {
     return (
-      <div className='container-fluid h-100 align d-flex justify-content-center align-items-center'>
+      <div className='container-fluid d-flex justify-content-center align-items-center'>
         <ProfileComponent />
       </div>
     );

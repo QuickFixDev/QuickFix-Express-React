@@ -48,13 +48,13 @@ const ResidenceList = () => {
 
     return (
         <div className="list container-fluid p-md-5 p-3">
-            <div className="p-4 mb-4 border-start border-3 border-primary">
-                <h1>Available residences</h1>
+            <div className="p-4 mb-4">
+                <h2 className='fw-bold'>Available residences</h2>
             </div>
-            <div className="row d-flex flex-row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1  g-3">
+            <div className="row d-flex flex-row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 px-4">
                 {residences.map(residence => (
                     <div key={residence.id} className="col">
-                        <div className="container bg-light text-center rounded-4 p-3">
+                        <div className="container text-center rounded-4 p-3 shadow-md">
                             {residence.status === 'available' ? (
                                 <div className="street my-3 text-primary">
                                     <FontAwesomeIcon icon={faHouseCircleCheck} size="3x"></FontAwesomeIcon>
@@ -66,7 +66,7 @@ const ResidenceList = () => {
                             )}
 
                             <div className="street my-3 ">
-                                <h2>{residence.street_name} #{residence.street_number}</h2>
+                                <h5>{residence.street_name} {residence.street_number}</h5>
                             </div>
                             <div className="state my-3">
                                 <p>{residence.status}</p>
