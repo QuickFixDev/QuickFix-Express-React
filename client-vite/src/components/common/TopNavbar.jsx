@@ -9,7 +9,7 @@ function TopNavbar() {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
     const { user, isAuthenticated } = useAuth0();
 
-    console.log('actions', import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS)
+    // console.log('actions', import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS)
 
     return (
         <nav className="container-fluid bg-dark">
@@ -31,13 +31,13 @@ function TopNavbar() {
                     )}
 
 
-                    {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS === 'true' ? (
+                    {/* {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS === 'true' ? (
                         <span className="nav-link text-white ps-1">
                             {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS}
                         </span> //test
                     ) : (
                         <span></span>
-                    )}
+                    )} */}
 
 
 
