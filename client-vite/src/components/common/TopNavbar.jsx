@@ -32,7 +32,7 @@ function TopNavbar() {
                     {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS === 'true' ? (
                         <span className="nav-link text-white ps-1">
                             is currently updating...
-                        </span>
+                        </span> //test
                     ) : (
                         <span></span>
                     )}
