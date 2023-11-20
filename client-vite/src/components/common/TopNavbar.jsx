@@ -28,6 +28,18 @@ function TopNavbar() {
                         </span>
                     )}
 
+
+                    {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS === 'true' ? (
+                        <span className="nav-link text-white ps-1">
+                            is currently updating...
+                        </span>
+                    ) : (
+                        <span></span>
+                    )}
+
+
+
+
                 </div>
                 <div className="d-flex col justify-content-end align-items-center">
 
