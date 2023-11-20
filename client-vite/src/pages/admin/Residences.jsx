@@ -54,7 +54,7 @@ const ResidenceList = () => {
             <div className="row d-flex flex-row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 px-4">
                 {residences.map(residence => (
                     <div key={residence.id} className="col">
-                        <div className="container text-center rounded-4 p-3 shadow-md">
+                        <div className="container text-center rounded-4 p-3 hover-navlink">
                             {residence.status === 'available' ? (
                                 <div className="street my-3 text-primary">
                                     <FontAwesomeIcon icon={faHouseCircleCheck} size="3x"></FontAwesomeIcon>

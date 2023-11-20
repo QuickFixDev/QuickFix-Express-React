@@ -12,9 +12,9 @@ const BootstrapTable = () => {
             <div className="p-4 ps-0 mb-4">
                 <h2 className='fw-bold'>My profile</h2>
             </div>
-            <div className="row shadow-md">
+            <div className="row ">
                 <div className="p-4">
-                    <div className="container-fluid d-flex flex-row justify-content-center pb-4">
+                    <div className="container-fluid d-flex flex-row justify-content-center pb-5">
                         <img className="rounded-circle" src={user.picture} alt={user.name} />
                     </div>
 

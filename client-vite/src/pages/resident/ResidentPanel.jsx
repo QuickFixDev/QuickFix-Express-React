@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -24,49 +24,41 @@ const ResidentPanel = () => {
         <h1>Welcome {authUser.FirstName}!</h1>
         <span>How can we assist you today?</span>
       </div>
-      <div className="row d-flex flex-row row-cols-lg-3 row-cols-1 g-3">
-        <div className="col">
-          <Link to="/user/complaints/new">
-            <button className="btn btn-outline-primary rounded-4 p-4 w-100">
-              <div className="row row-cols-1">
-                <div className="col p-lg-3 p-1">
-                <FontAwesomeIcon icon={faPlusCircle} size="2x" />
-                </div>
-                <div className="col p-lg-3 p-1">
-                  <span className="">Submit a new report</span>
-                </div>
-              </div>
-            </button>
-          </Link>
-        </div>
-        <div className="col">
-          <Link to={`/user/complaints`}>
-            <button className="btn btn-outline-primary rounded-4 p-4 w-100">
-            <div className="row row-cols-1">
-                <div className="col p-lg-3 p-1">
-                  <FontAwesomeIcon icon={faList} size="2x" />
-                </div>
-                <div className="col p-lg-3 p-1">
-                  <span className="">View previous reports</span>
-                </div>
-              </div>
-            </button>
-          </Link>
-        </div>
-        <div className="col">
-          <Link to="/user/residences">
-            <button className="btn btn-outline-primary rounded-4 p-4 w-100">
-              <div className="row row-cols-1">
-                <div className="col p-lg-3 p-1">
-                  <FontAwesomeIcon icon={faHouseChimneyUser} size="2x" />
-                </div>
-                <div className="col p-lg-3 p-1">
-                  <span className="">Search for available properties</span>
-                </div>
-              </div>
-            </button>
-          </Link>
-        </div>
+      <div className="row d-flex flex-row row-cols-lg-3 row-cols-1 g-3 px-md-1 px-5">
+
+        <NavLink to={'/user/complaints/new'} className="text-decoration-none">
+          <div className="container text-center rounded-4 p-5 hover-navlink">
+            <div className="my-3">
+              <FontAwesomeIcon icon={faPlusCircle} size="2x" />
+            </div>
+            <div className="my-3">
+              <span className="">Submit a new report</span>
+            </div>
+          </div>
+        </NavLink>
+
+        <NavLink to={'/user/complaints'} className="text-decoration-none">
+          <div className="container text-center rounded-4 p-5 hover-navlink">
+            <div className="my-3">
+              <FontAwesomeIcon icon={faList} size="2x" />
+            </div>
+            <div className="my-3">
+              <span className="">View previous reports</span>
+            </div>
+          </div>
+        </NavLink>
+
+        <NavLink to={'/user/residences'} className="text-decoration-none">
+          <div className="container text-center rounded-4 p-5 hover-navlink">
+            <div className="my-3">
+              <FontAwesomeIcon icon={faHouseChimneyUser} size="2x" />
+            </div>
+            <div className="my-3">
+              <span className="">Available properties</span>
+            </div>
+          </div>
+        </NavLink>
+
       </div>
 
     </div>

@@ -68,23 +68,33 @@
 
 @keyframes colorLoop {
   0% {
+    color: rgb(32, 56, 101);
+  }
+
+  25% {
     color: rgb(0, 117, 226);
   }
 
   50% {
-    color: rgb(162, 0, 255);
+    color: rgb(89, 0, 255);
+  }
+
+  75% {
+    color: rgb(0, 117, 226);
   }
 
   100% {
-    color: rgb(0, 117, 226)
+    color: rgb(32, 56, 101);
   }
 }
 
 .hover-navlink {
-  color: black;
+  background-color: #FBFCFF;
+  color: #003274;
   text-decoration: none;
   transition: color ease-in-out 1s;
   transition: transform 0.3s;
+  border: 1px solid #e4ebff;
 }
 
 .hover-navlink:hover {
