@@ -5,8 +5,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useAuth } from '../../contexts/AuthContext';
 import AccessDenied from '../common/AccessDenied';
 import { getCategories } from '../../contexts/CategoryContext';
+import { useNavigate  } from 'react-router-dom';
 
 function UserForm() {
+    const navigate  = useNavigate();
     const { authUser, isLoggedIn } = useAuth();
     const { categories, loading } = getCategories();
     const { user } = useAuth0();
@@ -29,6 +31,7 @@ function UserForm() {
 
     const handleModalClose = () => {
         setShowModal(false);
+        navigate('/user/complaints'); // Replace with your desired route
     };
 
     const handleSubmit = (e) => {
@@ -128,6 +131,7 @@ function UserForm() {
 
         </div>
     );
+
 }
 
 const ReturningComponent = () => {

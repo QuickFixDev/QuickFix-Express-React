@@ -39,7 +39,6 @@ const iconMapping = {
   faCity: faCity,
   faHouseChimney: faHouseChimney,
   faSearch: faSearch,
-  // Add more icons as needed
 };
 // { userRequired: 'resident', path: '/user/complaints/new', label: 'Submit report', iconName: 'faPlusCircle' },
 // { userRequired: 'resident', path: '/user/complaints', label: 'My reports', iconName: 'faList' },
@@ -48,9 +47,9 @@ const iconMapping = {
 
 const routes = [
   { userRequired: 'common', path: '/', label: 'Home', iconName: 'faHome' },
-  { userRequired: 'resident', path: '/user/complaints/new', label: 'Submit report', iconName: 'faPlusCircle' },
-  { userRequired: 'resident', path: '/user/complaints', label: 'My reports', iconName: 'faList' },
   { userRequired: 'common', path: '/profile', label: 'Profile', iconName: 'faUser' },
+  { userRequired: 'resident', path: '/user/complaints', label: 'My reports', iconName: 'faList' },
+  { userRequired: 'resident', path: '/user/complaints/new', label: 'Submit report', iconName: 'faPlusCircle' },
   { userRequired: 'resident', path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
   { userRequired: 'admin', path: '/admin/complaints/stats', label: 'Stats', iconName: 'faChartBar' },
   { userRequired: 'admin', path: '/admin/users', label: 'Manage users', iconName: 'faUsers' },
@@ -58,9 +57,9 @@ const routes = [
   { userRequired: 'admin', path: '/admin/residences', label: 'Manage residences', iconName: 'faHouseChimney' },
   { userRequired: 'admin', path: '/admin/residentials', label: 'Manage residentials', iconName: 'faCity' },
   { userRequired: 'admin', path: '/admin/roles/new', label: 'Roles', iconName: 'faCrown' },
-  { userRequired: 'common', path: '/context-test', label: 'Context', iconName: 'faCog' },
-  { userRequired: 'common', path: '/complaint-filter', label: 'Complaint filter', iconName: 'faSearch' },
-  { userRequired: 'common', path: '/role-filter', label: 'Role filter', iconName: 'faSearch' },
+  { userRequired: 'admin', path: '/complaint-filter', label: 'Complaint filter', iconName: 'faSearch' },
+  { userRequired: 'admin', path: '/role-filter', label: 'Role filter', iconName: 'faSearch' },
+  { userRequired: 'admin', path: '/context-test', label: 'Context', iconName: 'faCog' },
   // { userRequired: 'admin', path: '/category-management', label: 'Category management' },
 ];
 

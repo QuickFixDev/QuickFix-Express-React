@@ -6,45 +6,12 @@ import AccessDenied from '../common/AccessDenied';
 import { useAuth } from '../../contexts/AuthContext';
 import ServerUrl from '../../constants/ServerUrl';
 import { useEffect, useState } from 'react';
+import { getResidences } from '../../contexts/ResidenceContext';
 
 
 const ResidenceList = () => {
-    const [residences, setResidences] = useState([])
-    const [loading, setLoading] = useState(true)
+    const { residences, isLoading } = getResidences();
 
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${ServerUrl}/user/residences`, {
-                    method: 'GET',
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const responseData = await response.json();
-                setResidences(responseData);
-                setLoading(false);
-                console.log(responseData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-
-    if (loading) {
-        return (
-            <div>
-                loading...
-            </div>
-        )
-    }
 
     return (
         <div className="list container-fluid p-md-5 p-3">
@@ -52,28 +19,35 @@ const ResidenceList = () => {
                 <h2 className='fw-bold'>Available residences</h2>
             </div>
             <div className="row d-flex flex-row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 px-4">
-                {residences.map(residence => (
-                    <div key={residence.id} className="col">
-                        <div className="container text-center rounded-4 p-3 hover-navlink">
-                            {residence.status === 'available' ? (
-                                <div className="street my-3 text-primary">
-                                    <FontAwesomeIcon icon={faHouseCircleCheck} size="3x"></FontAwesomeIcon>
-                                </div>
-                            ) : (
-                                <div className="street my-3">
-                                    <FontAwesomeIcon icon={faHouseCircleExclamation} size="3x"></FontAwesomeIcon>
-                                </div>
-                            )}
 
-                            <div className="street my-3 ">
-                                <h5>{residence.street_name} {residence.street_number}</h5>
-                            </div>
-                            <div className="state my-3">
-                                <p>{residence.status}</p>
+                {isLoading ? (
+                    <div className="container-fluid p-4 spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                ) : (
+
+                    residences.map(residence => (
+                        <div key={residence.id} className="col">
+                            <div className="container text-center rounded-4 p-3 hover-navlink">
+                                {residence.status === 'available' ? (
+                                    <div className="street my-3 text-primary">
+                                        <FontAwesomeIcon icon={faHouseCircleCheck} size="3x"></FontAwesomeIcon>
+                                    </div>
+                                ) : (
+                                    <div className="street my-3">
+                                        <FontAwesomeIcon icon={faHouseCircleExclamation} size="3x"></FontAwesomeIcon>
+                                    </div>
+                                )}
+
+                                <div className="street my-3 ">
+                                    <h5>{residence.street_name} {residence.street_number}</h5>
+                                </div>
+                                <div className="state my-3">
+                                    <p>{residence.status}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    )))}
             </div>
 
         </div>

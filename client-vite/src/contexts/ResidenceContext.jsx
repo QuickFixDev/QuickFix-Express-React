@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 export function getResidences() {
     const [residences, setResidences] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch(`${ServerUrl}/api/residences`, {
@@ -21,5 +21,5 @@ export function getResidences() {
             });
     }, []);
 
-    return { residences, loading };
+    return { residences, isLoading };
 }
