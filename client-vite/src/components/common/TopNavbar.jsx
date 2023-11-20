@@ -9,6 +9,8 @@ function TopNavbar() {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
     const { user, isAuthenticated } = useAuth0();
 
+    console.log('actions', import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS)
+
     return (
         <nav className="container-fluid bg-dark">
             <div className="row py-3">
@@ -17,7 +19,7 @@ function TopNavbar() {
 
                     {isLoggedIn ? (
                         <span className="nav-link text-white user-username">
-                            Quickfix
+                            Quickfix {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS}
                             <span className='badge bg-secondary mx-3'>
                                 {authUser.Role}
                             </span>
@@ -31,11 +33,12 @@ function TopNavbar() {
 
                     {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS === 'true' ? (
                         <span className="nav-link text-white ps-1">
-                            is currently updating...
+                            {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS}
                         </span> //test
                     ) : (
                         <span></span>
                     )}
+
 
 
 
