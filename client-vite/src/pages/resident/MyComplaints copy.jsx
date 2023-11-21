@@ -10,14 +10,77 @@ import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCategories } from '../../contexts/CategoryContext';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { getComplaints } from '../../contexts/ComplaintContext';
+
+const Filter = () => {
+    const { categories } = getCategories();
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const { authUser, isLoggedIn } = useAuth();
+    const { complaints, loading } = getComplaints(authUser.Id);
+
+    const handleFilterChange = (categoryId) => {
+        setSelectedCategories((prevCategories) => {
+            if (prevCategories.includes(categoryId)) {
+                return prevCategories.filter((category) => category !== categoryId);
+            } else {
+                return [...prevCategories, categoryId];
+            }
+        });
+    };
+
+    let filteredComplaints;
+
+    if (selectedCategories.length === 0) {
+        filteredComplaints = complaints;
+    } else {
+        filteredComplaints = complaints.filter((complaint) =>
+            selectedCategories.includes(complaint.category_id)
+        );
+    }
+
+
+    const filteredCategories = categories.filter((category) =>
+        selectedCategories.includes(category.category_id)
+    );
+
+    return (
+        <div className="col-md-2 col-3">
+            <div className="row row-cols-1">
+                <div className="col p-0 g-2 mb-2">
+                    <div>
+                        {categories && categories.length > 0 ?
+                            (
+                                categories.map((category) => (
+                                    <div key={category.category_id}>
+                                        <Checkbox
+                                            checked={selectedCategories.includes(category.category_id)}
+                                            className="p-2"
+                                            onChange={() => handleFilterChange(category.category_id)}
+                                        >
+                                            {category.category_name}
+                                        </Checkbox>
+                                    </div>
+                                ))
+                            ) : (
+                                <div>
+                                    hey
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+}
 
 const MyComplaints = () => {
     const { authUser, isLoggedIn } = useAuth();
     const { user, isAuthenticated } = useAuth0();
     const { categories } = getCategories();
     const { complaints, loading } = getComplaints(authUser.Id);
-    const [isLoading, setIsLoading] = useState(true);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     if (!isAuthenticated) {
@@ -33,21 +96,6 @@ const MyComplaints = () => {
             }
         });
     };
-
-    const filteredCategories = categories.filter((category) =>
-        selectedCategories.includes(category.category_id)
-    );
-
-    let filteredComplaints;
-
-
-    if (selectedCategories.length === 0) {
-        filteredComplaints = complaints;
-    } else {
-        filteredComplaints = complaints.filter((complaint) =>
-            selectedCategories.includes(complaint.category_id)
-        );
-    }
 
     return (
         <>
@@ -77,9 +125,7 @@ const MyComplaints = () => {
                 </div>
                 <div className="container-fluid">
                     {loading ? (
-                        <div className="container-fluid p-4 spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
+                        <LoadingSpinner />
                     ) : complaints.length > 0 ? (
                         <div className="row">
                             <div className="col-md-2 col-3">
@@ -98,17 +144,7 @@ const MyComplaints = () => {
                                             <p className="fw-bold">Category</p>
                                         </div>
                                         <div>
-                                            {categories.map((category) => (
-                                                <div key={category.category_id}>
-                                                    <Checkbox
-                                                        checked={selectedCategories.includes(category.category_id)}
-                                                        className="p-2"
-                                                        onChange={() => handleFilterChange(category.category_id)}
-                                                    >
-                                                        {category.category_name}
-                                                    </Checkbox>
-                                                </div>
-                                            ))}
+                                            <Filter />
                                         </div>
                                     </div>
                                 </div>

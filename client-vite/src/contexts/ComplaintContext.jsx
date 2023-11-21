@@ -1,12 +1,18 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function getComplaints() {
+export function getComplaints(userId = null) {
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    let apiUrl = `${ServerUrl}/api/complaints`;
+
+    if(userId){
+        apiUrl += `/${userId}`
+    }
+
     useEffect(() => {
-        fetch(`${ServerUrl}/api/complaints`, {
+        fetch(apiUrl, {
             method: 'GET',
         })
             .then((response) => response.json())

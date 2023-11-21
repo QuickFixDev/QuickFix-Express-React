@@ -24,7 +24,7 @@ export function AuthProvider({ children }) {
     const [role, setRole] = useState('');
     const [streetName, setStreetName] = useState('');
     const [picture, setPicture] = useState('');
-useEffect
+
     // Validation of existing user in database based on auth0's provided user
     if (isAuthenticated) {
 
@@ -42,8 +42,6 @@ useEffect
         })
             .then((response) => response.json())
             .then((responseData) => {
-                console.log(responseData)
-
                 setUserId(responseData.user_id);
                 setEmail(responseData.email);
                 setFirstName(responseData.first_name);
@@ -71,8 +69,7 @@ useEffect
                     return response.json();
                 })
                 .then((responseData) => {
-                    console.log('response data:', responseData);
-                    console.log(responseData)
+
                     setRole(responseData);
                     setLoading(false);
                 })
@@ -131,7 +128,6 @@ useEffect
                     StreetName: null
                 });
             }
-            console.log('user id below: ', userId);
             setIsLoggedIn(isAuthenticated);
         }
     }, [
