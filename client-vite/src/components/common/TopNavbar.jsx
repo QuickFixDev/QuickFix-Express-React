@@ -19,7 +19,7 @@ function TopNavbar() {
 
                     {isLoggedIn ? (
                         <span className="nav-link text-white user-username">
-                            Quickfix {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS}
+                            Quickfix
                             <span className='badge bg-secondary mx-3'>
                                 {authUser.Role}
                             </span>
@@ -30,7 +30,6 @@ function TopNavbar() {
                         </span>
                     )}
 
-
                     {/* {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS === 'true' ? (
                         <span className="nav-link text-white ps-1">
                             {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS}
@@ -38,10 +37,6 @@ function TopNavbar() {
                     ) : (
                         <span></span>
                     )} */}
-
-
-
-
 
                 </div>
                 <div className="d-flex col justify-content-end align-items-center">
