@@ -1,7 +1,7 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function getComplaints(userId = null) {
+export function useComplaints(userId = null) {
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
 

@@ -25,6 +25,7 @@ app.use('/api/roles', RoleRoutes);
 app.use('/api/residences', ResidenceRoutes);
 app.use('/api/residentials', ResidentialRoutes);
 app.use('/api/complaints', ComplaintRoutes);
+app.use('/api/users', UserRoutes);
     
 app.use('/admin/users', UserRoutes);
 app.use('/admin/complaints', ComplaintRoutes);

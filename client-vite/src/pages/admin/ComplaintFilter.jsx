@@ -1,10 +1,10 @@
 // ComplaintFilter.js
 import React, { useState, useEffect } from "react";
 import ServerUrl from "../../constants/ServerUrl";
-import { getComplaints } from "../../contexts/ComplaintContext";
+import { useComplaints } from "../../contexts/ComplaintContext";
 import SearchBar from "../../components/common/SearchBar";
 import FilterComponent from "../../components/common/FilterComponent";
-import { getCategories } from "../../contexts/CategoryContext";
+import { useCategories } from "../../contexts/CategoryContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { Checkbox } from "antd";
 
@@ -12,10 +12,10 @@ const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5
 
 
 const Filter = () => {
-  const { categories } = getCategories();
+  const { categories } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { authUser, isLoggedIn } = useAuth();
-  const { complaints, loading } = getComplaints(authUser.Id);
+  const { complaints, loading } = useComplaints(authUser.Id);
 
   const handleFilterChange = (categoryId) => {
     setSelectedCategories((prevCategories) => {
@@ -76,7 +76,7 @@ const Filter = () => {
 
 
 const ComplaintFilter = () => {
-  const { complaints } = getComplaints();
+  const { complaints } = useComplaints();
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
 

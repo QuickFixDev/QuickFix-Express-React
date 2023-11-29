@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import ServerUrl from '../../constants/ServerUrl';
+import ServerUrl from '../../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
-import AccessDenied from '../common/AccessDenied';
-import { useAuth } from "../../contexts/AuthContext";
+import AccessDenied from '../../common/AccessDenied';
+import { useAuth } from "../../../contexts/AuthContext";
 
 function CreateRoleComponent() {
     const { isAuthenticated } = useAuth0();

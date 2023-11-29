@@ -9,15 +9,15 @@ import AccessDenied from '../common/AccessDenied';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getCategories } from '../../contexts/CategoryContext';
+import { useCategories } from '../../contexts/CategoryContext';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import { getComplaints } from '../../contexts/ComplaintContext';
+import { useComplaints } from '../../contexts/ComplaintContext';
 
 const Filter = () => {
-    const { categories } = getCategories();
+    const { categories } = useCategories();
     const [selectedCategories, setSelectedCategories] = useState([]);
     const { authUser, isLoggedIn } = useAuth();
-    const { complaints, loading } = getComplaints(authUser.Id);
+    const { complaints, loading } = useComplaints(authUser.Id);
 
     const handleFilterChange = (categoryId) => {
         setSelectedCategories((prevCategories) => {
@@ -79,8 +79,8 @@ const Filter = () => {
 const MyComplaints = () => {
     const { authUser, isLoggedIn } = useAuth();
     const { user, isAuthenticated } = useAuth0();
-    const { categories } = getCategories();
-    const { complaints, loading } = getComplaints(authUser.Id);
+    const { categories } = useCategories();
+    const { complaints, loading } = useComplaints(authUser.Id);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     if (!isAuthenticated) {

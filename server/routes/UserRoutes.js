@@ -6,8 +6,8 @@ const UserController = require('../controllers/UserController');
 const ComplaintController = require('../controllers/ComplaintController');
 
 router.post('/', UserController.deleteUser);
-router.get('/:id', UserController.getUserId);
 router.get('/', UserController.getAllUsers);
+router.get('/get-by-email/:id', UserController.getUserByEmail);
 router.post('/new', UserController.createUser);
 router.delete('/:id', UserController.deleteUser);
 

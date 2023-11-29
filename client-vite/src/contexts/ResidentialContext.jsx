@@ -1,7 +1,7 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function getResidentials() {
+export function useResidentials() {
     const [residentials, setResidentials] = useState([]);
     const [loading, setLoading] = useState(true);
 

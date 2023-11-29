@@ -3,7 +3,7 @@ import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
 import { useAuth } from "../../contexts/AuthContext";
-import { getRoles } from "../../contexts/RoleContext";
+import { useRoles } from "../../contexts/RoleContext";
 
 
 
@@ -20,7 +20,7 @@ const RegisterRequest = () => {
         phone: 0,
         email: ''
     });
-    const { roles } = getRoles();
+    const { roles } = useRoles();
 
     const handleChange = (e) => {
         const { name, value } = e.target;

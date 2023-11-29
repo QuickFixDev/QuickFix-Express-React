@@ -1,7 +1,7 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function getCategories() {
+export function useCategories() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 

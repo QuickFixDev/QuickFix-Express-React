@@ -11,27 +11,29 @@ import MyComplaints from './pages/resident/MyComplaints';
 import ComplainForm from './pages/resident/ComplaintStorage';
 import ResidentPanel from './pages/resident/ResidentPanel';
 
-import ComplaintManagement from './pages/admin/ComplaintManagement';
+import ResidentialsManagement from './pages/admin/management/ResidentialsManagement';
+import ResidenceManagement from './pages/admin/management/ResidenceManagement';
+import UserManagement from './pages/admin/management/UserManagement';
+import ComplaintManagement from './pages/admin/management/ComplaintManagement';
+import CategoryManagement from './pages/admin/management/CategoryManagement';
+
 import Stats from './pages/admin/Stats';
 import FilterTest from './pages/admin/FilterTest';
-import UserStorage from './pages/admin/UserStorage';
-import UserManagement from './pages/admin/UserManagement';
-import CategoryManagement from './pages/admin/CategoryManagement';
-import CreateRole from './pages/admin/RoleStorage';
-import Residences from './pages/admin/Residences';
-import ResidenceManagement from './pages/admin/ResidenceManagement';
+import UserStorage from './pages/admin/forms/UserStorage';
+import CreateRole from './pages/admin/forms/RoleStorage';
+import ResidenceList from './pages/admin/ResidenceList';
 
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import Dashboard from './components/common/DashBoard';
 
 import { useAuth0 } from '@auth0/auth0-react';
 import ContextTest from './pages/common/ContextTest';
 import RegisterRequest from './pages/resident/RegisterRequest';
 import ResidenceStorage from './pages/admin/ResidenceStorage';
-import ResidentialsManagement from './pages/admin/ResidentialsManagement';
 import ResidentialStorage from './pages/admin/ResidentialStorage';
 import ComplaintFilter from './pages/admin/ComplaintFilter';
 import RoleFilter from './pages/admin/RoleFilter';
+import EmployeePanel from './pages/employee/EmployeePanel';
+import NotificationPanel from './pages/common/NotificationPanel';
 
 
 
@@ -52,7 +54,7 @@ export default function App() {
                   <Route path="/user/complaints/new" element={<ComplainForm />} />
                   <Route path="/user/complaints" element={<MyComplaints />} />
                   <Route path="/user/request" element={<RegisterRequest />} />
-                  <Route path="/user/residences" element={<Residences />} />
+                  <Route path="/user/residences" element={<ResidenceList />} />
 
                   <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
@@ -74,6 +76,10 @@ export default function App() {
                   <Route path="/category-management" element={<CategoryManagement />} />
                   <Route path="/context-test" element={<ContextTest />} />
                   <Route path="/resident-panel" element={<ResidentPanel />} />
+
+                  <Route path="/employee-panel" element={<EmployeePanel />} />
+                  <Route path="/notification-panel" element={<NotificationPanel />} />
+
                 </Routes>
 
               </main>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ServerUrl from '../../constants/ServerUrl';
-import { useAuth } from "../../contexts/AuthContext";
-import AccessDenied from '../common/AccessDenied';
+import ServerUrl from '../../../constants/ServerUrl';
+import { useAuth } from "../../../contexts/AuthContext";
+import AccessDenied from '../../common/AccessDenied';
 import { Modal, Button, Table } from 'react-bootstrap';
 
 const initialSqlQuery = 'SELECT * FROM complaints';

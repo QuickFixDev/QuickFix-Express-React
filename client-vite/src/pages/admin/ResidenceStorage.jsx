@@ -3,14 +3,14 @@ import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
 import { useAuth } from '../../contexts/AuthContext';
-import { getResidences } from '../../contexts/ResidenceContext';
-import { getResidentials } from '../../contexts/ResidentialContext';
+import { useResidences } from '../../contexts/ResidenceContext';
+import { useResidentials } from '../../contexts/ResidentialContext';
 
 function ResidenceStorageComponent() {
     const { authUser, isLoggedIn } = useAuth();
     const { isAuthenticated } = useAuth0();
-    const { residences } = getResidences();
-    const { residentials } = getResidentials();
+    const { residences } = useResidences();
+    const { residentials } = useResidentials();
 
 
     const [formData, setFormData] = useState({

@@ -1,7 +1,7 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function getResidences() {
+export function useResidences() {
     const [residences, setResidences] = useState([]);
     const [isLoading, setLoading] = useState(true);
 

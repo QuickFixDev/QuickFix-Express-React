@@ -1,20 +1,22 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { NavLink } from 'react-router-dom';
 import LoginButton from "../../components/common/LoginButton";
-import { getCategories } from "../../contexts/CategoryContext";
-import { getRoles } from "../../contexts/RoleContext";
-import { getResidences } from "../../contexts/ResidenceContext";
-import { getResidentials } from "../../contexts/ResidentialContext";
+import { useCategories } from "../../contexts/CategoryContext";
+import { useRoles } from "../../contexts/RoleContext";
+import { useResidences } from "../../contexts/ResidenceContext";
+import { useResidentials } from "../../contexts/ResidentialContext";
 import { useEffect, useState } from "react";
-import { getComplaints } from "../../contexts/ComplaintContext";
+import { useComplaints } from "../../contexts/ComplaintContext";
+import { useUsers } from "../../contexts/UsersContext";
 
 const ContextTest = () => {
     const { authUser, isLoggedIn } = useAuth();
-    const { categories } = getCategories();
-    const { roles } = getRoles();
-    const { residences } = getResidences();
-    const { residentials } = getResidentials();
-    const { complaints } = getComplaints();
+    const { categories } = useCategories();
+    const { roles } = useRoles();
+    const { residences } = useResidences();
+    const { residentials } = useResidentials();
+    const { complaints } = useComplaints();
+    const { users } = useUsers();
 
     const userFields = [
         { name: 'User Status', value: isLoggedIn ? 'loggedIn' : 'loggedOut' },
@@ -134,6 +136,24 @@ const ContextTest = () => {
                         </select>
                     ) : (
                         'No complaints available'
+                    )}
+                </div>
+            </div>
+
+            <div className="row border round">
+                <div className="p-4">
+                    <h2>users context</h2>
+                    <p>users:</p>
+                    {users && users.length > 0 ? (
+                        <select className="form-select">
+                            {users.map((item, index) => (
+                                <option key={index} value={item.user_id}>
+                                    {item.first_name}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        'No users available'
                     )}
                 </div>
             </div>

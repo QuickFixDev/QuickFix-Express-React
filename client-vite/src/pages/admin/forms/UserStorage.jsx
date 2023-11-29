@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import ServerUrl from '../../constants/ServerUrl';
+import ServerUrl from '../../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
-import AccessDenied from '../common/AccessDenied';
-import { useAuth } from "../../contexts/AuthContext";
-import { getRoles } from "../../contexts/RoleContext";
-import { getResidences } from "../../contexts/ResidenceContext";
+import AccessDenied from '../../common/AccessDenied';
+import { useAuth } from "../../../contexts/AuthContext";
+import { useRoles } from "../../../contexts/RoleContext";
+import { useResidences } from "../../../contexts/ResidenceContext";
 
 
 function UserStorageComponent() {
     const { authUser, isLoggedIn } = useAuth();
     const { isAuthenticated } = useAuth0();
-    const { residences } = getResidences();
+    const { residences } = useResidences();
 
     const [formData, setFormData] = useState({
         first_name: '',
@@ -20,7 +20,7 @@ function UserStorageComponent() {
         role_id: 0,
         residence: 0,
     });
-    const { roles } = getRoles();
+    const { roles } = useRoles();
 
     const handleChange = (e) => {
         const { name, value } = e.target;

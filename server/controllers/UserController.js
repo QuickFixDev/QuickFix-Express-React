@@ -96,7 +96,7 @@ UserController.createUser = (req, res) => {
     });
 };
 
-UserController.getUserId = (req, res) => {
+UserController.getUserByEmail = (req, res) => {
     const sqlQuery = 'SELECT * FROM users WHERE email = ?';
     const userEmail = req.params.id;
 

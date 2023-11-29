@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import ServerUrl from '../../constants/ServerUrl';
+import ServerUrl from '../../../constants/ServerUrl';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import AccessDenied from '../common/AccessDenied';
-import { getRoles } from "../../contexts/RoleContext";
+import { useAuth } from '../../../contexts/AuthContext';
+import AccessDenied from '../../common/AccessDenied';
+import { useRoles } from "../../../contexts/RoleContext";
 
 import { Table } from 'react-bootstrap';
-import { getResidences } from '../../contexts/ResidenceContext';
+import { useResidences } from '../../../contexts/ResidenceContext';
 
 const NewRequestNotification = ({ count }) => {
     return (
@@ -85,9 +85,9 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
 }
 
 function UserDetails({ user, handleClose, handleSave }) {
-    const { roles } = getRoles();
+    const { roles } = useRoles();
     const [editedUser, setEditedUser] = useState({ ...user });
-    const { residences } = getResidences();
+    const { residences } = useResidences();
 
 
     const handleChange = (e) => {

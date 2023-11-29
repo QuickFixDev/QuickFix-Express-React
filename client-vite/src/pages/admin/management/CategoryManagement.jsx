@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import ServerUrl from '../../constants/ServerUrl';
+import ServerUrl from '../../../constants/ServerUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useAuth } from "../../contexts/AuthContext";
-import AccessDenied from '../common/AccessDenied';
+import { useAuth } from "../../../contexts/AuthContext";
+import AccessDenied from '../../common/AccessDenied';
 
 
 function CategoryList({ categories, setSelectedCategory, deleteCategory }) {

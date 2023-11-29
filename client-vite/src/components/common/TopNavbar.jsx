@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from "../../contexts/AuthContext";
+import { Link } from 'react-router-dom';
 
 function TopNavbar() {
     const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
@@ -43,9 +44,12 @@ function TopNavbar() {
 
                     {isAuthenticated ? (
                         <>
-                            <div className='text-white px-md-3 px-2'>
-                                <FontAwesomeIcon icon={faBell} />
-                            </div>
+                            <Link to={'/notification-panel'} className='text-white px-md-3'>
+                                <FontAwesomeIcon icon={faBell} className='px-2'/>
+                                <span className='badge bg-danger p-2'>
+                                    123
+                                </span>
+                            </Link>
 
                             <div className="d-flex flex-column align-items-end px-md-3 px-2">
                                 <span className="text-white d-none d-md-block text-white user-username fw-bold">{user.name}</span>

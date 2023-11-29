@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
         const email = user.email;
         const userEmail = removeDotsFromLocalPart(email);
 
-        fetch(`${ServerUrl}/user/${userEmail}`, {
+        fetch(`${ServerUrl}/user/get-by-email/${userEmail}`, {
             method: 'GET',
         })
             .then((response) => response.json())

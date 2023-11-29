@@ -6,12 +6,11 @@ import AccessDenied from '../common/AccessDenied';
 import { useAuth } from '../../contexts/AuthContext';
 import ServerUrl from '../../constants/ServerUrl';
 import { useEffect, useState } from 'react';
-import { getResidences } from '../../contexts/ResidenceContext';
+import { useResidences } from '../../contexts/ResidenceContext';
 
 
 const ResidenceList = () => {
-    const { residences, isLoading } = getResidences();
-
+    const { residences, isLoading } = useResidences();
 
     return (
         <div className="list container-fluid p-md-5 p-3">

@@ -3,13 +3,14 @@ import { NavLink } from 'react-router-dom';
 import LoginButton from "../../components/common/LoginButton";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { getCategories } from "../../contexts/CategoryContext";
+import { useCategories } from "../../contexts/CategoryContext";
 import { useEffect, useState } from "react";
 import ResidentPanel from "../resident/ResidentPanel";
+import AdminPanel from "../admin/AdminPanel";
 
 const WelcomePage = () => {
   const { authUser, isLoggedIn } = useAuth();
-  const { categories, loading } = getCategories();
+  const { categories, loading } = useCategories();
   const { loginWithRedirect } = useAuth0();
 
   return (
@@ -59,8 +60,11 @@ const HomePage = () => {
     return <WelcomePage />
   }
 
-  if (authUser.Role === 'resident' || authUser.Role === 'dev') {
+  if (authUser.Role === 'resident') {
     return <ResidentPanel />
+  }
+  if (authUser.Role === 'dev') {
+    return <AdminPanel />
   }
 
 }

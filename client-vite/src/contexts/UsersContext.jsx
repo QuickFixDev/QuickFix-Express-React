@@ -1,18 +1,24 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useRoles() {
-    const [roles, setroles] = useState([]);
+export function useUsers(id = null) {
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    let apiUrl = `${ServerUrl}/api/users`;
+
+    if(id){
+        apiUrl += `/${id}`
+    }
+
     useEffect(() => {
-        fetch(`${ServerUrl}/api/roles`, {
+        fetch(apiUrl, {
             method: 'GET',
         })
             .then((response) => response.json())
             .then((responseData) => {
-                const rolesData = responseData;
-                setroles(rolesData);
+                const usersData = responseData;
+                setUsers(usersData);
                 setLoading(false);
             })
             .catch((error) => {
@@ -21,5 +27,5 @@ export function useRoles() {
             });
     }, []);
 
-    return { roles, loading };
+    return { users, loading };
 }
