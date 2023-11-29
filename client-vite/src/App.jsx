@@ -36,7 +36,6 @@ import EmployeePanel from './pages/employee/EmployeePanel';
 import NotificationPanel from './pages/common/NotificationPanel';
 
 
-
 export default function App() {
   return (
     <BrowserRouter>

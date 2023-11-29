@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useContext, createContext, useEffect, } from 'react';
 import ServerUrl from '../constants/ServerUrl';
 import Logout from '../components/common/Logout';
+import { useNavigate  } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -24,6 +25,9 @@ export function AuthProvider({ children }) {
     const [role, setRole] = useState('');
     const [streetName, setStreetName] = useState('');
     const [picture, setPicture] = useState('');
+
+    const [redirectUser, setRedirectUser] = useState(false);
+    const navigate  = useNavigate();
 
     // Validation of existing user in database based on auth0's provided user
     if (isAuthenticated) {
@@ -113,6 +117,7 @@ export function AuthProvider({ children }) {
                         StreetName: null
                     });
                     logout();
+                    setRedirectUser(true)
                     return; // Exit the effect to prevent further updates
                 }
             } else {
@@ -127,6 +132,8 @@ export function AuthProvider({ children }) {
                     Role: null,
                     StreetName: null
                 });
+                navigate('/user/request');
+
             }
             setIsLoggedIn(isAuthenticated);
         }
@@ -135,7 +142,8 @@ export function AuthProvider({ children }) {
         isAuthenticated,
         isLoading,
         userId,
-        role
+        role,
+        redirectUser
     ]);
 
     return (
