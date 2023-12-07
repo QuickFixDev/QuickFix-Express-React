@@ -7,6 +7,7 @@ import FilterComponent from "../../components/common/FilterComponent";
 import { useCategories } from "../../contexts/CategoryContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { Checkbox } from "antd";
+import ComplaintModal from "../../components/admin/ComplaintModal";
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
 
@@ -79,6 +80,16 @@ const ComplaintFilter = () => {
   const { complaints } = useComplaints();
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+
+  const handleComplaintClick = (complaint) => {
+    setSelectedComplaint(complaint);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedComplaint(null);
+  };
+
 
   const handleSelectFilter = (filter) => {
     setSelectedFilter(filter);
@@ -94,10 +105,10 @@ const ComplaintFilter = () => {
 
   const filteredComplaints = complaints.filter((item) => {
     return search.toLowerCase() === '' ||
-      item.complaint_description.toLowerCase().includes(search.toLowerCase()) ||
-      item.complaint_title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase()) ||
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
 
-      item.complaint_id.toString().includes(search.toLowerCase());
+      item.id.toString().includes(search.toLowerCase());
   });
 
   const truncateText = (text, limit) => {
@@ -113,6 +124,7 @@ const ComplaintFilter = () => {
           <h2 className="fw-bold">Complaint manager</h2>
         </div>
       </div>
+
       <div className="row py-3">
         <div className="col">
           <SearchBar onSearch={handleSearch} searchType='complaints' />
@@ -124,7 +136,7 @@ const ComplaintFilter = () => {
           </div>
         </div>
       </div>
-
+      title
 
       <div className="row">
 
@@ -134,18 +146,18 @@ const ComplaintFilter = () => {
               <tr>
                 <th>ID</th>
                 <th>Complaint</th>
-                <th>status</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {filteredComplaints.map((item) => (
-                <tr key={item.complaint_id}>
-                  <td>{item.complaint_id}</td>
+                <tr className="cursor-pointer" key={item.id} onClick={() => handleComplaintClick(item)}>
+                  <td>{item.id}</td>
                   <td>
                     <div>
-                      <strong>{item.complaint_title}</strong>
+                      <strong>{item.title}</strong>
                     </div>
-                    <div className="d-md-block d-none">{truncateText(item.complaint_description, 15)}</div>
+                    <div className="d-md-block d-none">{truncateText(item.description, 15)}</div>
                   </td>
                   <td>
                     {item.complaint_status}
@@ -154,6 +166,10 @@ const ComplaintFilter = () => {
               ))}
             </tbody>
           </table>
+
+          {selectedComplaint && (
+            <ComplaintModal complaint={selectedComplaint} onClose={handleCloseModal} />
+          )}
         </div>
       </div>
 

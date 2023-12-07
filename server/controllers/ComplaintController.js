@@ -8,7 +8,7 @@ ComplaintController.getUserComplaints = (req, res) => {
 }
 
 ComplaintController.getAllComplaints = (req, res) => {
-    const sqlQuery = 'SELECT * FROM complaints';
+    const sqlQuery = 'SELECT * FROM complaints_test';
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {

@@ -108,7 +108,9 @@ const WelcomePage = () => {
             </h1>
 
             <p className="fw-light">
-              QuickFix is a comprehensive Resident Services Management System designed to streamline and enhance the management of residential complexes and private residences.
+              QuickFix
+
+              QuickFix is a system designed to enhance communication between tenants and managers residential complexes and private residences.
               The system facilitates efficient communication between residents and management, allowing users to report and track various maintenance and service requests seamlessly.
             </p>
 

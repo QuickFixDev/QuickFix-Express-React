@@ -5,7 +5,13 @@ const pool = require('../dbConnection');
 
 UserController.getAllUsers = (req, res) => {
     console.log("Fetching the users");
-    const sqlQuery = 'SELECT * FROM users';
+    const sqlQuery = `
+    SELECT u.user_id, u.first_name, u.last_name, u.email, u.phone, r.role_name
+    FROM users u
+    INNER JOIN users_roles ur ON u.user_id = ur.user_id
+    INNER JOIN roles r ON ur.role_id = r.role_id
+    `;
+        ;
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
@@ -97,7 +103,15 @@ UserController.createUser = (req, res) => {
 };
 
 UserController.getUserByEmail = (req, res) => {
-    const sqlQuery = 'SELECT * FROM users WHERE email = ?';
+    const sqlQuery = `
+        SELECT u.user_id, u.first_name, u.last_name, u.email, u.phone, r.role_name
+        FROM users u
+        INNER JOIN users_roles ur ON u.user_id = ur.user_id
+        INNER JOIN roles r ON ur.role_id = r.role_id
+        WHERE u.email = ?
+    `;
+
+    // const sqlQuery = 'SELECT * FROM users WHERE email = ?';
     const userEmail = req.params.id;
 
     pool.query(sqlQuery, userEmail, (err, results) => {
@@ -114,7 +128,7 @@ UserController.getUserByEmail = (req, res) => {
 
         const user_id = results[0].user_id; // Extract the user_id from the first result
         res.json(results[0]);
-    }); 
+    });
 };
 
 module.exports = UserController;

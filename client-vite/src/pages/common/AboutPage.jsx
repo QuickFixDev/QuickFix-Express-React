@@ -37,7 +37,7 @@ const AboutContent = () => {
         general: [
             {
                 title: "QuickFix",
-                generalDescription: "QuickFix is a comprehensive Resident Services Management System designed to streamline and enhance the management of residential complexes and private residences. The system facilitates efficient communication between residents and management, allowing users to report and track various maintenance and service requests seamlessly.",
+                generalDescription: "QuickFix is a service designed to enhance the management of residential service issues. The system facilitates efficient communication between residents and management, allowing users to report and track various maintenance and service requests seamlessly.",
             },
         ],
         details: [

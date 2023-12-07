@@ -35,6 +35,7 @@ import RoleFilter from './pages/admin/RoleFilter';
 import EmployeePanel from './pages/employee/EmployeePanel';
 import NotificationPanel from './pages/common/NotificationPanel';
 
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function App() {
   return (

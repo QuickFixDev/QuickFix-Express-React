@@ -60,7 +60,7 @@ const routes = [
   { userRequired: 'admin', path: '/admin/roles/new', label: 'Roles', iconName: 'faCrown' },
   // { userRequired: 'admin', path: '/complaint-filter', label: 'Complaint filter', iconName: 'faSearch' },
   { userRequired: 'admin', path: '/role-filter', label: 'Role filter', iconName: 'faSearch' },
-  { userRequired: 'admin', path: '/context-test', label: 'Context', iconName: 'faCog' },
+  { userRequired: 'admin', path: '/context-test', label: 'JSON DB', iconName: 'faCog' },
   // { userRequired: 'admin', path: '/category-management', label: 'Category management' },
 ];
 

@@ -54,33 +54,13 @@ export function AuthProvider({ children }) {
                 setPhoneNumber(responseData.phone);
                 setStreetName(responseData.street_name);
                 setPicture(user.picture)
-
+                setRole(responseData.role_name)
+                console.log(responseData)
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
                 setLoading(false);
             });
-
-
-
-            fetch(`${ServerUrl}/api/roles/${userId}`, {
-                method: 'GET',
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((responseData) => {
-
-                    setRole(responseData);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error('Error fetching data:', error);
-                    setLoading(false);
-                });
 
         if (loading) {
             return (
@@ -118,6 +98,8 @@ export function AuthProvider({ children }) {
                     });
                     logout();
                     setRedirectUser(true)
+                    navigate('/user/request');
+
                     return; // Exit the effect to prevent further updates
                 }
             } else {
@@ -132,7 +114,6 @@ export function AuthProvider({ children }) {
                     Role: null,
                     StreetName: null
                 });
-                navigate('/user/request');
 
             }
             setIsLoggedIn(isAuthenticated);

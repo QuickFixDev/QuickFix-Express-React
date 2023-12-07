@@ -146,7 +146,7 @@ const FilterTest = () => {
                             style={{ cursor: 'pointer' }}
                           >
                             <td>
-                              {complaint.complaint_title}
+                              {complaint.title}
                             </td>
                             <td>
                               {complaint.complaint_status}
@@ -170,7 +170,7 @@ const FilterTest = () => {
         <Modal show={showModal} onHide={handleModalClose} size="lg" centered>
           <Modal.Header closeButton>
             <Modal.Title>
-              {selectedComplaint ? selectedComplaint.complaint_title : 'No Complaint Selected'}
+              {selectedComplaint ? selectedComplaint.title : 'No Complaint Selected'}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -179,7 +179,7 @@ const FilterTest = () => {
                 <div>
                   <p>{selectedComplaint.status}</p>
                   <div className='bg-light p-3'>
-                    {selectedComplaint.complaint_description || 'No details available for this complaint.'}
+                    {selectedComplaint.description || 'No details available for this complaint.'}
                   </div>
                 </div>
               ) : (

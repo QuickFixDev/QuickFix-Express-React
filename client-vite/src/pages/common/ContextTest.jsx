@@ -1,164 +1,172 @@
+import React, { useEffect, useState } from "react";
+import AccessDenied from '../common/AccessDenied';
+import { Checkbox } from 'antd';
+import 'antd/lib/checkbox/style'; // Import the specific style for Checkbox
+import 'antd/lib/style'; // Import the general styles for Ant Design
+
 import { useAuth } from "../../contexts/AuthContext";
-import { NavLink } from 'react-router-dom';
-import LoginButton from "../../components/common/LoginButton";
 import { useCategories } from "../../contexts/CategoryContext";
 import { useRoles } from "../../contexts/RoleContext";
 import { useResidences } from "../../contexts/ResidenceContext";
 import { useResidentials } from "../../contexts/ResidentialContext";
-import { useEffect, useState } from "react";
 import { useComplaints } from "../../contexts/ComplaintContext";
 import { useUsers } from "../../contexts/UsersContext";
 
-const ContextTest = () => {
+const LoggedUser = () => {
     const { authUser, isLoggedIn } = useAuth();
-    const { categories } = useCategories();
-    const { roles } = useRoles();
-    const { residences } = useResidences();
-    const { residentials } = useResidentials();
-    const { complaints } = useComplaints();
-    const { users } = useUsers();
-
-    const userFields = [
-        { name: 'User Status', value: isLoggedIn ? 'loggedIn' : 'loggedOut' },
-        { name: 'First Name', value: isLoggedIn ? authUser.FirstName : null },
-        { name: 'Last Name', value: isLoggedIn ? authUser.LastName : null },
-        { name: 'Role', value: isLoggedIn ? authUser.Role : null },
-        { name: 'User ID', value: isLoggedIn ? authUser.Id : null },
-    ];
+    const jsonLoggedUser = JSON.stringify(authUser, null, 2)
 
     return (
-        <div className="container p-sm-5 p-0">
-            <div className="row border round">
-                <div className="p-4">
-                    <h2>User context</h2>
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Field</th>
-                                <th scope="col">Data</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {userFields.map((field, index) => (
-                                <tr key={index}>
-                                    <td>{field.name}</td>
-                                    <td>{field.value}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div className="row border round">
-                <div className="p-4">
-                    <h2>Categories context</h2>
-                    <p>Categories:</p>
-                    {categories && categories.length > 0 ? (
-                        <select className="form-select">
-                            {categories.map((category, index) => (
-                                <option key={index} value={category.category_id}>
-                                    {category.category_id} {category.category_name}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        'No categories available'
-                    )}
-                </div>
-            </div>
-
-            <div className="row border round">
-                <div className="p-4">
-                    <h2>Roles context</h2>
-                    <p>Roles:</p>
-                    {roles && roles.length > 0 ? (
-                        <select className="form-select">
-                            {roles.map((role, index) => (
-                                <option key={index} value={role.role_id}>
-                                    {role.role_name}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        'No roles available'
-                    )}
-                </div>
-            </div>
-
-            <div className="row border round">
-                <div className="p-4">
-                    <h2>Residences context</h2>
-                    <p>Residences:</p>
-                    {residences && residences.length > 0 ? (
-                        <select className="form-select">
-                            {residences.map((residence, index) => (
-                                <option key={index} value={residence.residence_id}>
-                                    {residence.street_name} #{residence.street_number}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        'No residences available'
-                    )}
-                </div>
-            </div>
-
-            <div className="row border round">
-                <div className="p-4">
-                    <h2>Residentials context</h2>
-                    <p>Residentials:</p>
-                    {residentials && residentials.length > 0 ? (
-                        <select className="form-select">
-                            {residentials.map((residential, index) => (
-                                <option key={index} value={residential.residential_id}>
-                                    {residential.residential_name}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        'No residentials available'
-                    )}
-                </div>
-            </div>
-
-            <div className="row border round">
-                <div className="p-4">
-                    <h2>Complaints context</h2>
-                    <p>complaints:</p>
-                    {complaints && complaints.length > 0 ? (
-                        <select className="form-select">
-                            {complaints.map((complaint, index) => (
-                                <option key={index} value={complaint.complaint_id}>
-                                    {complaint.complaint_title}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        'No complaints available'
-                    )}
-                </div>
-            </div>
-
-            <div className="row border round">
-                <div className="p-4">
-                    <h2>users context</h2>
-                    <p>users:</p>
-                    {users && users.length > 0 ? (
-                        <select className="form-select">
-                            {users.map((item, index) => (
-                                <option key={index} value={item.user_id}>
-                                    {item.first_name}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        'No users available'
-                    )}
-                </div>
-            </div>
-        </div>
+        < pre >
+            {jsonLoggedUser}
+        </pre >
     );
+}
+
+const UsersList = () => {
+    const { users } = useUsers();
+    const jsonUsers = JSON.stringify(users, null, 2)
+
+    return (
+        < pre >
+            {jsonUsers}
+        </pre >
+    );
+}
+
+const RolesList = () => {
+    const { roles } = useRoles();
+    const jsonRoles = JSON.stringify(roles, null, 2)
+
+    return (
+        < pre >
+            {jsonRoles}
+        </pre >
+    );
+}
+
+const ComplaintsList = () => {
+    const { complaints } = useComplaints();
+    const jsonComplaints = JSON.stringify(complaints, null, 2)
+
+    return (
+        < pre >
+            {jsonComplaints}
+        </pre >
+    );
+}
+
+const ResidentialsList = () => {
+    const { residentials } = useResidentials();
+    const jsonResidentials = JSON.stringify(residentials, null, 2)
+
+    return (
+        < pre >
+            {jsonResidentials}
+        </pre >
+    );
+}
+
+const ResidencesList = () => {
+    const { residences } = useResidences();
+    const jsonResidences = JSON.stringify(residences, null, 2)
+
+    return (
+        < pre >
+            {jsonResidences}
+        </pre >
+    );
+}
+
+const CategoriesList = () => {
+    const { categories } = useCategories();
+    const jsonCategories = JSON.stringify(categories, null, 2)
+
+    return (
+        < pre >
+            {jsonCategories}
+        </pre >
+    );
+}
+
+const ContextTest = () => {
+    const { authUser, isLoggedIn } = useAuth();
+
+    const [selectedComponents, setSelectedComponents] = useState([]);
+
+    const handleComponentToggle = (component) => {
+        setSelectedComponents((prevSelected) => {
+            if (prevSelected.includes(component)) {
+                return prevSelected.filter((selected) => selected !== component);
+            } else {
+                return [...prevSelected, component];
+            }
+        });
+    };
+
+    const componentsList = [
+        {
+            label: 'Logged User (yourself)',
+            component: 'LoggedUser'
+        },
+        {
+            label: 'Users List',
+            component: 'UsersList'
+        },
+        {
+            label: 'Roles List',
+            component: 'RolesList'
+        },
+        {
+            label: 'Complaints List',
+            component: 'ComplaintsList'
+        },
+        {
+            label: 'Residentials List',
+            component: 'ResidentialsList'
+        },
+        {
+            label: 'Residences List',
+            component: 'ResidencesList'
+        },
+        {
+            label: 'Categories List',
+            component: 'CategoriesList'
+        },
+    ]
+
+
+    if (authUser && authUser.Role == 'dev') {
+        return (
+            <div className="container-fluid px-5">
+
+                <div className="row my-5">
+                    <h4 className="fw-bold mb-4">Welcome to the DB view {authUser.FirstName}, select the lists you want to display</h4>
+                    {componentsList.map((item, index) => (
+
+                        <div key={index}> <Checkbox className="p-2" checked={selectedComponents.includes(item.component)}
+                            onChange={() => handleComponentToggle(item.component)}>{item.label}</Checkbox>
+                        </div>
+
+                    ))}
+                </div>
+
+                {componentsList
+                    .filter((item) => selectedComponents.includes(item.component))
+                    .map((item, index) => (
+                        <div key={index} className="row border rounded-3 my-2">
+                            <h5 className="my-3 fw-bold">{item.label}</h5>
+                            {React.createElement(eval(item.component))}
+                        </div>
+                    ))}
+            </div>
+        );
+    } else {
+        return (
+            <AccessDenied />
+        );
+    }
+
 };
 
 export default ContextTest;

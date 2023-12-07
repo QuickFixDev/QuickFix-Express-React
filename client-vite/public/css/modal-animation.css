@@ -1,0 +1,8 @@
+.custom-fade {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.custom-fade.show {
+    opacity: 1;
+}
