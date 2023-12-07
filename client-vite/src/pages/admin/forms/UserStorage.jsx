@@ -26,7 +26,7 @@ function UserStorageComponent() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-    authUser
+    
     const handleSubmit = (e) => {
         e.preventDefault();
 

@@ -19,16 +19,21 @@ const RoleRoutes = require('./routes/RoleRoutes');
 const CategoryRoutes = require('./routes/CategoryRoutes');
 const ResidenceRoutes = require('./routes/ResidenceRoutes');
 const ResidentialRoutes = require('./routes/ResidentialRoutes');
+const ComplaintsStatusRoutes = require('./routes/ComplaintsStatusRoutes');
+const ComplaintsHistoryRoutes = require('./routes/ComplaintsHistoryRoutes');
 
 app.use('/api/categories', CategoryRoutes);
 app.use('/api/roles', RoleRoutes);
 app.use('/api/residences', ResidenceRoutes);
 app.use('/api/residentials', ResidentialRoutes);
 app.use('/api/complaints', ComplaintRoutes);
+app.use('/api/complaints-status', ComplaintsStatusRoutes);
 app.use('/api/users', UserRoutes);
     
 app.use('/admin/users', UserRoutes);
 app.use('/admin/complaints', ComplaintRoutes);
+app.use('/admin/complaints-history', ComplaintsHistoryRoutes);
+
 app.use('/admin/roles', RoleRoutes);
 app.use('/admin/residences', ResidenceRoutes);
 app.use('/admin/residentials', ResidentialRoutes);

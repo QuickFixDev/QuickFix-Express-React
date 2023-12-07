@@ -7,46 +7,84 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { Form } from 'react-bootstrap';
 
+import { useUsers } from '../../contexts/UsersContext';
+import { useComplaintsStatus } from '../../contexts/ComplaintsStatusContext';
+import ServerUrl from '../../constants/ServerUrl';
 
-const Chatbox = () => {
-    const [textareaValue, setTextareaValue] = useState('');
 
-    const handleTextareaChange = (event) => {
-        setTextareaValue(event.target.value);
+const Chatbox = ({ onSendMessage }) => {
+    const [message, setMessage] = useState('');
+
+    const handleInputChange = (e) => {
+        setMessage(e.target.value);
     };
 
-    const calculateRows = (text) => {
-        const lineCount = (text.match(/\n/g) || []).length + 1;
-        return Math.min(lineCount, 10); // Limit to a maximum of 10 rows
+    const handleSendMessage = () => {
+        onSendMessage(message);
+        setMessage('');
     };
 
     return (
-        <form className='form mt-4'>
-            <div>
-                <p className='fw-bold'>Add a comment</p>
+        <div>
+            <div className='row'>
+                <p className='fw-bold px-0'>Add a comment</p>
             </div>
             <div className="row py-3 d-flex flex-row justify-content-center align-items-center border">
                 <div className="col pe-0">
                     <textarea rows={5} className='form-control border-0' placeholder='Add a summary for update' type="text" name="" id=""
                         style={{
                             boxShadow: 'none',
-                            borderColor: '#ced4da', // Set the border color to the default color
                             resize: 'none'
-                            /* Add any additional styles you want to remove during the active state */
                         }}
                     />
                 </div>
-                <div className="col-auto">
-                    <button className='btn bg-primary'>
-                        <FontAwesomeIcon icon={faPaperPlane} className='text-white' />
-                    </button>
-                </div>
+
             </div>
-        </form>
+        </div>
     );
 }
 
 const ComplaintModal = ({ complaint, onClose }) => {
+    const { users } = useUsers();
+    const { complaintsStatus } = useComplaintsStatus();
+
+    const [selectedEmployee, setSelectedEmployee] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
+    const [chatboxMessage, setChatboxMessage] = useState('');
+
+    const handleSubmit = (e) => {
+        console.log('Submitting Form:', {
+            complaintId: complaint.id,
+            selectedEmployee,
+            selectedStatus,
+            chatboxMessage,
+        });
+
+        e.preventDefault();
+
+        fetch(`${ServerUrl}/admin/complaints-history/new`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                complaint_id: complaint.id,
+                employee_id: selectedEmployee,
+                status_id: selectedStatus,
+                comment: chatboxMessage,
+              }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Form submitted successfully:', data);
+                onClose(); // Close the modal on success
+              })
+              .catch((error) => {
+                console.error('Error submitting form:', error);
+                // Handle errors or show a message to the user
+              });
+    };
+
     return (
         <Modal
             show={true}
@@ -66,30 +104,69 @@ const ComplaintModal = ({ complaint, onClose }) => {
                     <p className='m-0'>{complaint.description}</p>
                 </div>
 
-                <div className=''>
-                    <Form>
-                        <div className="row">
-                            <div className="col">
-                                <Form.Control className='my-2' as="select">
-                                    <option>Assign complaint to an employee</option>
-                                    <option>Employee 1</option>
-                                    <option>Employee 2</option>
-                                    <option>Employee 3</option>
-                                </Form.Control>
+                <Form>
+                    <div className="row">
+                        <div className="col">
+                            <input name='complaint_id' id='complaint_id' type="number" value={complaint.id} hidden readOnly/>
+                            <Form.Control name='employee_id' id='employee_id' className='my-2' as="select" onChange={(e) => setSelectedEmployee(e.target.value)}>
+                                <option>Assign complaint to an employee</option>
+
+                                {users.map((item) => (
+                                    item.role_name === 'employee' ? (
+                                        <option key={item.user_id} value={item.user_id}>{item.first_name}</option>
+                                    ) : (
+                                        null
+                                    )
+                                ))}
+
+                            </Form.Control>
+                        </div>
+                        <div className="col">
+                            <Form.Control name='status_id' id='status_id' className='my-2' as="select" onChange={(e) => setSelectedStatus(e.target.value)}>
+                                <option>Change complaint status</option>
+
+                                {complaintsStatus.map((item) => (
+                                    <option key={item.id} value={item.id}>{item.name}</option>
+                                ))}
+
+                            </Form.Control>
+                        </div>
+                    </div>
+                    <div className='p-3'>
+                        <div className='row'>
+                            <p className='fw-bold px-0'>Add a comment</p>
+                        </div>
+                        <div className="row py-3 d-flex flex-row justify-content-center align-items-center border">
+                            <div className="col pe-0">
+                                <textarea
+                                    rows={5}
+                                    className='form-control border-0'
+                                    placeholder='Add a summary for update'
+                                    type="text"
+                                    name='comment'
+                                    id='comment'
+                                    value={chatboxMessage}
+                                    onChange={(e) => setChatboxMessage(e.target.value)}
+                                    style={{
+                                        boxShadow: 'none',
+                                        borderColor: '#ced4da',
+                                        resize: 'none'
+                                    }}
+                                />
                             </div>
-                            <div className="col">
-                                <Form.Control className='my-2' as="select">
-                                    <option>Change complaint status</option>
-                                    <option>Status 1</option>
-                                    <option>Status 2</option>
-                                    <option>Status 3</option>
-                                </Form.Control>
+                            <div className="col-auto">
+                                <button
+                                    className='btn bg-primary'
+                                    onClick={handleSubmit}
+                                    type="submit"
+                                >
+                                    <FontAwesomeIcon icon={faPaperPlane} className='text-white' />
+                                </button>
                             </div>
                         </div>
-                    </Form>
-                </div>
+                    </div>
+                </Form>
 
-                <Chatbox />
             </Modal.Body>
         </Modal>
     );

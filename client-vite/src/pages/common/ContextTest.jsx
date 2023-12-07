@@ -11,6 +11,7 @@ import { useResidences } from "../../contexts/ResidenceContext";
 import { useResidentials } from "../../contexts/ResidentialContext";
 import { useComplaints } from "../../contexts/ComplaintContext";
 import { useUsers } from "../../contexts/UsersContext";
+import { useComplaintsStatus } from "../../contexts/ComplaintsStatusContext";
 
 const LoggedUser = () => {
     const { authUser, isLoggedIn } = useAuth();
@@ -89,6 +90,17 @@ const CategoriesList = () => {
     );
 }
 
+const ComplaintsStatusList = () => {
+    const { complaintsStatus } = useComplaintsStatus();
+    const jsonComplaintsStatus = JSON.stringify(complaintsStatus, null, 2)
+
+    return (
+        < pre >
+            {jsonComplaintsStatus}
+        </pre >
+    );
+}
+
 const ContextTest = () => {
     const { authUser, isLoggedIn } = useAuth();
 
@@ -132,6 +144,10 @@ const ContextTest = () => {
         {
             label: 'Categories List',
             component: 'CategoriesList'
+        },
+        {
+            label: 'Complaints Status List',
+            component: 'ComplaintsStatusList'
         },
     ]
 
