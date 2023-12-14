@@ -80,7 +80,7 @@ const MyComplaints = () => {
     const { authUser, isLoggedIn } = useAuth();
     const { user, isAuthenticated } = useAuth0();
     const { categories } = useCategories();
-    const { complaints, loading } = useComplaints({userId: authUser.Id});
+    const { complaints, isLoading: complaintsLoading } = useComplaints({userId: authUser.Id});
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     if (!isAuthenticated) {
@@ -124,7 +124,7 @@ const MyComplaints = () => {
                     </div>
                 </div>
                 <div className="container-fluid">
-                    {loading ? (
+                    {complaintsLoading ? (
                         <LoadingSpinner />
                     ) : complaints.length > 0 ? (
                         <div className="row">

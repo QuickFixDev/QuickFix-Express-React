@@ -1,7 +1,7 @@
 const LoadingSpinner = () => {
     return (
-        <div className="container-fluid p-4 spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
+        <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+            <div className="spinner-border text-secondary" role="status"></div>
         </div>
     );
 }

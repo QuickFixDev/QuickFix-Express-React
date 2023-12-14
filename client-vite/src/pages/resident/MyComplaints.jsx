@@ -11,12 +11,13 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useCategories } from '../../hooks/useCategories';
 import { useComplaints } from '../../hooks/useComplaints';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 const MyComplaints = () => {
     const { authUser, isLoggedIn } = useAuth();
     const { user, isAuthenticated } = useAuth0();
     const { categories } = useCategories();
-    const { complaints, loading } = useComplaints({userId: authUser.Id});
+    const { complaints, isLoading: complaintsLoading } = useComplaints({ userId: authUser.Id });
     const [isLoading, setIsLoading] = useState(true);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
@@ -76,10 +77,9 @@ const MyComplaints = () => {
                     </div>
                 </div>
                 <div className="container-fluid">
-                    {loading ? (
-                        <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
-                            <div className="spinner-border text-secondary" role="status"></div>
-                        </div>
+                    {complaintsLoading ? (
+                        <LoadingSpinner />
+
                     ) : complaints.length > 0 ? (
                         <div className="row">
                             <div className="col-md-2 col-3">

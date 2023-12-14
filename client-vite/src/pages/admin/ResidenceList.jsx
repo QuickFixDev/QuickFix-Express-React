@@ -2,15 +2,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouseCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { faHouseCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 import AccessDenied from '../common/AccessDenied';
-import { useAuth } from '../../contexts/AuthContext';
 import ServerUrl from '../../constants/ServerUrl';
+import { useAuth } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { useResidences } from '../../hooks/useResidences';
 
-
 const ResidenceList = () => {
-    const { residences, isLoading } = useResidences();
+    const { residences, isLoading: residencesLoading } = useResidences();
 
     return (
         <div className="list container-fluid p-md-5 p-3">
@@ -19,9 +19,9 @@ const ResidenceList = () => {
             </div>
             <div className="row d-flex flex-row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 px-4">
 
-                {isLoading ? (
-                    <div className="container-fluid p-4 spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
+                {residencesLoading ? (
+                    <div className="container-fluid">
+                        <LoadingSpinner />
                     </div>
                 ) : (
 
