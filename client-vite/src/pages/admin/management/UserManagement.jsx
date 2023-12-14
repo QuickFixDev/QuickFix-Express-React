@@ -6,12 +6,13 @@ import AccessDenied from '../../common/AccessDenied';
 import SearchBar from "../../../components/common/SearchBar";
 import FilterComponent from "../../../components/common/FilterComponent";
 import { Checkbox } from "antd";
-import UserModal from "../../../components/admin/UserModal"; // Import the UserModal component
+import UserModal from "../../../components/admin/UserModal";
 
-import { useUsers } from "../../../hooks/useUsers"; // Assuming you have a UsersContext
-import { useRoles } from "../../../hooks/useRoles"; // Assuming you have a RolesContex
+import { useUsers } from "../../../hooks/useUsers";
+import { useRoles } from "../../../hooks/useRoles";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useResidences } from "../../../hooks/useResidences";
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 
@@ -51,6 +52,7 @@ const Filter = ({ selectedCategories, handleFilterChange }) => {
 
 const UserManager = () => {
     const { users, loading } = useUsers();
+    const { residences } = useResidences();
     const [search, setSearch] = useState('');
     const [selectedFilter, setSelectedFilter] = useState('All');
     const [selectedUser, setSelectedUser] = useState(null);
@@ -123,13 +125,18 @@ const UserManager = () => {
                                             <div>
                                                 <strong>{user.first_name} {user.last_name}</strong>
                                             </div>
-                                            {/* Add other user details if needed */}
                                         </td>
                                         <td>
                                             {user.status}
                                         </td>
                                         <td>
-                                            {user.residence}
+                                            {residences.map((residence) => (
+                                                residence.tenant_user_id === user.user_id && (
+                                                    <div key={residence.residence_id}>
+                                                        {`${residence.street_name} ${residence.street_number}`}
+                                                    </div>
+                                                )))
+                                            }
                                         </td>
                                     </tr>
                                 ))

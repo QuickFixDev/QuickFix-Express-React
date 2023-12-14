@@ -28,7 +28,7 @@ function Form({ tableName, route, formName }) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ tableName, formName, data: formData }), // Include table name and form name in the data
+            body: JSON.stringify({ tableName, formName, data: formData }),
         })
             .then((response) => {
                 if (response.status === 200) {

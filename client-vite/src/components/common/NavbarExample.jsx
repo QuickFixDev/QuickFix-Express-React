@@ -18,7 +18,7 @@ const routes = [
 ];
 
 const Navbar = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     const { user, isAuthenticated, isLoading } = useAuth0();
 

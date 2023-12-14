@@ -11,9 +11,9 @@ import { useActivityStatuses } from '../../hooks/useActivityStatuses';
 import { useResidences } from '../../hooks/useResidences';
 
 const UserModal = ({ user, onClose }) => {
-    const { roles } = useRoles(); // Assuming you have a context for roles
-    const { activityStatuses } = useActivityStatuses(); // Assuming you have a context for roles
-    const { residences } = useResidences(); // Assuming you have a context for roles
+    const { roles } = useRoles();
+    const { activityStatuses } = useActivityStatuses();
+    const { residences } = useResidences();
 
     const [selectedRole, setSelectedRole] = useState(user.role_name);
     const [selectedActivityStatus, setSelectedActivityStatus] = useState(user.status);
@@ -59,7 +59,6 @@ const UserModal = ({ user, onClose }) => {
             })
             .catch((error) => {
                 console.error('Error updating user:', error);
-                // Handle errors or show a message to the user
             });
     };
 
@@ -67,7 +66,7 @@ const UserModal = ({ user, onClose }) => {
         <Modal
             show={true}
             onHide={onClose}
-            onExit={() => console.log('Modal is exiting')}  // Add your exit animation logic here
+            onExit={() => console.log('Modal is exiting')}
             onExited={onClose}
             size='xl' centered
             backdrop="static"
@@ -172,7 +171,6 @@ const UserModal = ({ user, onClose }) => {
                                 </FloatingLabel >
                             </div>
                         </div>
-                    {/* Add other user fields here */}
                     <div className="row">
                         <div className="col my-2">
                             <Button type='submit'>

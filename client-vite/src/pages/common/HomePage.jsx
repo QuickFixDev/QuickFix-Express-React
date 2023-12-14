@@ -91,7 +91,7 @@ const WelcomePage = () => {
 
     // Set the random light gradients in the state
     setRandomGradients(gradients);
-  }, [details]); // Run this effect whenever details change
+  }, [details]);
 
   return (
     <>
@@ -144,8 +144,8 @@ const WelcomePage = () => {
                 <div className=" shadow-sm rounded-2 mb-4">
                   <div className="rounded-2  container-fluid text-black d-flex flex-col justify-content-center align-items-center p-5"
                     style={{
-                      background: randomGradients[index], // Use the random gradient for this item
-                      color: 'black', // Set text color to black for better contrast
+                      background: randomGradients[index],
+                      color: 'black',
                     }}
                   >
                     <FontAwesomeIcon icon={iconMapping[detail.iconName]} size="3x" />
@@ -167,7 +167,7 @@ const WelcomePage = () => {
 }
 
 const HomePage = () => {
-  const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+  const { authUser, isLoggedIn } = useAuth();
 
   if (!isLoggedIn) {
     return <WelcomePage />

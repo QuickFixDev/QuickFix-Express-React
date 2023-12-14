@@ -66,7 +66,7 @@ const routes = [
 
 
 const Sidebar = () => {
-  const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+  const { authUser, isLoggedIn } = useAuth();
   const { isLoading } = useAuth0();
 
   if (isLoading) {
@@ -88,7 +88,6 @@ const Sidebar = () => {
                 <div className="col-xl-3 col-12 text-center">
                   <FontAwesomeIcon icon={faHome} />
                 </div>
-                {/* This div will be hidden on screens smaller than xl */}
                 <div className="col-xl-9 col-0 d-xl-block d-none navlink-text">
                   Home
                 </div>
@@ -106,7 +105,6 @@ const Sidebar = () => {
                         <div className="col-xl-3 col-12 text-center">
                           <FontAwesomeIcon icon={iconMapping[route.iconName]} />
                         </div>
-                        {/* This div will be hidden on screens smaller than xl */}
                         <div className="col-xl-9 col-0 d-xl-block d-none navlink-text">
                           {route.label}
                         </div>

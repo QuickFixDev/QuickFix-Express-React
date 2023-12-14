@@ -1,12 +1,19 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useResidentials() {
+export function useResidentials(params = {}) {
+    const { id } = params;
     const [residentials, setResidentials] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
+
+    let apiUrl = `${ServerUrl}/api/residentials`;
+
+    if (id) {
+        apiUrl += `/${id}`
+    }
 
     useEffect(() => {
-        fetch(`${ServerUrl}/api/residentials`, {
+        fetch(apiUrl, {
             method: 'GET',
         })
             .then((response) => response.json())
@@ -21,5 +28,5 @@ export function useResidentials() {
             });
     }, []);
 
-    return { residentials, loading };
+    return { residentials, isLoading };
 }

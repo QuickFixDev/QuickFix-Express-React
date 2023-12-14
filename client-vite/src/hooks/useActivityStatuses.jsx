@@ -1,12 +1,19 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useActivityStatuses() {
+export function useActivityStatuses(params = {}) {
+    const { id } = params;
     const [activityStatuses, setActivityStatuses] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
+
+    let apiUrl = `${ServerUrl}/api/activity-statuses`
+    
+    if (id) {
+        apiUrl += `/${id}`
+    }
 
     useEffect(() => {
-        fetch(`${ServerUrl}/api/activity-statuses`, {
+        fetch(apiUrl, {
             method: 'GET',
         })
         .then((response) => response.json())
@@ -21,5 +28,5 @@ export function useActivityStatuses() {
         });
     }, []);
 
-    return { activityStatuses, loading };
+    return { activityStatuses, isLoading };
 }

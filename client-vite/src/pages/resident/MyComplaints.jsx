@@ -3,8 +3,8 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox } from 'antd';
-import 'antd/lib/checkbox/style'; // Import the specific style for Checkbox
-import 'antd/lib/style'; // Import the general styles for Ant Design
+import 'antd/lib/checkbox/style';
+import 'antd/lib/style';
 import AccessDenied from '../common/AccessDenied';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
@@ -16,7 +16,7 @@ const MyComplaints = () => {
     const { authUser, isLoggedIn } = useAuth();
     const { user, isAuthenticated } = useAuth0();
     const { categories } = useCategories();
-    const { complaints, loading } = useComplaints(authUser.Id);
+    const { complaints, loading } = useComplaints({userId: authUser.Id});
     const [isLoading, setIsLoading] = useState(true);
     const [selectedCategories, setSelectedCategories] = useState([]);
 

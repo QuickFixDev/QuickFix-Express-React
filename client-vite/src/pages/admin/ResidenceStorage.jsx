@@ -19,7 +19,7 @@ function ResidenceStorageComponent() {
         street_name: '',
         street_number: 0,
         details: '',
-        status: 'available', // Set a default status
+        status: 'available',
         owner_user_id: '',
         tenant_user_id: '',
     });
@@ -209,7 +209,7 @@ function ResidenceStorageComponent() {
 }
 
 const ResidenceStorage = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
         return <ResidenceStorageComponent />

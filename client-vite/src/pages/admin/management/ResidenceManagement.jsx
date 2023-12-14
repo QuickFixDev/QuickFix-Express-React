@@ -81,13 +81,12 @@ function ResidenceList({ owners, tenants, residences, setSelectedResidence, dele
   );
 }
 
-// ... (No changes to ResidenceDetails component)
 
 function ResidenceManagement() {
   const { authUser, isLoggedIn } = useAuth();
   const { residences, setResidences, deleteResidence } = useResidences();
-  const { users: owners } = useUsers(residences.owner_user_id); // Custom hook for fetching owner details
-  const { users: tenants } = useUsers(residences.tenant_user_id); // Custom hook for fetching tenant details
+  const { users: owners } = useUsers(residences.owner_user_id);
+  const { users: tenants } = useUsers(residences.tenant_user_id);
   const [selectedResidence, setSelectedResidence] = useState(null);
   const [show, setShow] = useState(false);
 
@@ -99,7 +98,6 @@ function ResidenceManagement() {
 
   const handleSave = (editedResidence) => {
     console.log('Saving changes:', editedResidence);
-    // Logic to save changes to the server
     handleClose();
   };
 

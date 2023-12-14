@@ -85,7 +85,6 @@ export default function App() {
           </div>
         </AuthProvider>
       </Auth0ProviderWithNavigate>
-      {/* <Footer /> */}
     </BrowserRouter>
   );
 }

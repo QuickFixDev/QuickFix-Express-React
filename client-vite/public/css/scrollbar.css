@@ -1,19 +1,13 @@
-/* CSS File */
 .scrollbar-hidden {
     scrollbar-width: none;
-    /* Firefox */
     -ms-overflow-style: none;
-    /* IE and Edge */
 }
 
 .scrollbar-hidden::-webkit-scrollbar {
     width: 0.1rem;
-    /* Width of the scrollbar */
     background-color: transparent;
-    /* Background color of the scrollbar track */
 }
 
 .scrollbar-hidden::-webkit-scrollbar-thumb {
     background-color: transparent;
-    /* Color of the scrollbar thumb (handle) */
 }

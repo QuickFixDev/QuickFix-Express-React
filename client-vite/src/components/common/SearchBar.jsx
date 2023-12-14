@@ -17,7 +17,7 @@ const SearchBar = ({ onSearch, searchType }) => {
       placeholder={`Search ${searchType}`}
       value={searchTerm}
       onChange={handleSearch}
-      autoComplete="off"  // Set to "off" to disable autocomplete
+      autoComplete="on"
     />
   );
 };

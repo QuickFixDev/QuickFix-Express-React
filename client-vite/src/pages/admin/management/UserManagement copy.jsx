@@ -43,12 +43,10 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
                 </Link>
             </div>
             <div className="card-body">
-                {/* Use Table component from react-bootstrap */}
                 <Table bordered={false} hover>
                     <thead style={{ backgroundColor: '#f2f2f2' }}>
                         <tr>
                             <th>Name</th>
-                            {/* <th>Role</th> */}
                             <th className="text-end">Actions</th>
                         </tr>
                     </thead>
@@ -59,7 +57,6 @@ function UserList({ users, setSelectedUser, deleteUser, showModal }) {
                                 <tr key={user.user_id}>
 
                                     <td>{user.first_name} {user.last_name}</td>
-                                    {/* <td>{user.role}</td> */}
                                     <td className="text-end">
                                         <Button
                                             variant="outline-primary"
@@ -238,7 +235,6 @@ function UserManagement() {
 
     const handleSave = (editedUser) => {
         console.log('Saving changes:', editedUser);
-        // Logic to save changes to the server
         handleClose();
     };
 

@@ -78,7 +78,7 @@ function CategoryDetails({ category }) {
 }
 
 function CategoryManagement() {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
 

@@ -7,7 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Link } from 'react-router-dom';
 
 function TopNavbar() {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
     const { user, isAuthenticated } = useAuth0();
 
     // console.log('actions', import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS)

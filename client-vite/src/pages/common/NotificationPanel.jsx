@@ -16,7 +16,7 @@ const NotificationComponent = ({ img_src, title, description }) => {
 }
 
 const NotificationPanel = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     if (isLoggedIn) {
         return (

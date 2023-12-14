@@ -132,7 +132,7 @@ function ResidentialDetails({ residential, handleClose, handleSave }) {
 }
 
 function ResidentialsManagement() {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
     const [residentials, setResidentials] = useState([]);
     const [selectedResidential, setSelectedResidential] = useState(null);
     const [show, setShow] = useState(false);
@@ -167,7 +167,6 @@ function ResidentialsManagement() {
 
     const handleSave = (editedResidential) => {
         console.log('Saving changes:', editedResidential);
-        // Logic to save changes to the server
         handleClose();
     };
 

@@ -2,7 +2,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import LoginButton from "./LoginButton";
 
 const Dashboard = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     return (
         <>

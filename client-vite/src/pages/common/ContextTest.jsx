@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AccessDenied from '../common/AccessDenied';
 import { Checkbox } from 'antd';
-import 'antd/lib/checkbox/style'; // Import the specific style for Checkbox
-import 'antd/lib/style'; // Import the general styles for Ant Design
+import 'antd/lib/checkbox/style';
+import 'antd/lib/style';
 
 import { useAuth } from "../../contexts/AuthContext";
 import { useCategories } from "../../hooks/useCategories";

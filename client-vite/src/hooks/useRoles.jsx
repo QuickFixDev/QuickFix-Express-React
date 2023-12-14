@@ -1,12 +1,19 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useRoles() {
+export function useRoles(params = {}) {
+    const { id } = params;
     const [roles, setroles] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
+
+    let apiUrl = `${ServerUrl}/api/roles`;
+
+    if (id) {
+        apiUrl += `/${id}`
+    }
 
     useEffect(() => {
-        fetch(`${ServerUrl}/api/roles`, {
+        fetch(apiUrl, {
             method: 'GET',
         })
             .then((response) => response.json())
@@ -21,5 +28,5 @@ export function useRoles() {
             });
     }, []);
 
-    return { roles, loading };
+    return { roles, isLoading };
 }

@@ -97,7 +97,7 @@ export function AuthProvider({ children }) {
                     setRedirectUser(true)
                     navigate('/user/request');
 
-                    return; // Exit the effect to prevent further updates
+                    return;
                 }
             } else {
                 // Handle the case when the user is not authenticated

@@ -31,7 +31,7 @@ function UserForm() {
 
     const handleModalClose = () => {
         setShowModal(false);
-        navigate('/user/complaints'); // Replace with your desired route
+        navigate('/user/complaints');
     };
 
     const handleSubmit = (e) => {
@@ -135,7 +135,7 @@ function UserForm() {
 }
 
 const ReturningComponent = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev') {
         return <UserForm />

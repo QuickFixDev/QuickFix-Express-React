@@ -1,9 +1,10 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useUsers(id = null) {
+export function useUsers(params = {}) {
+    const { id } = params;
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
 
     let apiUrl = `${ServerUrl}/api/users`;
 
@@ -27,5 +28,5 @@ export function useUsers(id = null) {
             });
     }, []);
 
-    return { users, loading };
+    return { users, isLoading };
 }

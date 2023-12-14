@@ -1,9 +1,10 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useComplaints(userId = null) {
+export function useComplaints(params = {}) {
+    const { userId } = params;
     const [complaints, setComplaints] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
 
     let apiUrl = `${ServerUrl}/api/complaints`;
 
@@ -27,5 +28,5 @@ export function useComplaints(userId = null) {
             });
     }, []);
 
-    return { complaints, loading };
+    return { complaints, isLoading };
 }

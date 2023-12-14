@@ -1,12 +1,20 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useCategories() {
+export function useCategories(params = {}) {
+    const { id } = params;
     const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
 
+    let apiUrl = `${ServerUrl}/api/categories`;
+
+    if (id) {
+        apiUrl += `/${id}`
+    }
+
+    
     useEffect(() => {
-        fetch(`${ServerUrl}/api/categories`, {
+        fetch(apiUrl, {
             method: 'GET',
         })
         .then((response) => response.json())
@@ -21,5 +29,5 @@ export function useCategories() {
         });
     }, []);
 
-    return { categories, loading };
+    return { categories, isLoading };
 }

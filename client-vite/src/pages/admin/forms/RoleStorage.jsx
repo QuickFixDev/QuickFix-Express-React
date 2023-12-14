@@ -32,11 +32,11 @@ function CreateRoleComponent() {
         })
             .then((response) => response.json())
             .then((data) => {
-                setShowModal(true); // Show the modal on success
+                setShowModal(true);
                 console.log('Role registered:', data);
             })
             .catch((error) => {
-                setShowModal(true); // Show the modal on error
+                setShowModal(true);
                 console.error('Error registering role:', error);
             });
     };
@@ -122,7 +122,7 @@ function CreateRoleComponent() {
 }
 
 const CreateRole = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
         return <CreateRoleComponent />

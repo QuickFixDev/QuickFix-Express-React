@@ -81,7 +81,6 @@ const ComplaintModal = ({ complaint, onClose }) => {
               })
               .catch((error) => {
                 console.error('Error submitting form:', error);
-                // Handle errors or show a message to the user
               });
     };
 
@@ -89,7 +88,7 @@ const ComplaintModal = ({ complaint, onClose }) => {
         <Modal
             show={true}
             onHide={onClose}
-            onExit={() => console.log('Modal is exiting')}  // Add your exit animation logic here
+            onExit={() => console.log('Modal is exiting')}
             onExited={onClose}
             size='xl' centered
             backdrop="static"

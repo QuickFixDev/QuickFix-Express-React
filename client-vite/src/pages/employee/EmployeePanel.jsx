@@ -13,7 +13,6 @@ const EmployeePanel = () => {
                 <h2 className="fw-bold py-5 px-4">Assigned complaints{authUser.FirstName}</h2>
             </div>
             <div className="row">
-                {/* This one */}
                 <div className="col order-md-1 order-2">
                     <div className="h-100 rounded-3 shadow-sm p-3">
 

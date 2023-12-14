@@ -123,7 +123,7 @@ function ResidentialStorageComponent() {
 }
 
 const ResidentialStorage = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     if (isLoggedIn && (authUser.Role === 'admin' || authUser.Role === 'dev')) {
         return <ResidentialStorageComponent />

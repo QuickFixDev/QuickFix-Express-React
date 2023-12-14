@@ -17,7 +17,6 @@ const Stats = () => {
         fetch(`${ServerUrl}/admin/complaints/stats`)
             .then((response) => response.json())
             .then((responseData) => {
-                // Assuming the response data has a structure like [{ category_name: 'CategoryA', category_count: 5 }, ...]
                 setData(responseData);
             })
             .catch((error) => {
@@ -44,12 +43,11 @@ const Stats = () => {
                     ))}
                 </Pie>
                 <Tooltip />
-                {/* Legend inside the PieChart */}
                 <Legend
-                    layout="horizontal"  // Set layout to "vertical" for column display
-                    align="center"  // Align the legend to the center
+                    layout="horizontal"
+                    align="center"
                     formatter={(value, entry) => entry.payload.category_name}
-                    wrapperStyle={{ padding: '0 0 50px 0 ' }}  // Add top margin of 20 pixels
+                    wrapperStyle={{ padding: '0 0 50px 0 ' }}
 
                 />
             </PieChart>

@@ -16,7 +16,7 @@ import {
 
 
 const ResidentPanel = () => {
-  const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+  const { authUser, isLoggedIn } = useAuth();
 
   return (
     <div className="list container-fluid p-md-5 p-3">

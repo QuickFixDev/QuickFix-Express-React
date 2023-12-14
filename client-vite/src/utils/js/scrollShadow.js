@@ -3,10 +3,8 @@ const handleScroll = () => {
     const container = document.getElementById("scroll-container");
 
     if (container.scrollTop > 0) {
-        // Apply shadow styles
         container.classList.add("inner-shadow")
     } else {
-        // Remove shadow styles
         container.style.boxShadow = "none";
     }
 

@@ -55,7 +55,7 @@ const ResidenceList = () => {
 
 
 const Residences = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
 
     if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev') {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { BiFilter } from 'react-icons/bi'; // Import the filter icon
+import { BiFilter } from 'react-icons/bi';
 
 const FilterComponent = ({ options, onSelectFilter }) => {
   const [selectedFilter, setSelectedFilter] = useState('All');

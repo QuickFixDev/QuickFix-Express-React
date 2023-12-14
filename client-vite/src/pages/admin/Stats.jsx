@@ -4,7 +4,7 @@ import AccessDenied from '../common/AccessDenied';
 import { useAuth } from "../../contexts/AuthContext";
 
 const Stats = () => {
-    const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
+    const { authUser, isLoggedIn } = useAuth();
 
     if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
         return (
