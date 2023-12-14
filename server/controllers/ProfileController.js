@@ -5,7 +5,7 @@ const pool = require('../dbConnection');
 
 ProfileController.getProfileInfo = (req, res) => {
     console.log("Fetching all users");
-    const sqlQuery = 'SELECT * FROM users WHERE user_id = ?';
+    const sqlQuery = `SELECT * FROM users WHERE user_id = ?`;
     const values = 1
 
     pool.query(sqlQuery, values, (err, results) => {

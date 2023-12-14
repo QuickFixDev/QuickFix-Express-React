@@ -1,7 +1,7 @@
 import Graphic from '../../components/admin/Graphic'
 import { useAuth } from '../../contexts/AuthContext';
 import { Table } from 'react-bootstrap';
-import { useComplaints } from "../../contexts/ComplaintContext";
+import { useComplaints } from "../../hooks/useComplaints";
 
 const EmployeePanel = () => {
     const { authUser } = useAuth();

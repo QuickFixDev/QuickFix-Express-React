@@ -1,8 +1,8 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useComplaintsStatus() {
-    const [complaintsStatus, setComplaintsStatus] = useState([]);
+export function useComplaintStatuses() {
+    const [complaintStatuses, setComplaintStatuses] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -11,8 +11,8 @@ export function useComplaintsStatus() {
         })
         .then((response) => response.json())
         .then((responseData) => {
-            const complaintsStatusData = responseData;
-            setComplaintsStatus(complaintsStatusData);
+            const complaintStatusesData = responseData;
+            setComplaintStatuses(complaintStatusesData);
             setLoading(false);
         })
         .catch((error) => {
@@ -21,5 +21,5 @@ export function useComplaintsStatus() {
         });
     }, []);
 
-    return { complaintsStatus, loading };
+    return { complaintStatuses, loading };
 }

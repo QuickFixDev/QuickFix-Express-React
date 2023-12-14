@@ -1,7 +1,7 @@
 // RoleFilter.js
 import React, { useState, useEffect } from "react";
 import ServerUrl from "../../constants/ServerUrl";
-import { useRoles } from "../../contexts/RoleContext";
+import { useRoles } from "../../hooks/useRoles";
 import SearchBar from "../../components/common/SearchBar";
 import FilterComponent from "../../components/common/FilterComponent";
 

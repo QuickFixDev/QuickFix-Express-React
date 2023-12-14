@@ -7,7 +7,7 @@ export function useComplaintsTest(userId = null) {
 
     let apiUrl = `${ServerUrl}/api/complaints-test`;
 
-    if(userId){
+    if (userId) {
         apiUrl += `/${userId}`
     }
 

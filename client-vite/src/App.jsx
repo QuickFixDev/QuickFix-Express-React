@@ -18,7 +18,6 @@ import ComplaintManagement from './pages/admin/management/ComplaintManagement';
 import CategoryManagement from './pages/admin/management/CategoryManagement';
 
 import Stats from './pages/admin/Stats';
-import FilterTest from './pages/admin/FilterTest';
 import UserStorage from './pages/admin/forms/UserStorage';
 import CreateRole from './pages/admin/forms/RoleStorage';
 import ResidenceList from './pages/admin/ResidenceList';
@@ -72,7 +71,6 @@ export default function App() {
                   <Route path="/admin/residentials" element={<ResidentialsManagement />} />
                   <Route path="/admin/residentials/new" element={<ResidentialStorage />} />
 
-                  <Route path="/filter-test" element={<FilterTest />} />
                   <Route path="/category-management" element={<CategoryManagement />} />
                   <Route path="/context-test" element={<ContextTest />} />
                   <Route path="/resident-panel" element={<ResidentPanel />} />

@@ -6,7 +6,7 @@ import AccessDenied from '../common/AccessDenied';
 import { useAuth } from '../../contexts/AuthContext';
 import ServerUrl from '../../constants/ServerUrl';
 import { useEffect, useState } from 'react';
-import { useResidences } from '../../contexts/ResidenceContext';
+import { useResidences } from '../../hooks/useResidences';
 
 
 const ResidenceList = () => {
@@ -26,7 +26,7 @@ const ResidenceList = () => {
                 ) : (
 
                     residences.map(residence => (
-                        <div key={residence.id} className="col">
+                        <div key={residence.residence_id} className="col">
                             <div className="container text-center rounded-4 p-3 hover-navlink">
                                 {residence.status === 'available' ? (
                                     <div className="street my-3 text-primary">

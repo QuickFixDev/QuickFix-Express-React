@@ -3,8 +3,8 @@ import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
 import { useAuth } from '../../contexts/AuthContext';
-import { useResidences } from '../../contexts/ResidenceContext';
-import { useResidentials } from '../../contexts/ResidentialContext';
+import { useResidences } from '../../hooks/useResidences';
+import { useResidentials } from '../../hooks/useResidentials';
 
 function ResidenceStorageComponent() {
     const { authUser, isLoggedIn } = useAuth();

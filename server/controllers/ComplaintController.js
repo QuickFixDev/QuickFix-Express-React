@@ -8,7 +8,7 @@ ComplaintController.getUserComplaints = (req, res) => {
 }
 
 ComplaintController.getAllComplaints = (req, res) => {
-    const sqlQuery = 'SELECT * FROM complaints_test';
+    const sqlQuery = `SELECT * FROM complaints_test`;
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
@@ -22,7 +22,7 @@ ComplaintController.getAllComplaints = (req, res) => {
 
 ComplaintController.getComplaintById = (req, res) => {
     const userId = req.params.id;
-    const sqlQuery = 'SELECT * FROM complaints WHERE user_id = ?';
+    const sqlQuery = `SELECT * FROM complaints WHERE user_id = ?`;
 
     pool.query(sqlQuery, userId, (err, result) => {
         if (err) {
@@ -57,7 +57,7 @@ ComplaintController.createComplaint = async (req, res) => {
 
 ComplaintController.getComplaintsInGraphic = (req, res) => {
     console.log("Fetching all complaints");
-    const sqlQuery = 'SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM complaints uc INNER JOIN categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name';
+    const sqlQuery = `SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM complaints uc INNER JOIN categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name`;
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {

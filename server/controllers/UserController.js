@@ -6,12 +6,28 @@ const pool = require('../dbConnection');
 UserController.getAllUsers = (req, res) => {
     console.log("Fetching the users");
     const sqlQuery = `
-    SELECT u.user_id, u.first_name, u.last_name, u.email, u.phone, r.role_name
-    FROM users u
-    INNER JOIN users_roles ur ON u.user_id = ur.user_id
-    INNER JOIN roles r ON ur.role_id = r.role_id
+    SELECT 
+        u.user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.phone,
+        r.role_name,
+        u.status_id,
+        us.name AS status,
+        re.residence_id
+    FROM
+        users u
+    INNER JOIN
+        users_roles ur ON u.user_id = ur.user_id
+    INNER JOIN
+        roles r ON ur.role_id = r.role_id
+    INNER JOIN
+        activity_statuses us ON u.status_id = us.id
+    LEFT JOIN
+        residences re ON u.user_id = re.tenant_user_id;
     `;
-        ;
+    ;
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
@@ -24,24 +40,52 @@ UserController.getAllUsers = (req, res) => {
 };
 
 UserController.getUserByEmail = (req, res) => {
-    console.log("Fetching the users");
-    const sqlQuery = 'SELECT * FROM users WHERE email = {auth0 email}';
+    const sqlQuery = `
+    SELECT 
+        u.user_id, 
+        u.first_name, 
+        u.last_name, 
+        u.email,
+        u.phone,
+        r.role_name,
+        u.status_id,
+        us.name AS status
+    FROM
+        users u
+    INNER JOIN 
+        users_roles ur ON u.user_id = ur.user_id
+    INNER JOIN 
+        roles r ON ur.role_id = r.role_id
+    INNER JOIN 
+        activity_statuses us ON u.status_id = us.id
+    WHERE 
+        u.email = ?
+    `;
 
-    pool.query(sqlQuery, (err, results) => {
+    const userEmail = req.params.id;
+
+    pool.query(sqlQuery, userEmail, (err, results) => {
         if (err) {
-            console.error("Error fetching data:", err); // Log the error
-            res.status(500).json({ error: 'Error fetching data' });
-        } else {
-            res.json(results);
+            console.log(`Error fetching user with email: ${userEmail}`);
+            console.error(err);
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
+
+        if (results.length === 0) {
+            // Handle the case when no user is found with the provided email
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const user_id = results[0].user_id; // Extract the user_id from the first result
+        res.json(results[0]);
     });
 };
 
 UserController.deleteUser = async (req, res) => {
     const userId = req.params.id;
 
-    const sqlQuery = 'DELETE FROM users WHERE user_id = ?';
-    const values = [userId];
+    const sqlQuery = `DELETE FROM users WHERE user_id = ?`;
+    const values = [userId];    
 
     pool.query(sqlQuery, values, (err, result) => {
         if (err) {
@@ -99,35 +143,6 @@ UserController.createUser = (req, res) => {
                 }
             });
         }
-    });
-};
-
-UserController.getUserByEmail = (req, res) => {
-    const sqlQuery = `
-        SELECT u.user_id, u.first_name, u.last_name, u.email, u.phone, r.role_name
-        FROM users u
-        INNER JOIN users_roles ur ON u.user_id = ur.user_id
-        INNER JOIN roles r ON ur.role_id = r.role_id
-        WHERE u.email = ?
-    `;
-
-    // const sqlQuery = 'SELECT * FROM users WHERE email = ?';
-    const userEmail = req.params.id;
-
-    pool.query(sqlQuery, userEmail, (err, results) => {
-        if (err) {
-            console.log(`Error fetching user with email: ${userEmail}`);
-            console.error(err);
-            return res.status(500).json({ error: 'Internal Server Error' });
-        }
-
-        if (results.length === 0) {
-            // Handle the case when no user is found with the provided email
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        const user_id = results[0].user_id; // Extract the user_id from the first result
-        res.json(results[0]);
     });
 };
 

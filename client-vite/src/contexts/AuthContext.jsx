@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useContext, createContext, useEffect, } from 'react';
 import ServerUrl from '../constants/ServerUrl';
 import Logout from '../components/common/Logout';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -19,15 +19,14 @@ export function AuthProvider({ children }) {
     const [userId, setUserId] = useState(0);
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
-    const [houseNumber, setHouseNumber] = useState(0);
     const [lastName, setLastName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState(0);
+    const [phoneNumber, setPhone] = useState(0);
     const [role, setRole] = useState('');
-    const [streetName, setStreetName] = useState('');
-    const [picture, setPicture] = useState('');
+    const [status, setStatus] = useState('');
+    const [statusId, setStatusId] = useState(0);
 
     const [redirectUser, setRedirectUser] = useState(false);
-    const navigate  = useNavigate();
+    const navigate = useNavigate();
 
     // Validation of existing user in database based on auth0's provided user
     if (isAuthenticated) {
@@ -49,13 +48,11 @@ export function AuthProvider({ children }) {
                 setUserId(responseData.user_id);
                 setEmail(responseData.email);
                 setFirstName(responseData.first_name);
-                setHouseNumber(responseData.house_number);
                 setLastName(responseData.last_name);
-                setPhoneNumber(responseData.phone);
-                setStreetName(responseData.street_name);
-                setPicture(user.picture)
+                setPhone(responseData.phone);
                 setRole(responseData.role_name)
-                console.log(responseData)
+                setStatus(responseData.status)
+                setStatusId(responseData.status_id)
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
@@ -77,24 +74,24 @@ export function AuthProvider({ children }) {
                     setAuthUser({
                         Id: user ? userId : null,
                         FirstName: user ? firstName : null,
-                        Email: user ? email : null,
-                        HouseNumber: user ? houseNumber : null,
                         LastName: user ? lastName : null,
-                        PhoneNumber: user ? phoneNumber : null,
+                        Email: user ? email : null,
+                        Phone: user ? phoneNumber : null,
                         Role: user ? role : null,
-                        StreetName: user ? streetName : null
+                        StatusId: user ? statusId : null,
+                        Status: user ? status : null
                     });
                 } else {
                     // If userId is 0, it means no results were found, so system log the user out
                     setAuthUser({
                         Id: null,
                         FirstName: null,
-                        Email: null,
-                        HouseNumber: null,
                         LastName: null,
-                        PhoneNumber: null,
+                        Email: null,
+                        Phone: null,
                         Role: null,
-                        StreetName: null
+                        StatusId: null,
+                        Status: null
                     });
                     logout();
                     setRedirectUser(true)
@@ -108,11 +105,11 @@ export function AuthProvider({ children }) {
                     Id: null,
                     FirstName: null,
                     Email: null,
-                    HouseNumber: null,
                     LastName: null,
-                    PhoneNumber: null,
+                    Phone: null,
                     Role: null,
-                    StreetName: null
+                    StatusId: null,
+                    Status: null
                 });
 
             }
@@ -124,7 +121,14 @@ export function AuthProvider({ children }) {
         isLoading,
         userId,
         role,
-        redirectUser
+        loading,
+        email,
+        firstName,
+        lastName,
+        phoneNumber,
+        status,
+        statusId,
+        redirectUser,
     ]);
 
     return (

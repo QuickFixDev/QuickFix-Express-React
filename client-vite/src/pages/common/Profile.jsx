@@ -4,7 +4,6 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const Profile = () => {
   const { authUser, isLoggedIn } = useAuth(); // Remove setAuthUser and setIsLoggedIn
-console.log(isLoggedIn)
   if (isLoggedIn) {
     return (
       <div className='container-fluid d-flex justify-content-center align-items-center'>

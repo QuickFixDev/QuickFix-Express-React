@@ -1,11 +1,11 @@
 import Graphic from '../../components/admin/Graphic'
 import { useAuth } from '../../contexts/AuthContext';
 import { Table } from 'react-bootstrap';
-import { useComplaints } from "../../contexts/ComplaintContext";
+import { useComplaints } from "../../hooks/useComplaints";
 
 const AdminPanel = () => {
     const { authUser } = useAuth();
-    const {complaints, loading} = useComplaints();
+    const { complaints, loading } = useComplaints();
 
     return (
         <div className="container-fluid px-md-5 px-1">
@@ -13,7 +13,6 @@ const AdminPanel = () => {
                 <h2 className="fw-bold py-5 px-4">Welcome {authUser.FirstName}</h2>
             </div>
             <div className="row row-cols-md-2 row-cols-1">
-                {/* This one */}
                 <div className="col order-md-1 order-2">
                     <div className="h-100 rounded-3 shadow-sm p-3">
 
@@ -24,8 +23,8 @@ const AdminPanel = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {complaints.map ((complaint) => (
-                                    <tr key={complaint.complaint_id}>
+                                {complaints.map((complaint) => (
+                                    <tr key={complaint.id}>
                                         <td>{complaint.complaint_title}</td>
                                     </tr>
                                 ))}

@@ -7,7 +7,7 @@ ComplaintsHistoryController.getAllComplaintsHistory = (req, res) => {
     const sqlQuery = "SELECT * FROM complaints_history"
 
     pool.query(sqlQuery, (err, results) => {
-        if(err) {
+        if (err) {
             console.error(err);
             res.status(500).json({ error: 'Error fetching data' });
         } else {
@@ -24,7 +24,7 @@ ComplaintsHistoryController.createComplaintHistory = (req, res) => {
     `
 
     pool.query(sqlQuery, [ comment, employee_id, complaint_id, status_id ], (err, results) => {
-        if(err) {
+        if (err) {
             console.error(err);
             res.status(500).json({ error: 'Error inserting data' });
         } else {

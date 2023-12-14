@@ -7,7 +7,7 @@ export function useUsers(id = null) {
 
     let apiUrl = `${ServerUrl}/api/users`;
 
-    if(id){
+    if (id) {
         apiUrl += `/${id}`
     }
 

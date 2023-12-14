@@ -71,7 +71,7 @@ const Sidebar = () => {
 
   if (isLoading) {
     return (
-      <div className="sidebar">
+      <div className="sidebar d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
         <div className="spinner-border text-secondary" role="status"></div>
       </div>
     );

@@ -1,13 +1,17 @@
 // ComplaintFilter.js
 import React, { useState, useEffect } from "react";
 import ServerUrl from "../../constants/ServerUrl";
-import { useComplaints } from "../../contexts/ComplaintContext";
+import AccessDenied from '../common/AccessDenied';
+
 import SearchBar from "../../components/common/SearchBar";
 import FilterComponent from "../../components/common/FilterComponent";
-import { useCategories } from "../../contexts/CategoryContext";
-import { useAuth } from "../../contexts/AuthContext";
 import { Checkbox } from "antd";
 import ComplaintModal from "../../components/admin/ComplaintModal";
+
+import { useComplaintsTest } from "../../hooks/useComplaintsTest";
+import { useCategories } from "../../hooks/useCategories";
+import { useAuth } from "../../contexts/AuthContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
 
@@ -16,7 +20,7 @@ const Filter = () => {
   const { categories } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { authUser, isLoggedIn } = useAuth();
-  const { complaints, loading } = useComplaints(authUser.Id);
+  const { complaints, loading } = useComplaintsTest();
 
   const handleFilterChange = (categoryId) => {
     setSelectedCategories((prevCategories) => {
@@ -77,10 +81,11 @@ const Filter = () => {
 
 
 const ComplaintFilter = () => {
-  const { complaints } = useComplaints();
+  const { complaints, loading } = useComplaintsTest();
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const { isLoggedIn } = useAuth();
 
   const handleComplaintClick = (complaint) => {
     setSelectedComplaint(complaint);
@@ -117,64 +122,70 @@ const ComplaintFilter = () => {
     return truncated + (words.length > limit ? '...' : '');
   };
 
-  return (
-    <div className="list container-fluid p-md-5 p-3">
-      <div className="row">
-        <div className="col text-start">
-          <h2 className="fw-bold">Complaint manager</h2>
-        </div>
-      </div>
-
-      <div className="row py-3">
-        <div className="col">
-          <SearchBar onSearch={handleSearch} searchType='complaints' />
-        </div>
-        <div className="col-auto">
-          <div className="container">
-            <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
-
+  if (isLoggedIn) {
+    return (
+      <div className="list container-fluid p-md-5 p-3">
+        <div className="row">
+          <div className="col text-start">
+            <h2 className="fw-bold">Complaint manager</h2>
           </div>
         </div>
-      </div>
-      title
 
-      <div className="row">
+        <div className="row py-3">
+          <div className="col">
+            <SearchBar onSearch={handleSearch} searchType='complaints' />
+          </div>
+          <div className="col-auto">
+            <div className="container">
+              <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
 
-        <div className="col">
-          <table className="table table-hover mt-4">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Complaint</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredComplaints.map((item) => (
-                <tr className="cursor-pointer" key={item.id} onClick={() => handleComplaintClick(item)}>
-                  <td>{item.id}</td>
-                  <td>
-                    <div>
-                      <strong>{item.title}</strong>
-                    </div>
-                    <div className="d-md-block d-none">{truncateText(item.description, 15)}</div>
-                  </td>
-                  <td>
-                    {item.complaint_status}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {selectedComplaint && (
-            <ComplaintModal complaint={selectedComplaint} onClose={handleCloseModal} />
-          )}
+            </div>
+          </div>
         </div>
-      </div>
+        title
 
-    </div>
-  );
+        <div className="row">
+
+          <div className="col">
+            <table className="table table-hover mt-4">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Complaint</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredComplaints.map((item) => (
+                  <tr className="cursor-pointer" key={item.id} onClick={() => handleComplaintClick(item)}>
+                    <td>{item.id}</td>
+                    <td>
+                      <div>
+                        <strong>{item.title}</strong>
+                      </div>
+                      <div className="d-md-block d-none">{truncateText(item.description, 15)}</div>
+                    </td>
+                    <td>
+                      {item.complaint_status}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {selectedComplaint && (
+              <ComplaintModal complaint={selectedComplaint} onClose={handleCloseModal} />
+            )}
+          </div>
+        </div>
+
+      </div>
+    );
+  } else {
+    return (
+      <AccessDenied />
+    )
+  }
 }
 
 export default ComplaintFilter;

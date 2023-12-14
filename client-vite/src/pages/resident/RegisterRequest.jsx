@@ -3,7 +3,7 @@ import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import AccessDenied from '../common/AccessDenied';
 import { useAuth } from "../../contexts/AuthContext";
-import { useRoles } from "../../contexts/RoleContext";
+import { useRoles } from "../../hooks/useRoles";
 
 
 

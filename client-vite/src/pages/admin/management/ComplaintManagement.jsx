@@ -4,7 +4,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import AccessDenied from '../../common/AccessDenied';
 import { Modal, Button, Table } from 'react-bootstrap';
 
-const initialSqlQuery = 'SELECT * FROM complaints';
+const initialSqlQuery = `SELECT * FROM complaints`;
 const availableFilters = [
   { name: 'User id', key: 'user_id', options: [1, 2] },
   { name: 'Category ID', key: 'category_id', options: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
@@ -85,9 +85,6 @@ const FilterTest = () => {
 
     setSelectedFilters(updatedFilters);
   };
-
-  console.log(isLoggedIn)
-  console.log(authUser.role)
 
   if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
 

@@ -9,8 +9,8 @@ import AccessDenied from '../common/AccessDenied';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useCategories } from '../../contexts/CategoryContext';
-import { useComplaints } from '../../contexts/ComplaintContext';
+import { useCategories } from '../../hooks/useCategories';
+import { useComplaints } from '../../hooks/useComplaints';
 
 const MyComplaints = () => {
     const { authUser, isLoggedIn } = useAuth();
@@ -77,8 +77,8 @@ const MyComplaints = () => {
                 </div>
                 <div className="container-fluid">
                     {loading ? (
-                        <div className="container-fluid p-4 spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
+                        <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
+                            <div className="spinner-border text-secondary" role="status"></div>
                         </div>
                     ) : complaints.length > 0 ? (
                         <div className="row">

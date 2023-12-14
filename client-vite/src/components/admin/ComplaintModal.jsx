@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { Form } from 'react-bootstrap';
 
-import { useUsers } from '../../contexts/UsersContext';
-import { useComplaintsStatus } from '../../contexts/ComplaintsStatusContext';
+import { useUsers } from '../../hooks/useUsers';
+import { useComplaintStatuses } from '../../hooks/useComplaintStatuses';
 import ServerUrl from '../../constants/ServerUrl';
 
 
@@ -46,7 +46,7 @@ const Chatbox = ({ onSendMessage }) => {
 
 const ComplaintModal = ({ complaint, onClose }) => {
     const { users } = useUsers();
-    const { complaintsStatus } = useComplaintsStatus();
+    const { complaintStatuses } = useComplaintStatuses();
 
     const [selectedEmployee, setSelectedEmployee] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
@@ -125,7 +125,7 @@ const ComplaintModal = ({ complaint, onClose }) => {
                             <Form.Control name='status_id' id='status_id' className='my-2' as="select" onChange={(e) => setSelectedStatus(e.target.value)}>
                                 <option>Change complaint status</option>
 
-                                {complaintsStatus.map((item) => (
+                                {complaintStatuses.map((item) => (
                                     <option key={item.id} value={item.id}>{item.name}</option>
                                 ))}
 

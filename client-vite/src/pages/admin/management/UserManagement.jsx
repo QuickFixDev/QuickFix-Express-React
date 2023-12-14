@@ -1,259 +1,149 @@
-import { useState, useEffect } from 'react';
-import ServerUrl from '../../../constants/ServerUrl';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../../contexts/AuthContext';
+// UserManager.js
+import React, { useState, useEffect } from "react";
+import ServerUrl from "../../../constants/ServerUrl";
 import AccessDenied from '../../common/AccessDenied';
-import { useRoles } from "../../../contexts/RoleContext";
 
-import { Table } from 'react-bootstrap';
-import { useResidences } from '../../../contexts/ResidenceContext';
+import SearchBar from "../../../components/common/SearchBar";
+import FilterComponent from "../../../components/common/FilterComponent";
+import { Checkbox } from "antd";
+import UserModal from "../../../components/admin/UserModal"; // Import the UserModal component
 
-const NewRequestNotification = ({ count }) => {
+import { useUsers } from "../../../hooks/useUsers"; // Assuming you have a UsersContext
+import { useRoles } from "../../../hooks/useRoles"; // Assuming you have a RolesContex
+import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
+
+const Filter = ({ selectedCategories, handleFilterChange }) => {
+    const { roles } = useRoles();
+
     return (
-        <div>
-            {count > 0 ? (
-                <div className="alert alert-success">
-                    <div className="container d-flex justify-content-between align-items-center">
-                        <div>
-                            You have {count} access {count === 1 ? 'request' : 'requests'}!
-                        </div>
-                        <button className="btn btn-success">Manage requests</button>
+        <div className="col-md-2 col-3">
+            <div className="row row-cols-1">
+                <div className="col p-0 g-2 mb-2">
+                    <div>
+                        {roles && roles.length > 0 ?
+                            (
+                                roles.map((role) => (
+                                    <div key={role.role_id}>
+                                        <Checkbox
+                                            checked={selectedCategories.includes(role.role_id)}
+                                            className="p-2"
+                                            onChange={() => handleFilterChange(role.role_id)}
+                                        >
+                                            {role.role_name}
+                                        </Checkbox>
+                                    </div>
+                                ))
+                            ) : (
+                                <div>
+                                    hey
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
-            ) : (
-                <div>
-                </div>
-            )}
-        </div>
-    );
-};
-
-function UserList({ users, setSelectedUser, deleteUser, showModal }) {
-    return (
-        <div className="user-list card border-0 p-3">
-            <div className="container d-flex flex-row justify-content-between align-items-center">
-                <h2 className='fw-bold'>User manager</h2>
-                <Link className="text-white text-decoration-none" to="/admin/users/new">
-                    <button className="btn btn-primary mb-3">
-                        <FontAwesomeIcon icon={faUserPlus} /> Create New User
-                    </button>
-                </Link>
-            </div>
-            <div className="card-body">
-                {/* Use Table component from react-bootstrap */}
-                <Table bordered={false} hover>
-                    <thead style={{ backgroundColor: '#f2f2f2' }}>
-                        <tr>
-                            <th>Name</th>
-                            {/* <th>Role</th> */}
-                            <th className="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user) => (
-                            <tr key={user.user_id}>
-                                <td>{user.first_name} {user.last_name}</td>
-                                {/* <td>{user.role}</td> */}
-                                <td className="text-end">
-                                    <Button
-                                        variant="outline-primary"
-                                        className="me-2"
-                                        onClick={() => {
-                                            setSelectedUser(user);
-                                            showModal();
-                                        }}
-                                    >
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </Button>
-                                    <Button
-                                        variant="outline-danger"
-                                        onClick={() => deleteUser(user.user_id)}
-                                    >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
             </div>
         </div>
     );
 }
 
-function UserDetails({ user, handleClose, handleSave }) {
-    const { roles } = useRoles();
-    const [editedUser, setEditedUser] = useState({ ...user });
-    const { residences } = useResidences();
+const UserManager = () => {
+    const { users, loading } = useUsers();
+    const [search, setSearch] = useState('');
+    const [selectedFilter, setSelectedFilter] = useState('All');
+    const [selectedUser, setSelectedUser] = useState(null);
+    const { isLoggedIn } = useAuth();
 
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEditedUser((prevUser) => ({
-            ...prevUser,
-            [name]: value,
-        }));
+    const handleUserClick = (user) => {
+        setSelectedUser(user);
     };
 
-    return (
-        <Modal show={true} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Edit User</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formFirstName">
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="first_name"
-                            value={editedUser.first_name}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formLastName">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="last_name"
-                            value={editedUser.last_name}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-
-
-                    <Form.Group className="mb-3" controlId="formResidence">
-                        <Form.Label>Residence</Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="residence"
-                            value={editedUser.residence}
-                            onChange={handleChange}
-                        >
-
-                            <option value="">Select residence</option>
-                            {residences.map((residence, index) => (
-                                <option key={index} value={residence.residence_id}>
-                                    {residence.street_name} #{residence.street_number}
-                                </option>
-                            ))}
-
-                        </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formPhoneNumber">
-                        <Form.Label>PhoneNumber</Form.Label>
-                        <Form.Control
-                            type="number"
-                            name="phone"
-                            value={editedUser.phone}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            value={editedUser.email}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formRole">
-                        <Form.Label>Role</Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="role"
-                            value={editedUser.role}
-                            onChange={handleChange}
-                        >
-
-                            <option value="">Select role</option>
-                            {roles.map((role, index) => (
-                                <option key={index} value={role.role_name} onChange={handleChange}>
-                                    {role.role_name}
-                                </option>
-                            ))}
-
-                        </Form.Control>
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={() => handleSave(editedUser)}>
-                    Save Changes
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    );
-}
-
-function UserManagement() {
-    const { authUser, isLoggedIn } = useAuth();
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [show, setShow] = useState(false);
-
-    const showModal = () => setShow(true);
-    const handleClose = () => {
-        setShow(false);
+    const handleCloseModal = () => {
         setSelectedUser(null);
     };
 
+    const handleSelectFilter = (filter) => {
+        setSelectedFilter(filter);
+    };
+
+    const handleSearch = (value) => {
+        setSearch(value);
+    }
+
     useEffect(() => {
-        fetch(`${ServerUrl}/admin/users`)
-            .then((response) => response.json())
-            .then((data) => setUsers(data))
-            .catch((error) => console.error('Error fetching data:', error));
-    }, []);
+        console.log(search);
+    }, [search]);
 
-    const deleteUser = (userId) => {
-        fetch(`${ServerUrl}/admin/users/${userId}`, {
-            method: 'DELETE',
-        })
-            .then((response) => {
-                if (response.ok) {
-                    const updatedUsers = users.filter((user) => user.user_id !== userId);
-                    setUsers(updatedUsers);
-                }
-            })
-            .catch((error) => console.error('Error deleting user:', error));
-    };
+    const filteredUsers = users.filter((user) => {
+        return search.toLowerCase() === '' ||
+            user.first_name.toLowerCase().includes(search.toLowerCase()) ||
+            user.last_name.toLowerCase().includes(search.toLowerCase()) ||
+            user.user_id.toString().includes(search.toLowerCase());
+    });
 
-    const handleSave = (editedUser) => {
-        console.log('Saving changes:', editedUser);
-        // Logic to save changes to the server
-        handleClose();
-    };
+    return (
+        <div className="list container-fluid p-md-5 p-3">
+            <div className="row">
+                <div className="col text-start">
+                    <h2 className="fw-bold">User manager</h2>
+                </div>
+            </div>
 
-    if (isLoggedIn && (authUser.Role === 'admin' || authUser.Role === 'dev')) {
-        return (
-            <div className="container mt-4">
-                <div className="row row-cols-1">
-                    <div className="col">
-                        <NewRequestNotification count={2} />
-                    </div>
-                    <div className="col">
-                        <UserList users={users} setSelectedUser={setSelectedUser} deleteUser={deleteUser} showModal={showModal} />
-                    </div>
-                    <div className="col">
-                        {selectedUser && <UserDetails user={selectedUser} handleClose={handleClose} handleSave={handleSave} />}
+            <div className="row py-3">
+                <div className="col">
+                    <SearchBar onSearch={handleSearch} searchType='users' />
+                </div>
+                <div className="col-auto">
+                    <div className="container">
+                        <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
                     </div>
                 </div>
             </div>
-        );
-    } else {
-        return <AccessDenied />
-    }
+
+            <div className="row">
+                <div className="col">
+                    <table className="table table-hover mt-4">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Residence</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredUsers
+                                .sort((a, b) => a.user_id - b.user_id) // Sort the users by user ID
+                                .map((user) => (
+                                    <tr className="cursor-pointer" key={user.user_id} onClick={() => handleUserClick(user)}>
+                                        <td>{user.user_id}</td>
+                                        <td>
+                                            <div>
+                                                <strong>{user.first_name} {user.last_name}</strong>
+                                            </div>
+                                            {/* Add other user details if needed */}
+                                        </td>
+                                        <td>
+                                            {user.status}
+                                        </td>
+                                        <td>
+                                            {user.residence}
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+
+                    {selectedUser && (
+                        <UserModal user={selectedUser} onClose={handleCloseModal} />
+                    )}
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default UserManagement;
+export default UserManager;

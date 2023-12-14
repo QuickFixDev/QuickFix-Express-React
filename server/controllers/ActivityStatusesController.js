@@ -1,10 +1,10 @@
-// controllers/ComplaintsStatusController.js
+// controllers/ActivityStatusesController.js
 
-const ComplaintsStatusController = {};
+const ActivityStatusesController = {};
 const pool = require('../dbConnection');
 
-ComplaintsStatusController.getAllStatuses = (req, res) => {
-    const sqlQuery = "SELECT * FROM complaints_status"
+ActivityStatusesController.getAllActivityStatuses = (req, res) => {
+    const sqlQuery = "SELECT * FROM activity_statuses"
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
@@ -16,4 +16,4 @@ ComplaintsStatusController.getAllStatuses = (req, res) => {
     })
 }
 
-module.exports = ComplaintsStatusController;
+module.exports = ActivityStatusesController;

@@ -2,25 +2,35 @@
 
 const ResidenceController = {};
 const pool = require('../dbConnection');
+const executeQuery = require('../utils/dbUtils');
 
 ResidenceController.getAllResidences = (req, res) => {
     console.log("Fetching the residences");
-    const sqlQuery = 'SELECT * FROM residences';
+    const sqlQuery = `SELECT * FROM residences`;
+    executeQuery(req, res, sqlQuery)
+};
 
-    pool.query(sqlQuery, (err, results) => {
-        if (err) {
-            console.error("Error fetching data:", err); // Log the error
-            res.status(500).json({ error: 'Error fetching data' });
-        } else {
-            res.json(results);
-        }
-        console.log(results);
-    });
+ResidenceController.getResidenceById = (req, res) => {
+    id = req.params.id;
+    const sqlQuery = `SELECT * FROM residences WHERE residence_id = ?`;
+    executeQuery(req, res, sqlQuery, [id])
+};
+
+ResidenceController.getResidenceByTenantId = (req, res) => {
+    id = req.params.id;
+    const sqlQuery = `SELECT * FROM residences WHERE tenant_user_id = ?`;
+    executeQuery(req, res, sqlQuery, [id])
+};
+
+ResidenceController.getResidenceByOwnerId = (req, res) => {
+    id = req.params.id;
+    const sqlQuery = `SELECT * FROM residences WHERE owner_user_id = ?`;
+    executeQuery(req, res, sqlQuery, [id])
 };
 
 ResidenceController.deleteResidence = async (req, res) => {
     const residenceId = req.params.id;
-    const sqlQuery = 'DELETE FROM residences WHERE residence_id = ?';
+    const sqlQuery = `DELETE FROM residences WHERE residence_id = ?`;
 
     pool.query(sqlQuery, residenceId, (err, result) => {
         if (err) {
@@ -39,7 +49,10 @@ ResidenceController.createResidence = (req, res) => {
     console.log('form data in query: ', formData)
     const { residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details } = formData;
 
-    sqlQuery = 'INSERT INTO residences (residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    sqlQuery = `
+        INSERT INTO residences (residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `
 
     pool.query(sqlQuery, [residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details], (err, results) => {
         if (err) {
@@ -52,53 +65,4 @@ ResidenceController.createResidence = (req, res) => {
     });
 }
 
-// ResidenceController.getUserId = (req, res) => {
-//     const sqlQuery = 'SELECT * FROM users WHERE email = ?';
-//     const userEmail = req.params.id;
-
-//     pool.query(sqlQuery, userEmail, (err, results) => {
-//         if (err) {
-//             console.log(`Error fetching user with email: ${userEmail}`);
-//             console.error(err);
-//             return res.status(500).json({ error: 'Internal Server Error' });
-//         }
-
-//         if (results.length === 0) {
-//             // Handle the case when no user is found with the provided email
-//             return res.status(404).json({ error: 'User not found' });
-//         }
-
-//         const user_id = results[0].user_id; // Extract the user_id from the first result
-//         res.json(results[0]);
-//     });
-// };
-
-
-// ResidenceController.getUserByEmail = (req, res) => {
-//     console.log("Fetching the users");
-//     const sqlQuery = 'SELECT * FROM users WHERE email = {auth0 email}';
-
-//     pool.query(sqlQuery, (err, results) => {
-//         if (err) {
-//             console.error("Error fetching data:", err); // Log the error
-//             res.status(500).json({ error: 'Error fetching data' });
-//         } else {
-//             res.json(results);
-//         }
-//     });
-// };
-
 module.exports = ResidenceController;
-
-
-
-
-
-
-
-
-
-
-
-
-

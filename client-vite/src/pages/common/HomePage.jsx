@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import LoginButton from "../../components/common/LoginButton";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { useCategories } from "../../contexts/CategoryContext";
+import { useCategories } from "../../hooks/useCategories";
 import { useEffect, useState } from "react";
 import ResidentPanel from "../resident/ResidentPanel";
 import AdminPanel from "../admin/AdminPanel";

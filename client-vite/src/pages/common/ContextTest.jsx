@@ -5,13 +5,14 @@ import 'antd/lib/checkbox/style'; // Import the specific style for Checkbox
 import 'antd/lib/style'; // Import the general styles for Ant Design
 
 import { useAuth } from "../../contexts/AuthContext";
-import { useCategories } from "../../contexts/CategoryContext";
-import { useRoles } from "../../contexts/RoleContext";
-import { useResidences } from "../../contexts/ResidenceContext";
-import { useResidentials } from "../../contexts/ResidentialContext";
-import { useComplaints } from "../../contexts/ComplaintContext";
-import { useUsers } from "../../contexts/UsersContext";
-import { useComplaintsStatus } from "../../contexts/ComplaintsStatusContext";
+import { useCategories } from "../../hooks/useCategories";
+import { useRoles } from "../../hooks/useRoles";
+import { useResidences } from "../../hooks/useResidences";
+import { useResidentials } from "../../hooks/useResidentials";
+import { useComplaints } from "../../hooks/useComplaints";
+import { useUsers } from "../../hooks/useUsers";
+import { useComplaintStatuses } from "../../hooks/useComplaintStatuses";
+import { useActivityStatuses } from "../../hooks/useActivityStatuses";
 
 const LoggedUser = () => {
     const { authUser, isLoggedIn } = useAuth();
@@ -91,12 +92,23 @@ const CategoriesList = () => {
 }
 
 const ComplaintsStatusList = () => {
-    const { complaintsStatus } = useComplaintsStatus();
-    const jsonComplaintsStatus = JSON.stringify(complaintsStatus, null, 2)
+    const { complaintStatuses } = useComplaintStatuses();
+    const jsonComplaintsStatus = JSON.stringify(complaintStatuses, null, 2)
 
     return (
         < pre >
             {jsonComplaintsStatus}
+        </pre >
+    );
+}
+
+const ActivityStatusesList = () => {
+    const { activityStatuses } = useActivityStatuses();
+    const jsonActivityStatuses = JSON.stringify(activityStatuses, null, 2)
+
+    return (
+        < pre >
+            {jsonActivityStatuses}
         </pre >
     );
 }
@@ -148,6 +160,10 @@ const ContextTest = () => {
         {
             label: 'Complaints Status List',
             component: 'ComplaintsStatusList'
+        },
+        {
+            label: 'Activity Statuses List',
+            component: 'ActivityStatusesList'
         },
     ]
 
