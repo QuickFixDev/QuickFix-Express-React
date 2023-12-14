@@ -6,7 +6,7 @@ export function useComplaints(params = {}) {
     const [complaints, setComplaints] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    let apiUrl = `${ServerUrl}/api/complaints`;
+    let apiUrl = `${ServerUrl}/api/complaints-test`;
 
     if (userId) {
         apiUrl += `/${userId}`
