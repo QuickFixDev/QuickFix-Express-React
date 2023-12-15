@@ -97,7 +97,7 @@ const UserManager = () => {
                 <div className="col-auto text-start">
                     <h2 className="m-0 fw-bold">User manager</h2>
                 </div>
-                <div class="col text-start">
+                <div className="col text-start">
                     <IconInfo
                         message=
                         {

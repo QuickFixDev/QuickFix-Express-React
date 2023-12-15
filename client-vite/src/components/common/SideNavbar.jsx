@@ -40,10 +40,6 @@ const iconMapping = {
   faHouseChimney: faHouseChimney,
   faSearch: faSearch,
 };
-// { userRequired: 'resident', path: '/user/complaints/new', label: 'Submit report', iconName: 'faPlusCircle' },
-// { userRequired: 'resident', path: '/user/complaints', label: 'My reports', iconName: 'faList' },
-// { userRequired: 'resident', path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
-
 
 const routes = [
   { userRequired: 'common', path: '/', label: 'Home', iconName: 'faHome' },
@@ -53,17 +49,13 @@ const routes = [
   { userRequired: 'resident', path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
   { userRequired: 'admin', path: '/admin/complaints/stats', label: 'Stats', iconName: 'faChartBar' },
   { userRequired: 'admin', path: '/admin/users', label: 'Manage users', iconName: 'faUsers' },
-  { userRequired: 'admin', path: '/complaint-filter', label: 'Complaint manager', iconName: 'faClipboard' },
-  // { userRequired: 'admin', path: '/admin/complaints', label: 'Manage complaints', iconName: 'faClipboard' },
+  { userRequired: 'admin', path: '/admin/complaints', label: 'Complaint manager', iconName: 'faClipboard' },
   { userRequired: 'admin', path: '/admin/residences', label: 'Manage residences', iconName: 'faHouseChimney' },
   { userRequired: 'admin', path: '/admin/residentials', label: 'Manage residentials', iconName: 'faCity' },
   { userRequired: 'admin', path: '/admin/roles/new', label: 'Roles', iconName: 'faCrown' },
-  // { userRequired: 'admin', path: '/complaint-filter', label: 'Complaint filter', iconName: 'faSearch' },
   { userRequired: 'admin', path: '/role-filter', label: 'Role filter', iconName: 'faSearch' },
   { userRequired: 'admin', path: '/context-test', label: 'JSON DB', iconName: 'faCog' },
-  // { userRequired: 'admin', path: '/category-management', label: 'Category management' },
 ];
-
 
 const Sidebar = () => {
   const { authUser, isLoggedIn } = useAuth();

@@ -1,205 +1,185 @@
-import React, { useState, useEffect } from 'react';
-import ServerUrl from '../../../constants/ServerUrl';
-import { useAuth } from "../../../contexts/AuthContext";
+import React, { useState, useEffect } from "react";
+import ServerUrl from "../../../constants/ServerUrl";
 import AccessDenied from '../../../components/access/AccessDenied';
-import { Modal, Button, Table } from 'react-bootstrap';
 
-const initialSqlQuery = `SELECT * FROM complaints`;
-const availableFilters = [
-  { name: 'User id', key: 'user_id', options: [1, 2] },
-  { name: 'Category ID', key: 'category_id', options: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
-];
+import SearchBar from "../../../components/filtering/SearchBar";
+import FilterComponent from "../../../components/filtering/FilterComponent";
+import { Checkbox } from "antd";
+import ComplaintModal from "../../../components/modals/ComplaintModal";
 
-const FilterTest = () => {
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [queryResult, setQueryResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [selectedComplaint, setSelectedComplaint] = useState(null);
+import { useComplaintsTest } from "../../../hooks/useComplaintsTest";
+import { useCategories } from "../../../hooks/useCategories";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
+
+
+const Filter = () => {
+  const { categories } = useCategories();
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const { authUser, isLoggedIn } = useAuth();
+  const { complaints, loading } = useComplaintsTest();
 
-  const [showModal, setShowModal] = useState(false);
-
-  const handleModalClose = () => setShowModal(false);
-
-  const selectComplaint = (complaint) => {
-    setSelectedComplaint(complaint);
-    setShowModal(true);
+  const handleFilterChange = (categoryId) => {
+    setSelectedCategories((prevCategories) => {
+      if (prevCategories.includes(categoryId)) {
+        return prevCategories.filter((category) => category !== categoryId);
+      } else {
+        return [...prevCategories, categoryId];
+      }
+    });
   };
+
+  let filteredComplaints;
+
+  if (selectedCategories.length === 0) {
+    filteredComplaints = complaints;
+  } else {
+    filteredComplaints = complaints.filter((complaint) =>
+      selectedCategories.includes(complaint.category_id)
+    );
+  }
+
+
+  const filteredCategories = categories.filter((category) =>
+    selectedCategories.includes(category.category_id)
+  );
+
+  return (
+    <div className="col-md-2 col-3">
+      <div className="row row-cols-1">
+        <div className="col p-0 g-2 mb-2">
+          <div>
+            {categories && categories.length > 0 ?
+              (
+                categories.map((category) => (
+                  <div key={category.category_id}>
+                    <Checkbox
+                      checked={selectedCategories.includes(category.category_id)}
+                      className="p-2"
+                      onChange={() => handleFilterChange(category.category_id)}
+                    >
+                      {category.category_name}
+                    </Checkbox>
+                  </div>
+                ))
+              ) : (
+                <div>
+                  hey
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+}
+
+
+const ComplaintManager = () => {
+  const { complaints, isLoading: complaintsLoading } = useComplaintsTest();
+  const [search, setSearch] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const { isLoggedIn } = useAuth();
+
+  const handleComplaintClick = (complaint) => {
+    setSelectedComplaint(complaint);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedComplaint(null);
+  };
+
+  const handleSelectFilter = (filter) => {
+    setSelectedFilter(filter);
+  };
+
+  const handleSearch = (value) => {
+    setSearch(value);
+  }
 
   useEffect(() => {
-    const fetchQueryResult = async () => {
-      setLoading(true);
-      try {
-        const filterQuery = buildFilterQuery();
-        const result = await executeQuery(filterQuery);
-        setQueryResult(result);
-      } catch (error) {
-        console.error('Error executing query:', error);
-        setQueryResult(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+    console.log(search);
+  }, [search]);
 
-    fetchQueryResult();
-  }, [selectedFilters]);
+  const filteredComplaints = complaints.filter((item) => {
+    return search.toLowerCase() === '' ||
+      item.description.toLowerCase().includes(search.toLowerCase()) ||
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
 
-  const executeQuery = async (filterQuery) => {
-    const fetchUrl = `${ServerUrl}/filter-test`;
+      item.id.toString().includes(search.toLowerCase());
+  });
 
-    const response = await fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ filterQuery }),
-    });
-    if (!response.ok) {
-      throw Error(`Error: ${response.status}`);
-    }
-    return response.json();
+  const truncateText = (text, limit) => {
+    const words = text.split(' ');
+    const truncated = words.slice(0, limit).join(' ');
+    return truncated + (words.length > limit ? '...' : '');
   };
 
-  const buildFilterQuery = () => {
-    const appliedFilters = selectedFilters.map(filter => `${filter.key} = ${filter.value}`);
-    const whereClause = appliedFilters.length > 0 ? `WHERE ${appliedFilters.join(' AND ')}` : '';
-    return `${initialSqlQuery} ${whereClause}`;
-  };
-
-  const toggleFilter = (filterName, filterValue) => {
-    const updatedFilters = [...selectedFilters];
-    const filterIndex = updatedFilters.findIndex(filter => filter.name === filterName);
-
-    if (filterValue === '') {
-      if (filterIndex !== -1) {
-        updatedFilters.splice(filterIndex, 1);
-      }
-    } else {
-      if (filterIndex !== -1) {
-        updatedFilters[filterIndex].value = filterValue;
-      } else {
-        const key = availableFilters.find(filter => filter.name === filterName).key;
-        updatedFilters.push({ name: filterName, key, value: filterValue });
-      }
-    }
-
-    setSelectedFilters(updatedFilters);
-  };
-
-  if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev') {
-
-
+  if (isLoggedIn) {
     return (
-      <div className="container-fluid h-100">
-        <div className='my-3 p-md-4 p-1'>
-          <div className="row my-4">
-            <div className="col">
-              <h2 className='fw-bold'>Complaint manager</h2>
-            </div>
-
-            {availableFilters.map((filter, index) => (
-              <div key={index} className="col">
-                <select
-                  className="form-control"
-                  onChange={(e) => toggleFilter(filter.name, e.target.value)}
-                  value={
-                    selectedFilters.find(
-                      (selectedFilter) => selectedFilter.name === filter.name
-                    )?.value || ''
-                  }
-                >
-                  <option value="">{filter.name}</option>
-                  {filter.options.map((option, optionIndex) => (
-                    <option key={optionIndex} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-
-              </div>
-            ))}
+      <div className="list container-fluid p-md-5 p-3">
+        <div className="row">
+          <div className="col text-start">
+            <h2 className="fw-bold">Complaint manager</h2>
           </div>
-          {queryResult ? (
-            <div>
-              {loading ? (
-                <p>Loading...</p>
-              ) : (
-                queryResult.length === 0 ? (
-                  <p>No data found with the selected filter criteria.</p>
-                ) : (
-                  <div style={{ maxHeight: 'calc(100vh - 250px)', overflowY: 'auto' }}>
-                    <Table bordered={false} hover>
-                      <thead>
-                        <tr>
-                          <th>Title</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {queryResult.map((complaint, index) => (
-                          <tr
-                            key={index}
-                            onClick={() => selectComplaint(complaint)}
-                            style={{ cursor: 'pointer' }}
-                          >
-                            <td>
-                              {complaint.title}
-                            </td>
-                            <td>
-                              {complaint.complaint_status}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </div>
-                )
-              )}
-            </div>
-          ) : (
-            loading && <p>Loading...</p>
-          )}
-          {!queryResult && !loading && (
-            <p>No data found with the selected filter criteria.</p>
-          )}
         </div>
 
-        <Modal show={showModal} onHide={handleModalClose} size="lg" centered>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              {selectedComplaint ? selectedComplaint.title : 'No Complaint Selected'}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="container p-xl-5 p-3">
-              {selectedComplaint ? (
-                <div>
-                  <p>{selectedComplaint.status}</p>
-                  <div className='bg-light p-3'>
-                    {selectedComplaint.description || 'No details available for this complaint.'}
-                  </div>
-                </div>
-              ) : (
-                <div className="container d-flex flex-column justify-content-center align-items-center h-100">
-                  <h3>No Complaint Selected</h3>
-                </div>
-              )}
+        <div className="row py-3">
+          <div className="col">
+            <SearchBar onSearch={handleSearch} searchType='complaints' />
+          </div>
+          <div className="col-auto">
+            <div className="container">
+              <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
             </div>
-          </Modal.Body>
-        </Modal>
-      </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <table className="table table-hover mt-4">
+              <thead>
+                <tr>
+                  <th className="col-10">Complaint</th>
+                  <th className="col-2">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredComplaints.length > 0 ? (
+                  filteredComplaints.map((item) => (
+                    <tr className="cursor-pointer" key={item.id} onClick={() => handleComplaintClick(item)}>
+                      <td>
+                        <div>
+                          <strong>{item.title}</strong>
+                        </div>
+                        <div className="d-md-block d-none">{truncateText(item.description, 15)}</div>
+                      </td>
+                      <td>
+                        {item.complaint_status}
+                      </td>
+                    </tr>
+                  ))) : ( complaintsLoading ? ( <tr><td>Loading...</td></tr> ) : ( <tr><td>No complaints found</td></tr> ) )
+                }
+              </tbody>
+            </table>
+
+            {selectedComplaint && (
+              <ComplaintModal complaint={selectedComplaint} onClose={handleCloseModal} />
+            )}
+          </div>
+        </div>
+
+      </div >
     );
-
-
-
   } else {
     return (
       <AccessDenied />
     )
   }
+}
 
-
-
-};
-
-export default FilterTest;
+export default ComplaintManager;
