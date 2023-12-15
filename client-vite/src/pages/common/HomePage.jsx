@@ -1,6 +1,6 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, NavLink } from 'react-router-dom';
-import LoginButton from "../../components/common/LoginButton";
+import LoginButton from "../../components/access/LoginButton";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { useCategories } from "../../hooks/useCategories";

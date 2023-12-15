@@ -6,7 +6,7 @@ import AccessDenied from '../common/AccessDenied';
 import SearchBar from "../../components/common/SearchBar";
 import FilterComponent from "../../components/common/FilterComponent";
 import { Checkbox } from "antd";
-import ComplaintModal from "../../components/admin/ComplaintModal";
+import ComplaintModal from "../../components/modals/ComplaintModal";
 
 import { useComplaintsTest } from "../../hooks/useComplaintsTest";
 import { useCategories } from "../../hooks/useCategories";

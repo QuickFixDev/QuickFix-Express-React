@@ -1,12 +1,12 @@
 // UserManager.js
 import React, { useState, useEffect } from "react";
 import ServerUrl from "../../../constants/ServerUrl";
-import AccessDenied from '../../common/AccessDenied';
+import AccessDenied from '../../../components/access/AccessDenied';
 
-import SearchBar from "../../../components/common/SearchBar";
-import FilterComponent from "../../../components/common/FilterComponent";
+import SearchBar from "../../../components/filtering/SearchBar";
+import FilterComponent from "../../../components/filtering/FilterComponent";
 import { Checkbox } from "antd";
-import UserModal from "../../../components/admin/UserModal";
+import UserModal from "../../../components/modals/UserModal";
 
 import { useUsers } from "../../../hooks/useUsers";
 import { useRoles } from "../../../hooks/useRoles";
@@ -15,6 +15,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useResidences } from "../../../hooks/useResidences";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo, faInfoCircle, faUser } from "@fortawesome/free-solid-svg-icons";
+import AccessRequest from "../../../components/access/AccessRequest";
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 
@@ -51,35 +52,6 @@ const Filter = ({ selectedCategories, handleFilterChange }) => {
         </div>
     );
 }
-
-const UserRequestsAlert = ({ count }) => {
-    return (
-        <div>
-            {count > 0 ? (
-                <>
-                    <div className="border-start border-success border-5 rounded-2 p-4" style={{backgroundColor: '#DFF9E7'}}>
-                        <div className="row d-flex flex-row align-items-center">
-                            <div className="col text-start">
-                                <h5 className="fw-bold">New requests</h5>
-                                <span>
-                                    You have {count} new access {count === 1 ? 'request' : 'requests'}
-                                </span>
-                            </div>
-                            <div className="col text-end">
-                                <button className="btn btn-success">Manage requests</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </>
-            ) : (
-                <div>
-                </div>
-            )
-            }
-        </div >
-    );
-};
 
 const UserManager = () => {
     const { users, isLoading: usersLoading } = useUsers();
@@ -152,7 +124,7 @@ const UserManager = () => {
             </div>
 
             <div className="row">
-                <UserRequestsAlert count={pendingUsersCount.length} />
+                <AccessRequest count={pendingUsersCount.length} />
             </div>
 
             <div className="row">

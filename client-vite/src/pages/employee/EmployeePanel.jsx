@@ -1,4 +1,4 @@
-import Graphic from '../../components/admin/Graphic'
+import Graphic from '../../components/graphics/Graphic'
 import { useAuth } from '../../contexts/AuthContext';
 import { Table } from 'react-bootstrap';
 import { useComplaints } from "../../hooks/useComplaints";

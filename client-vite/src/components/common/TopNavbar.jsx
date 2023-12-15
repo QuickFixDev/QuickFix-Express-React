@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import LoginButton from './LoginButton';
+import LoginButton from '../access/LoginButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';

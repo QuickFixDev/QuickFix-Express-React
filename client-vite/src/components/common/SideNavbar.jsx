@@ -2,7 +2,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAuth } from "../../contexts/AuthContext";
-import LoginButton from "../../components/common/LoginButton";
+import LoginButton from "../../components/access/LoginButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlusCircle,

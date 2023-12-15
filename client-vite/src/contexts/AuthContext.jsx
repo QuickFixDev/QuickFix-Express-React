@@ -3,7 +3,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useContext, createContext, useEffect, } from 'react';
 import ServerUrl from '../constants/ServerUrl';
-import Logout from '../components/common/Logout';
+import Logout from '../components/access/Logout';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
