@@ -81,7 +81,7 @@ const Filter = () => {
 
 
 const ComplaintFilter = () => {
-  const { complaints, loading } = useComplaintsTest();
+  const { complaints, isLoading: complaintsLoading } = useComplaintsTest();
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [selectedComplaint, setSelectedComplaint] = useState(null);
@@ -94,7 +94,6 @@ const ComplaintFilter = () => {
   const handleCloseModal = () => {
     setSelectedComplaint(null);
   };
-
 
   const handleSelectFilter = (filter) => {
     setSelectedFilter(filter);
@@ -138,38 +137,34 @@ const ComplaintFilter = () => {
           <div className="col-auto">
             <div className="container">
               <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
-
             </div>
           </div>
         </div>
-        title
-
         <div className="row">
-
           <div className="col">
             <table className="table table-hover mt-4">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Complaint</th>
-                  <th>Status</th>
+                  <th className="col-10">Complaint</th>
+                  <th className="col-2">Status</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredComplaints.map((item) => (
-                  <tr className="cursor-pointer" key={item.id} onClick={() => handleComplaintClick(item)}>
-                    <td>{item.id}</td>
-                    <td>
-                      <div>
-                        <strong>{item.title}</strong>
-                      </div>
-                      <div className="d-md-block d-none">{truncateText(item.description, 15)}</div>
-                    </td>
-                    <td>
-                      {item.complaint_status}
-                    </td>
-                  </tr>
-                ))}
+                {filteredComplaints.length > 0 ? (
+                  filteredComplaints.map((item) => (
+                    <tr className="cursor-pointer" key={item.id} onClick={() => handleComplaintClick(item)}>
+                      <td>
+                        <div>
+                          <strong>{item.title}</strong>
+                        </div>
+                        <div className="d-md-block d-none">{truncateText(item.description, 15)}</div>
+                      </td>
+                      <td>
+                        {item.complaint_status}
+                      </td>
+                    </tr>
+                  ))) : ( complaintsLoading ? ( <tr><td>Loading...</td></tr> ) : ( <tr><td>No complaints found</td></tr> ) )
+                }
               </tbody>
             </table>
 
@@ -179,7 +174,7 @@ const ComplaintFilter = () => {
           </div>
         </div>
 
-      </div>
+      </div >
     );
   } else {
     return (
