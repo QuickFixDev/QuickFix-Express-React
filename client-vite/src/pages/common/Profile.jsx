@@ -1,5 +1,5 @@
 import ProfileComponent from '../../components/common/ProfileComponent';
-import AccessDenied from './AccessDenied';
+import AccessDenied from '../../components/access/AccessDenied';
 import { useAuth } from "../../contexts/AuthContext";
 
 const Profile = () => {

@@ -16,6 +16,7 @@ import { useResidences } from "../../../hooks/useResidences";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo, faInfoCircle, faUser } from "@fortawesome/free-solid-svg-icons";
 import AccessRequest from "../../../components/access/AccessRequest";
+import IconInfo from "../../../components/icons/IconInfo";
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 
@@ -81,10 +82,6 @@ const UserManager = () => {
         console.log(search);
     }, [search]);
 
-    useEffect(() => {
-        $('[data-toggle="tooltip"]').tooltip();
-    }, []);
-
     const pendingUsersCount = users.filter(user => user.status === 'Pending request');
 
     const filteredUsers = users.filter((user) => {
@@ -101,14 +98,12 @@ const UserManager = () => {
                     <h2 className="m-0 fw-bold">User manager</h2>
                 </div>
                 <div class="col text-start">
-                    <button
-                        className="btn btn-white p-0"
-                        data-toggle="tooltip"
-                        data-placement="right"
-                        title="Click a user to manage user info"
-                    >
-                        <FontAwesomeIcon icon={faInfoCircle} className="text-primary"></FontAwesomeIcon>
-                    </button>
+                    <IconInfo
+                        message=
+                        {
+                            "Click on a user to manage their information. You can update user details,assign roles, and handle access requests from this page."
+                        }
+                    />
                 </div>
             </div>
 

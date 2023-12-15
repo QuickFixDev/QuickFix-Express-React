@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import AccessDenied from '../../common/AccessDenied';
+import AccessDenied from '../../../components/access/AccessDenied';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import ServerUrl from '../../../constants/ServerUrl';
 import { useResidentials } from '../../../hooks/useResidentials';
 import { useResidences } from '../../../hooks/useResidences';
 import { useUsers } from '../../../hooks/useUsers';
-import FilterComponent from '../../../components/common/FilterComponent';
-import SearchBar from '../../../components/common/SearchBar';
+import FilterComponent from '../../../components/filtering/FilterComponent';
+import SearchBar from '../../../components/filtering/SearchBar';
 
 function ResidenceListItem({ owner, tenant, residence, setSelectedResidence, deleteResidence, showModal }) {
   return (

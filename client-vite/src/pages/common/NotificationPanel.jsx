@@ -1,4 +1,4 @@
-import AccessDenied from "./AccessDenied";
+import AccessDenied from "../../components/access/AccessDenied";
 import { useAuth } from "../../contexts/AuthContext";
 
 const NotificationComponent = ({ img_src, title, description }) => {

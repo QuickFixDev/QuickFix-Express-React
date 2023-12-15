@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AccessDenied from '../common/AccessDenied';
+import AccessDenied from '../../components/access/AccessDenied';
 import { Checkbox } from 'antd';
 import 'antd/lib/checkbox/style';
 import 'antd/lib/style';

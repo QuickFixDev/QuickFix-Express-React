@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import Graphic from '../../components/graphics/Graphic';
-import AccessDenied from '../common/AccessDenied';
+import AccessDenied from '../../components/access/AccessDenied';
 import { useAuth } from "../../contexts/AuthContext";
 
 const Stats = () => {

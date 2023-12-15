@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAuth } from '../../contexts/AuthContext';
-import AccessDenied from '../common/AccessDenied';
+import AccessDenied from '../../components/access/AccessDenied';
 import { useCategories } from '../../hooks/useCategories';
 import { useNavigate  } from 'react-router-dom';
 

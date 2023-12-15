@@ -1,15 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/common/SideNavbar';
 import TopNavbar from './components/common/TopNavbar';
-import Footer from './components/common/Footer';
-import Auth0ProviderWithNavigate from './components/Auth0ProviderWithNavigate';
-import AboutPage from './pages/common/AboutPage';
+import Auth0ProviderWithNavigate from './components/access/Auth0ProviderWithNavigate';
 import HomePage from './pages/common/HomePage';
 import Profile from './pages/common/Profile';
 
 import MyComplaints from './pages/resident/MyComplaints';
 import ComplainForm from './pages/resident/ComplaintStorage';
 import ResidentPanel from './pages/resident/ResidentPanel';
+import ResidenceList from './pages/resident/ResidenceList'
 
 import ResidentialsManagement from './pages/admin/management/ResidentialsManagement';
 import ResidenceManagement from './pages/admin/management/ResidenceManagement';
@@ -17,20 +16,18 @@ import UserManagement from './pages/admin/management/UserManagement';
 import ComplaintManagement from './pages/admin/management/ComplaintManagement';
 import CategoryManagement from './pages/admin/management/CategoryManagement';
 
-import Stats from './pages/admin/Stats';
+import Stats from './pages/common/Stats';
 import UserStorage from './pages/admin/forms/UserStorage';
 import CreateRole from './pages/admin/forms/RoleStorage';
-import ResidenceList from './pages/admin/ResidenceList';
 
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 import { useAuth0 } from '@auth0/auth0-react';
 import ContextTest from './pages/common/ContextTest';
 import RegisterRequest from './pages/resident/RegisterRequest';
-import ResidenceStorage from './pages/admin/ResidenceStorage';
-import ResidentialStorage from './pages/admin/ResidentialStorage';
-import ComplaintFilter from './pages/admin/ComplaintFilter';
-import RoleFilter from './pages/admin/RoleFilter';
+import ResidenceStorage from './pages/admin/creation/ResidenceStorage';
+import ResidentialStorage from './pages/admin/creation/ResidentialStorage';
+import RoleFilter from './pages/admin/management/RoleManagement';
 import EmployeePanel from './pages/employee/EmployeePanel';
 import NotificationPanel from './pages/common/NotificationPanel';
 
@@ -59,7 +56,6 @@ export default function App() {
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/role-filter" element={<RoleFilter />} />
-                  <Route path="/complaint-filter" element={<ComplaintFilter />} />
 
                   <Route path="/admin/complaints" element={<ComplaintManagement />} />
                   <Route path="/admin/complaints/stats" element={<Stats />} />

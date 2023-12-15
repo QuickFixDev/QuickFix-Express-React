@@ -6,7 +6,7 @@ import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from 'react-router-dom';
 import { useAuth } from "../../../contexts/AuthContext";
-import AccessDenied from '../../common/AccessDenied';
+import AccessDenied from '../../../components/access/AccessDenied';
 
 
 function CategoryList({ categories, setSelectedCategory, deleteCategory }) {

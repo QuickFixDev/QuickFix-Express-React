@@ -1,9 +1,9 @@
 // RoleFilter.js
 import React, { useState, useEffect } from "react";
-import ServerUrl from "../../constants/ServerUrl";
-import { useRoles } from "../../hooks/useRoles";
-import SearchBar from "../../components/common/SearchBar";
-import FilterComponent from "../../components/common/FilterComponent";
+import ServerUrl from "../../../constants/ServerUrl";
+import { useRoles } from "../../../hooks/useRoles";
+import SearchBar from "../../../components/filtering/SearchBar";
+import FilterComponent from "../../../components/filtering/FilterComponent";
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
 

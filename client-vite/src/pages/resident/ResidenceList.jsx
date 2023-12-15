@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouseCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { faHouseCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import AccessDenied from '../common/AccessDenied';
+import AccessDenied from '../../components/access/AccessDenied';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';

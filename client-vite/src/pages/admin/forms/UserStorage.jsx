@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ServerUrl from '../../../constants/ServerUrl';
 import { useAuth0 } from '@auth0/auth0-react';
-import AccessDenied from '../../common/AccessDenied';
+import AccessDenied from '../../../components/access/AccessDenied';
 import { useAuth } from "../../../contexts/AuthContext";
 import { useRoles } from "../../../hooks/useRoles";
 import { useResidences } from "../../../hooks/useResidences";

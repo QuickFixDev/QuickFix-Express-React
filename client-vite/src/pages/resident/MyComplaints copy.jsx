@@ -5,7 +5,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox } from 'antd';
 import 'antd/lib/checkbox/style';
 import 'antd/lib/style';
-import AccessDenied from '../common/AccessDenied';
+import AccessDenied from '../../../components/access/AccessDenied';
 import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAuth0 } from '@auth0/auth0-react';
