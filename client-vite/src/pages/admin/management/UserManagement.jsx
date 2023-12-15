@@ -52,6 +52,35 @@ const Filter = ({ selectedCategories, handleFilterChange }) => {
     );
 }
 
+const UserRequestsAlert = ({ count }) => {
+    return (
+        <div>
+            {count > 0 ? (
+                <>
+                    <div className="border-start border-success border-5 rounded-2 p-4" style={{backgroundColor: '#DFF9E7'}}>
+                        <div className="row d-flex flex-row align-items-center">
+                            <div className="col text-start">
+                                <h5 className="fw-bold">New requests</h5>
+                                <span>
+                                    You have {count} new access {count === 1 ? 'request' : 'requests'}
+                                </span>
+                            </div>
+                            <div className="col text-end">
+                                <button className="btn btn-success">Manage requests</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </>
+            ) : (
+                <div>
+                </div>
+            )
+            }
+        </div >
+    );
+};
+
 const UserManager = () => {
     const { users, isLoading: usersLoading } = useUsers();
     const { residences } = useResidences();
@@ -83,6 +112,8 @@ const UserManager = () => {
     useEffect(() => {
         $('[data-toggle="tooltip"]').tooltip();
     }, []);
+
+    const pendingUsersCount = users.filter(user => user.status === 'Pending request');
 
     const filteredUsers = users.filter((user) => {
         return search.toLowerCase() === '' ||
@@ -118,6 +149,10 @@ const UserManager = () => {
                         <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
                     </div>
                 </div>
+            </div>
+
+            <div className="row">
+                <UserRequestsAlert count={pendingUsersCount.length} />
             </div>
 
             <div className="row">
