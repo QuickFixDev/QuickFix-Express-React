@@ -1,3 +1,5 @@
+import AccessModal from "../modals/AccessModal";
+
 const AccessRequest = ({ count }) => {
     return (
         <div>
@@ -6,7 +8,8 @@ const AccessRequest = ({ count }) => {
                     <div className="rounded-2 border-start border-success border-5 p-4 cursor-pointer   " style={{ backgroundColor: '#DFF9E7' }}>
                         <div className="row d-flex flex-row align-items-center">
                             <div className="col text-start">
-                                <h5 className="fw-bold">New requests</h5>
+                                <AccessModal />
+                                <h5 className="fw-bold">New requests</h5>\
                                 <span>
                                     You have {count} new access {count === 1 ? 'request' : 'requests'}
                                 </span>
@@ -15,12 +18,12 @@ const AccessRequest = ({ count }) => {
                                 <button className="btn btn-success">Manage requests</button>
                             </div>
                         </div>
-
                     </div>
+                    
+                    <AccessModal />
                 </>
             ) : (
-                <div>
-                </div>
+                null
             )
             }
         </div >

@@ -74,20 +74,33 @@ const WelcomePage = () => {
   useEffect(() => {
     // Function to generate a random light color in hexadecimal format
     const randomLightColor = () => {
-      const letters = 'CEF'; // Using higher values for lighter colors
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * letters.length)];
-      }
-      return color;
+      const colors = [
+        '#B7FFEC',
+        '#B9FFFF',
+        '#DCD9FF',
+        '#F7D1FF',
+        '#FFD9EB',
+      ];
+      const randomIndex = Math.floor(Math.random() * colors.length)
+      const randomColor = colors[randomIndex];
+      return randomColor;
     };
 
     // Generate random light gradients for each item
     const gradients = Array.from({ length: details.length }, () => {
-      const color1 = randomLightColor();
-      const color2 = randomLightColor();
-      return `linear-gradient(to right, ${color1}, ${color2})`;
+      let repeat = true;
+
+      while (repeat) {
+        let color1 = randomLightColor();
+        let color2 = randomLightColor();
+
+        if (color1 !== color2) {
+          repeat = false;
+          return `linear-gradient(to right, ${color1}, ${color2})`;
+        }
+      }
     });
+
 
     // Set the random light gradients in the state
     setRandomGradients(gradients);
@@ -108,8 +121,6 @@ const WelcomePage = () => {
             </h1>
 
             <p className="fw-light">
-              QuickFix
-
               QuickFix is a system designed to enhance communication between tenants and managers residential complexes and private residences.
               The system facilitates efficient communication between residents and management, allowing users to report and track various maintenance and service requests seamlessly.
             </p>
@@ -130,7 +141,7 @@ const WelcomePage = () => {
 
           </div>
           <div className="col d-lg-flex d-none flex-row align-items-center justify-content-center">
-            <FontAwesomeIcon icon={faHome} size="10x" />
+            <img src="/svg/QuickFixGray.svg" alt="System Photo" className="user-photo mx-3" width={'200px'} />
           </div>
         </div >
 

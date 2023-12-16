@@ -1,22 +1,18 @@
 // UserManager.js
 import React, { useState, useEffect } from "react";
-import ServerUrl from "../../../constants/ServerUrl";
-import AccessDenied from '../../../components/access/AccessDenied';
 
+import { Checkbox } from "antd";
 import SearchBar from "../../../components/filtering/SearchBar";
 import FilterComponent from "../../../components/filtering/FilterComponent";
-import { Checkbox } from "antd";
 import UserModal from "../../../components/modals/UserModal";
+import AccessRequest from "../../../components/access/AccessRequest";
+import IconInfo from "../../../components/icons/IconInfo";
 
 import { useUsers } from "../../../hooks/useUsers";
 import { useRoles } from "../../../hooks/useRoles";
 import { useAuth } from "../../../contexts/AuthContext";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useResidences } from "../../../hooks/useResidences";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo, faInfoCircle, faUser } from "@fortawesome/free-solid-svg-icons";
-import AccessRequest from "../../../components/access/AccessRequest";
-import IconInfo from "../../../components/icons/IconInfo";
+
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 

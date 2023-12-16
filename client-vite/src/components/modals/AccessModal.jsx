@@ -1,24 +1,20 @@
 // AccessModal.js
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 
 import { Form, FloatingLabel } from 'react-bootstrap';
 
 import ServerUrl from '../../constants/ServerUrl';
-import { useRoles } from '../../hooks/useRoles';
 import { useActivityStatuses } from '../../hooks/useActivityStatuses';
-import { useResidences } from '../../hooks/useResidences';
+import { useUsers } from '../../hooks/useUsers';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faFighterJet, faX } from '@fortawesome/free-solid-svg-icons';
 
 const AccessModal = ({ user, onClose }) => {
-    const { activityStatuses } = useActivityStatuses();
+    const { users, isLoading: usersLoading } = useUsers();
 
-    const [selectedRole, setSelectedRole] = useState(user.role_name);
-    const [selectedActivityStatus, setSelectedActivityStatus] = useState(user.status);
-    const [firstName, setFirstName] = useState(user.first_name);
-    const [lastName, setLastName] = useState(user.last_name);
-    const [email, setEmail] = useState(user.email);
-    const [phone, setPhone] = useState(user.phone);
+    const pendingUsers = users.filter(user => user.status === 'Pending request');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -43,20 +39,50 @@ const AccessModal = ({ user, onClose }) => {
     };
 
     return (
-        <Modal show={true} onHide={onClose} onExit={() => console.log('Modal is exiting')} onExited={onClose} size='xl' centered backdrop="static">
+        <Modal show={true} onHide={onClose} onExit={() => console.log('Modal is exiting')} onExited={onClose} size='lg' centered backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <h5 className='fw-bold m-0 my-2'>Edit User</h5>
+                    <h5 className='fw-bold m-0 my-2'>User requests</h5>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className='p-4'>
                 <Form onSubmit={handleSubmit}>
                     <div className="row">
-                        <div className="col my-2 floating-placeholder">
-                            <FloatingLabel controlId="first_name" label="First Name">
-                                <Form.Control name='first_name' type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                            </FloatingLabel>
-                        </div>
+                        {pendingUsers.length > 0 ? (
+                            <table className='table'>
+                                <thead>
+                                    <tr>
+                                        <th className='col-10'>Name</th>
+                                        <th className='col-1 text-center'>Accept</th>
+                                        <th className='col-1 text-center'>Deny</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {pendingUsers.map((user) => (
+                                        <tr key={user.user_id}>
+                                            <td>
+                                                <span> {user.first_name} {user.last_name} </span>
+                                            </td>
+                                            <td className='text-center'>
+                                                <Link>
+                                                    <FontAwesomeIcon className='px-2 text-primary' icon={faCheck} />
+                                                </Link>
+                                            </td>
+                                            <td className='text-center'>
+                                                <Link>
+                                                    <FontAwesomeIcon className='px-2 text-danger' icon={faX} />
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div>
+                                message
+                            </div>
+                        )}
+
                     </div>
                 </Form>
             </Modal.Body>
