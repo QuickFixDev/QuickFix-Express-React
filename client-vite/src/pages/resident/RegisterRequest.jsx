@@ -5,8 +5,6 @@ import AccessDenied from '../../components/access/AccessDenied';
 import { useAuth } from "../../contexts/AuthContext";
 import { useRoles } from "../../hooks/useRoles";
 
-
-
 const RegisterRequest = () => {
     const { authUser, isLoggedIn } = useAuth();
 
@@ -63,7 +61,7 @@ const RegisterRequest = () => {
             <form onSubmit={handleSubmit} className="container">
                 <h2 className='py-4 text-center fw-bold'>Request access</h2>
 
-                <div className="row row-cols-lg-2 row-cols-1">
+                <div className="row row-cols-lg-1 row-cols-1">
                     <div className="col">
                         <div className="form-group">
                             <label className='my-2' htmlFor="first_name">first_name</label>
@@ -92,7 +90,7 @@ const RegisterRequest = () => {
                     </div>
                 </div>
 
-                <div className="row row-cols-lg-2 row-cols-1">
+                <div className="row row-cols-lg-1 row-cols-1">
                     <div className="col">
                         <div className="form-group">
                             <label className='my-2' htmlFor="street_name">street_name</label>

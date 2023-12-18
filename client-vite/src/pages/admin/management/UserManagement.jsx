@@ -12,6 +12,8 @@ import { useUsers } from "../../../hooks/useUsers";
 import { useRoles } from "../../../hooks/useRoles";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useResidences } from "../../../hooks/useResidences";
+import AccessModal from "../../../components/modals/AccessModal";
+import { modalGlobalConfig } from "antd/es/modal/confirm";
 
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];

@@ -20,6 +20,7 @@ import {
 
 }
   from '@fortawesome/free-solid-svg-icons';
+import AccessRequestModal from "../../components/modals/AccessRequestModal";
 
 
 const details = [
@@ -68,6 +69,15 @@ const WelcomePage = () => {
   const { authUser, isLoggedIn } = useAuth();
   const { categories, loading } = useCategories();
   const { loginWithRedirect } = useAuth0();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  }
+
+  const handleHideModal = () => {
+    setShowModal(false);
+  }
 
   const [randomGradients, setRandomGradients] = useState([]);
 
@@ -110,33 +120,36 @@ const WelcomePage = () => {
     <>
 
       <div className="container-fluid h-100">
-        <div className="row row-cols-lg-2 d-flex flex-row p-md-5 p-3"
+        <div className="row row-cols-lg-2 d-flex flex-row p-0 px-md-5 px-3"
           style={{
-            background: "linear-gradient(to right, #EBE5FB, #C2FBFA)",
+            background: "linear-gradient(to right, #FBF7FF, #C2FBFA)",
           }}
         >
           <div className="col">
-            <h1 className="fw-bold pb-4">
-              Having troubles with your residence?
-            </h1>
 
-            <p className="fw-light">
-              QuickFix is a system designed to enhance communication between tenants and managers residential complexes and private residences.
-              The system facilitates efficient communication between residents and management, allowing users to report and track various maintenance and service requests seamlessly.
-            </p>
+            <div className="row">
+              <h1 className="fw-bold m-0 mt-5">
+                Having troubles with your residence?
+              </h1>
+            </div>
 
-            <div className="row g-1">
-              <Link to={'/user/request'} className="col-auto text-decoration-none">
-                <button className="btn btn-primary">
-                  Sign up for free
-                </button>
-              </Link>
+            <div className="row">
+              <p className="fw-light m-0 mt-4 ">
+                QuickFix is a system designed to enhance communication between tenants and managers residential complexes and private residences.
+                The system facilitates efficient communication between residents and management, allowing users to report and track various maintenance and service requests seamlessly.
+              </p>
+            </div>
 
-              <Link onClick={() => loginWithRedirect()} className="col-auto">
-                <button className="btn btn-outline-dark">
-                  Sign into your account
-                </button>
-              </Link>
+
+            <div className="row px-2">
+              <button onClick={handleShowModal} className="mt-4 btn btn-outline-primary">
+                Sign up for free
+              </button>
+            </div>
+            <div className="row px-2">
+              <button onClick={() => loginWithRedirect()} className="mt-2 mb-5 col btn btn-primary">
+                Sign into your account
+              </button>
             </div>
 
           </div>
@@ -151,9 +164,9 @@ const WelcomePage = () => {
           </h4>
           <div className="row row-cols-md-3 row-cols-sm-2 row-cols-1">
             {details.map((detail, index) => (
-              <div className="col-md-4 rounded-2" key={index}>
-                <div className=" shadow-sm rounded-2 mb-4">
-                  <div className="rounded-2  container-fluid text-black d-flex flex-col justify-content-center align-items-center p-5"
+              <div className="col-md-4 rounded-2 mb-4" key={index}>
+                <div className=" shadow-sm h-100 rounded-2">
+                  <div className="container-fluid text-black d-flex flex-col justify-content-center align-items-center p-5"
                     style={{
                       background: randomGradients[index],
                       color: 'black',
@@ -173,6 +186,7 @@ const WelcomePage = () => {
 
       </div >
 
+      <AccessRequestModal showModal={showModal} handleClose={handleHideModal} />
     </>
   );
 }

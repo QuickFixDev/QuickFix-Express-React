@@ -12,7 +12,9 @@ export function useUsers(params = {}) {
         apiUrl += `/${id}`
     }
 
-    useEffect(() => {
+    const fetchData = () => {
+        setLoading(true);
+
         fetch(apiUrl, {
             method: 'GET',
         })
@@ -26,7 +28,11 @@ export function useUsers(params = {}) {
                 console.error('Error fetching data:', error);
                 setLoading(false);
             });
-    }, []);
+    };
 
-    return { users, isLoading };
+    useEffect(() => {
+        fetchData();
+    }, [id]);
+
+    return { users, isLoading, fetchData };
 }

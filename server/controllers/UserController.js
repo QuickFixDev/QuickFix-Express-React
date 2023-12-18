@@ -146,4 +146,27 @@ UserController.createUser = (req, res) => {
     });
 };
 
+UserController.updateUserStatus = (req, res) => {
+    const userId = req.params.id;
+    const { statusId } = req.body;
+    const values = [statusId, userId];
+
+    const sqlQuery = `
+        UPDATE users
+        SET status_id = ?
+        WHERE user_id = ?
+    `;
+
+    pool.query(sqlQuery, values, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to update user' });
+        } else if (result.affectedRows === 0) {
+            res.status(404).json({ error: 'User not found' });
+        } else {
+            res.json({ message: 'User updated successfully' });
+        }
+    });
+}
+
 module.exports = UserController;
