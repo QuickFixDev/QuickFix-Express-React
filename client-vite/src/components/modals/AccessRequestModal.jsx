@@ -1,31 +1,36 @@
 // AccessRequestModal.js
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import Modal from 'react-bootstrap/Modal';
 
-import { Form, FloatingLabel } from 'react-bootstrap';
+import { useResidences } from '../../hooks/useResidences';
+import { useUsers } from '../../hooks/useUsers';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import ServerUrl from '../../constants/ServerUrl';
-import { useActivityStatuses } from '../../hooks/useActivityStatuses';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faFighterJet, faX } from '@fortawesome/free-solid-svg-icons';
-import { useResidences } from '../../hooks/useResidences';
-import { useAuth0 } from '@auth0/auth0-react';
+import CustomAlert from '../alerts/CustomAlert';
 
 
 const AccessRequestModal = ({ showModal, handleClose }) => {
     const { residences, isLoading: residencesLoading } = useResidences();
     const { loginWithRedirect } = useAuth0();
-    
+    const { users, isLoading: usersLoading } = useUsers()
+
+    const [message, setMessage] = useState({
+        title: '',
+        text: '',
+        type: ''
+    })
+
     const [formData, setFormData] = useState({
-        residential_id: 0,
-        zip_code: 0,
-        street_name: '',
-        street_number: 0,
-        details: '',
-        status: 'available',
-        owner_user_id: '',
-        tenant_user_id: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        residence_id: 0,
+        status_id: 1,
+        role_id: 1
     });
 
     const handleChange = (e) => {
@@ -33,24 +38,61 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = () => {
-        fetch(`${ServerUrl}/user/access-request`, {
+    const isFormValid = () => {
+        const requiredFields = ['first_name', 'last_name', 'email', 'phone', 'status_id', 'role_id'];
+
+        for (const field of requiredFields) {
+            if (!formData[field]) {
+                return {
+                    isValid: false,
+                    title: 'Complete the form',
+                    text: `Please fill in the ${field} field.`,
+                    type: 'warning'
+                };
+            }
+        }
+
+        if (users.some(user => user.email === formData.email || user.phone === formData.phone)) {
+            return {
+                isValid: false,
+                title: 'Existing account',
+                text: 'Email or phone number already exists. Cannot request access.',
+                type: 'error'
+            };
+        }
+
+        return true;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const isFormValidResult = isFormValid();
+
+        if (!isFormValidResult.isValid) {
+            setMessage({
+                title: isFormValidResult.title,
+                text: isFormValidResult.text,
+                type: isFormValidResult.type,
+            });
+            return;
+        }
+
+        fetch(`${ServerUrl}/user/new/request`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-
-                statusId: newStatus,
-            }),
+            body: JSON.stringify(formData),
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('User updated successfully:', data);
+                console.log('Request saved successfully:', formData);
             })
             .catch((error) => {
-                console.error('Error updating user:', error);
+                console.error('Error saving request:', error);
             });
+
     };
 
     return (
@@ -60,6 +102,12 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
             </Modal.Header>
             <Modal.Body className='p-4'>
                 <form action="">
+                    {message.text ? (
+                        <CustomAlert title={message.title} message={message.text} type={message.type} hover={false} />
+                    ) : (
+                        null
+                    )}
+
                     <div className="form-group">
                         <label className='my-2' htmlFor="first_name">First name</label>
                         <input
@@ -110,10 +158,10 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
                     </div>
                     <div className="form-group">
                         <label className='my-2' htmlFor="residence">Residence</label>
-                        <select className='form-control bg-light' name="" id="">
+                        <select onChange={handleChange} className='form-control bg-light' name="residence_id" id="residence_id" value={formData.residence_id} type=''>
                             <option className='form-control' value="">Select your residence</option>
                             {residences.map((residence) => (
-                                <option className='form-control'    key={residence.residence_id} value={residence.residence_id}>
+                                <option className='form-control' key={residence.residence_id} value={residence.residence_id}>
                                     {residence.street_name} {residence.street_number}
                                 </option>
                             ))}
@@ -125,7 +173,7 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
                         </button>
                     </div>
                     <div className="form-group mt-2 mb-3">
-                        <button className='col-12 btn btn-primary'>
+                        <button onClick={handleSubmit} className='col-12 btn btn-primary'>
                             Request access
                         </button>
                     </div>

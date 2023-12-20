@@ -9,6 +9,7 @@ router.post('/', UserController.deleteUser);
 router.get('/', UserController.getAllUsers);
 router.get('/get-by-email/:id', UserController.getUserByEmail);
 router.post('/new', UserController.createUser);
+router.post('/new/request', UserController.createUserRequest);
 router.post('/access/:id', UserController.updateUserStatus);
 router.delete('/:id', UserController.deleteUser);
 

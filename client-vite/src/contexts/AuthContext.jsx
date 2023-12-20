@@ -95,7 +95,7 @@ export function AuthProvider({ children }) {
                     });
                     logout();
                     setRedirectUser(true)
-                    navigate('/user/request');
+                    navigate('/');
 
                     return;
                 }

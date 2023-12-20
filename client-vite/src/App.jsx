@@ -1,9 +1,16 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { useAuth0 } from '@auth0/auth0-react';
+
+import Auth0ProviderWithNavigate from './components/access/Auth0ProviderWithNavigate';
 import Navbar from './components/common/SideNavbar';
 import TopNavbar from './components/common/TopNavbar';
-import Auth0ProviderWithNavigate from './components/access/Auth0ProviderWithNavigate';
+
+import Stats from './pages/common/Stats';
 import HomePage from './pages/common/HomePage';
 import Profile from './pages/common/Profile';
+import ContextTest from './pages/common/ContextTest';
+import NotificationPanel from './pages/common/NotificationPanel';
 
 import MyComplaints from './pages/resident/MyComplaints';
 import ComplainForm from './pages/resident/ComplaintStorage';
@@ -15,21 +22,14 @@ import ResidenceManagement from './pages/admin/management/ResidenceManagement';
 import UserManagement from './pages/admin/management/UserManagement';
 import ComplaintManagement from './pages/admin/management/ComplaintManagement';
 import CategoryManagement from './pages/admin/management/CategoryManagement';
+import RoleFilter from './pages/admin/management/RoleManagement';
 
-import Stats from './pages/common/Stats';
-import UserStorage from './pages/admin/forms/UserStorage';
-import CreateRole from './pages/admin/forms/RoleStorage';
-
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-
-import { useAuth0 } from '@auth0/auth0-react';
-import ContextTest from './pages/common/ContextTest';
-import RegisterRequest from './pages/resident/RegisterRequest';
+import UserStorage from './pages/admin/creation/UserStorage';
+import CreateRole from './pages/admin/creation/RoleStorage';
 import ResidenceStorage from './pages/admin/creation/ResidenceStorage';
 import ResidentialStorage from './pages/admin/creation/ResidentialStorage';
-import RoleFilter from './pages/admin/management/RoleManagement';
+
 import EmployeePanel from './pages/employee/EmployeePanel';
-import NotificationPanel from './pages/common/NotificationPanel';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -49,7 +49,6 @@ export default function App() {
 
                   <Route path="/user/complaints/new" element={<ComplainForm />} />
                   <Route path="/user/complaints" element={<MyComplaints />} />
-                  <Route path="/user/request" element={<RegisterRequest />} />
                   <Route path="/user/residences" element={<ResidenceList />} />
 
                   <Route path="/" element={<HomePage />} />

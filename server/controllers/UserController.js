@@ -2,6 +2,7 @@
 
 const UserController = {};
 const pool = require('../dbConnection');
+const userDAO = require('../dao/userDAO')
 
 UserController.getAllUsers = (req, res) => {
     console.log("Fetching the users");
@@ -85,7 +86,7 @@ UserController.deleteUser = async (req, res) => {
     const userId = req.params.id;
 
     const sqlQuery = `DELETE FROM users WHERE user_id = ?`;
-    const values = [userId];    
+    const values = [userId];
 
     pool.query(sqlQuery, values, (err, result) => {
         if (err) {
@@ -144,6 +145,23 @@ UserController.createUser = (req, res) => {
             });
         }
     });
+};
+
+UserController.createUserRequest = async (req, res) => {
+    const formData = req.body;
+    console.log('form data in query: ', formData);
+
+    try {
+        const userId = await userDAO.createUser(formData);
+        await userDAO.insertUserRole(userId, formData.role_id);
+        await userDAO.updateResidence(userId, formData.role_id, formData.residence_id);
+
+        console.log('Form data, user role, and residence saved successfully');
+        res.json({ message: 'Form data, user role, and residence saved successfully' });
+    } catch (error) {
+        console.error('Error creating user and inserting data:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 UserController.updateUserStatus = (req, res) => {

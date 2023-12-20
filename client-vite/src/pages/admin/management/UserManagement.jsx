@@ -83,10 +83,15 @@ const UserManager = () => {
     const pendingUsersCount = users.filter(user => user.status === 'Pending request');
 
     const filteredUsers = users.filter((user) => {
-        return search.toLowerCase() === '' ||
+        const isSearchMatch =
+            search.toLowerCase() === '' ||
             user.first_name.toLowerCase().includes(search.toLowerCase()) ||
             user.last_name.toLowerCase().includes(search.toLowerCase()) ||
             user.user_id.toString().includes(search.toLowerCase());
+
+        const isStatusActive = user.status === 'Active';
+
+        return isSearchMatch && isStatusActive;
     });
 
     return (

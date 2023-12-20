@@ -143,7 +143,7 @@ const WelcomePage = () => {
 
             <div className="row px-2">
               <button onClick={handleShowModal} className="mt-4 btn btn-outline-primary">
-                Sign up for free
+                Create an account
               </button>
             </div>
             <div className="row px-2">
