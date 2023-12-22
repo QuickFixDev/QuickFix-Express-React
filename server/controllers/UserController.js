@@ -14,6 +14,7 @@ UserController.getAllUsers = (req, res) => {
         u.email,
         u.phone,
         r.role_name,
+        ur.role_id,
         u.status_id,
         us.name AS status,
         re.residence_id
@@ -81,6 +82,22 @@ UserController.getUserByEmail = (req, res) => {
         res.json(results[0]);
     });
 };
+
+UserController.updateUser = async (req, res) => {
+    const formData = req.body;
+    const userId = req.params;
+    const { first_name, last_name, email, phone, status_id } = formData;
+
+    try {
+        await userDAO.updateUser(userId, first_name, last_name, email, phone, status_id);
+
+        console.log('success');
+        res.json({ message: 'success' });
+    } catch (error) {
+        console.error('Error :', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
 UserController.deleteUser = async (req, res) => {
     const userId = req.params.id;

@@ -15,27 +15,34 @@ const UserModal = ({ user, onClose }) => {
     const { activityStatuses } = useActivityStatuses();
     const { residences } = useResidences();
 
-    const [selectedRole, setSelectedRole] = useState(user.role_name);
-    const [selectedActivityStatus, setSelectedActivityStatus] = useState(user.status);
-    const [selectedResidence, setSelectedResidence] = useState(user.status);
+    const [selectedRole, setSelectedRole] = useState(user.role_id);
+    const [selectedActivityStatus, setSelectedActivityStatus] = useState(user.status_id);
+    const [selectedResidence, setSelectedResidence] = useState(user.residence_id || '');
+
     const [firstName, setFirstName] = useState(user.first_name);
     const [lastName, setLastName] = useState(user.last_name);
     const [email, setEmail] = useState(user.email);
     const [phone, setPhone] = useState(user.phone);
 
+    const [formData, setFormData] = useState({
+        user_id: user.user_id,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: phone,
+        role_id: selectedRole,
+        status_id: selectedActivityStatus,
+        residence_id: selectedResidence,
+    });
 
-    const [selectedEmployee, setSelectedEmployee] = useState('');
-    const [selectedStatus, setSelectedStatus] = useState('');
-    const [chatboxMessage, setChatboxMessage] = useState('');
+    const JSONFORM = JSON.stringify(formData, null, 2)
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
     const handleSubmit = (e) => {
-        console.log('Submitting Form:', {
-            complaintId: complaint.id,
-            selectedEmployee,
-            selectedStatus,
-            chatboxMessage,
-        });
-
         e.preventDefault();
 
         fetch(`${ServerUrl}/admin/users/edit/${user.user_id}`, {
@@ -43,14 +50,7 @@ const UserModal = ({ user, onClose }) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                phone: phone,
-                role_id: selectedRole,
-                status: selectedStatus,
-            }),
+            body: JSON.stringify(formData),
         })
             .then((response) => response.json())
             .then((data) => {
@@ -78,36 +78,39 @@ const UserModal = ({ user, onClose }) => {
             </Modal.Header>
             <Modal.Body className='p-4'>
                 <Form onSubmit={handleSubmit}>
+                    <pre>
+                        {JSONFORM}
+                    </pre>
                     <div className="row">
                         <div className="col my-2 floating-placeholder">
                             <FloatingLabel controlId="first_name" label="First Name">
-                                <Form.Control name='first_name' type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                <Form.Control name='first_name' type="text" value={formData.first_name} onChange={handleChange} />
                             </FloatingLabel>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col my-2">
                             <FloatingLabel controlId="last_name" label="Last Name">
-                                <Form.Control name='last_name' type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                                <Form.Control name='last_name' type="text" value={formData.last_name} onChange={handleChange} />
                             </FloatingLabel>
                         </div>
                     </div>
                     <div className="row row-cols-md-2 row-cols-1">
                         <div className="col my-2">
                             <FloatingLabel controlId="email" label="Email">
-                                <Form.Control name='email' type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                <Form.Control name='email' type="text" value={formData.email} onChange={handleChange} />
                             </FloatingLabel >
                         </div>
                         <div className="col my-2">
                             <FloatingLabel controlId="phone" label="Phone">
-                                <Form.Control name='phone' type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                <Form.Control name='phone' type="text" value={formData.phone} onChange={handleChange} />
                             </FloatingLabel >
                         </div>
                     </div>
                     <div className="row row-cols-md-2 row-cols-1">
                         <div className="col my-2">
                             <FloatingLabel controlId="role_id" label="Role">
-                                <Form.Control name='role_id' as="select" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                                <Form.Control name='role_id' as="select" value={formData.selectedRole} onChange={handleChange}>
                                     {roles.map((role) => (
                                         role.role_name === user.role_name ? (
                                             <option key={role.role_id} value={role.role_id}>{role.role_name}</option>
@@ -128,7 +131,7 @@ const UserModal = ({ user, onClose }) => {
                         </div>
                         <div className="col my-2">
                             <FloatingLabel controlId="status_id" label="Status">
-                                <Form.Control name='status_id' as="select" value={selectedActivityStatus} onChange={(e) => setSelectedActivityStatus(e.target.value)}>
+                                <Form.Control name='status_id' as="select" value={formData.selectedActivityStatus} onChange={handleChange}>
                                     {activityStatuses.map((activityStatus) => (
                                         activityStatus.name === user.status ? (
                                             <option key={activityStatus.id} value={activityStatus.id}>{activityStatus.name}</option>
@@ -148,29 +151,30 @@ const UserModal = ({ user, onClose }) => {
                             </FloatingLabel >
                         </div>
                     </div>
-                        <div className="row">
-                            <div className="col my-2">
-                                <FloatingLabel controlId="status_id" label="Status">
-                                    <Form.Control name='status_id' as="select" value={selectedActivityStatus} onChange={(e) => setSelectedActivityStatus(e.target.value)}>
-                                        {activityStatuses.map((activityStatus) => (
-                                            activityStatus.name === user.status ? (
-                                                <option key={activityStatus.id} value={activityStatus.id}>{activityStatus.name}</option>
-                                            ) : (
-                                                null
-                                            )
-                                        ))}
-
-                                        {activityStatuses.map((activityStatus) => (
-                                            activityStatus.name !== user.status ? (
-                                                <option key={activityStatus.id} value={activityStatus.id}>{activityStatus.name}</option>
-                                            ) : (
-                                                null
-                                            )
-                                        ))}
-                                    </Form.Control>
-                                </FloatingLabel >
-                            </div>
+                    <div className="row">
+                        <div className="col my-2">
+                            <FloatingLabel controlId="residence_id" label="Status">
+                                <Form.Control name='residence_id' as="select" value={formData.selectedActivityStatus} onChange={handleChange}>
+                                    {residences.map((residence) => (
+                                        residence.tenant_user_id === user.user_id ? (
+                                            <option key={residence.residence_id} value={residence.residence_id}>
+                                                {residence.street_name}
+                                            </option>
+                                        ) : (
+                                            <option value=''>Select a residence</option>
+                                        )
+                                    ))}
+                                    {residences.map((residence) => (
+                                        residence.tenant_user_id !== user.user_id ? (
+                                            <option key={residence.residence_id} value={residence.residence_id}>
+                                                {residence.street_name}
+                                            </option>
+                                        ) : null
+                                    ))}
+                                </Form.Control>
+                            </FloatingLabel >
                         </div>
+                    </div>
                     <div className="row">
                         <div className="col my-2">
                             <Button type='submit'>

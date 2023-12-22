@@ -1,5 +1,5 @@
 // AccessRequestModal.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Modal from 'react-bootstrap/Modal';
@@ -12,17 +12,39 @@ import ServerUrl from '../../constants/ServerUrl';
 import CustomAlert from '../alerts/CustomAlert';
 
 
+const validateForm = (formData) => {
+    const { users, isLoading: usersLoading, fetchData } = useUsers();
+    const requiredFields = ['first_name', 'last_name', 'email', 'phone', 'status_id', 'role_id'];
+
+    for (const field of requiredFields) {
+        if (!formData[field]) {
+            return {
+                isValid: false,
+                title: 'Complete the form',
+                text: `Please fill in the ${field} field.`,
+                type: 'warning'
+            };
+        }
+    }
+
+    if (users.some(user => user.email === formData.email || user.phone === formData.phone)) {
+        return {
+            isValid: false,
+            title: 'Existing account',
+            text: 'Email or phone number already exists. Cannot request access.',
+            type: 'error'
+        };
+    }
+
+    return { isValid: true };
+};
+
 const AccessRequestModal = ({ showModal, handleClose }) => {
     const { residences, isLoading: residencesLoading } = useResidences();
     const { loginWithRedirect } = useAuth0();
-    const { users, isLoading: usersLoading } = useUsers()
+    const { isLoading: usersLoading, fetchData } = useUsers();
 
-    const [message, setMessage] = useState({
-        title: '',
-        text: '',
-        type: ''
-    })
-
+    const [message, setMessage] = useState({ title: '', text: '', type: '' })
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -38,43 +60,13 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const isFormValid = () => {
-        const requiredFields = ['first_name', 'last_name', 'email', 'phone', 'status_id', 'role_id'];
-
-        for (const field of requiredFields) {
-            if (!formData[field]) {
-                return {
-                    isValid: false,
-                    title: 'Complete the form',
-                    text: `Please fill in the ${field} field.`,
-                    type: 'warning'
-                };
-            }
-        }
-
-        if (users.some(user => user.email === formData.email || user.phone === formData.phone)) {
-            return {
-                isValid: false,
-                title: 'Existing account',
-                text: 'Email or phone number already exists. Cannot request access.',
-                type: 'error'
-            };
-        }
-
-        return true;
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const isFormValidResult = isFormValid();
+        const validation = validateForm(formData);
 
-        if (!isFormValidResult.isValid) {
-            setMessage({
-                title: isFormValidResult.title,
-                text: isFormValidResult.text,
-                type: isFormValidResult.type,
-            });
+        if (!validation.isValid) {
+            setMessage({ title: validation.title, text: validation.text, type: validation.type, });
             return;
         }
 
@@ -93,6 +85,8 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
                 console.error('Error saving request:', error);
             });
 
+
+
     };
 
     return (
@@ -102,6 +96,7 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
             </Modal.Header>
             <Modal.Body className='p-4'>
                 <form action="">
+
                     {message.text ? (
                         <CustomAlert title={message.title} message={message.text} type={message.type} hover={false} />
                     ) : (

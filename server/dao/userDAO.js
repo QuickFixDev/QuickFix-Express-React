@@ -55,8 +55,35 @@ const updateResidence = (userId, role_id, residenceId) => {
     });
 };
 
+const updateUser = (userId, first_name, last_name, email, phone, status_id) => {
+    return new Promise((resolve, reject) => {
+        const updateUserQuery = `
+            UPDATE users
+
+            SET 
+                first_name = ?,
+                last_name = ?,
+                email = ?,
+                phone = ?,
+                status_id = ?
+            
+            WHERE user_id = ?
+        ;`;
+
+        pool.query(updateUserQuery, [first_name, last_name, email, phone, status_id, userId], (err) => {
+            if (err) {
+                console.error('Error updating user:', err);
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
 module.exports = {
     createUser,
     insertUserRole,
     updateResidence,
+    updateUser,
 };
