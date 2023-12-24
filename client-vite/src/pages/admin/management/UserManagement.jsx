@@ -95,20 +95,36 @@ const UserManager = () => {
 
         return isSearchMatch && isStatusActive;
     });
-    
+
     return (
         <div className="list container-fluid p-md-5 p-3">
-            <div className="row d-flex flex-row align-items-center">
-                <div className="col-auto text-start">
-                    <h2 className="m-0 fw-bold">User manager</h2>
+            <div className="row">
+                <div className="col">
+                    <div className="row d-flex flex-row align-items-center">
+                        <div className="col-auto text-start">
+                            <h2 className="m-0 fw-bold">User manager</h2>
+                        </div>
+                        <div className="col text-start">
+                            <IconInfo
+                                message=
+                                {
+                                    "Click on a user to manage their information. You can update user details,assign roles, and handle access requests from this page."
+                                }
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div className="col text-start">
-                    <IconInfo
-                        message=
-                        {
-                            "Click on a user to manage their information. You can update user details,assign roles, and handle access requests from this page."
-                        }
-                    />
+                <div className="col text-end">
+                    <button className="btn btn-primary">
+                        <div className="row">
+                            <div className="col">
+                                <span>New</span>
+                            </div>
+                            <div className="col">
+                                <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
+                            </div>
+                        </div>
+                    </button>
                 </div>
             </div>
 
@@ -116,10 +132,8 @@ const UserManager = () => {
                 <div className="col">
                     <SearchBar onSearch={handleSearch} searchType='users' />
                 </div>
-                <div className="col-auto">
-                    <div className="container">
-                        <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
-                    </div>
+                <div className="col-auto text-end">
+                    <FilterComponent options={filterOptions} onSelectFilter={handleSelectFilter} />
                 </div>
             </div>
 

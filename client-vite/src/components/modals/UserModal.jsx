@@ -35,8 +35,6 @@ const UserModal = ({ user, onClose }) => {
         residence_id: selectedResidence,
     });
 
-    const JSONFORM = JSON.stringify(formData, null, 2)
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -77,9 +75,6 @@ const UserModal = ({ user, onClose }) => {
             </Modal.Header>
             <Modal.Body className='p-4'>
                 <Form onSubmit={handleSubmit}>
-                    <pre>
-                        {JSONFORM}
-                    </pre>
                     <div className="row">
                         <div className="col my-2 floating-placeholder">
                             <FloatingLabel controlId="first_name" label="First Name">

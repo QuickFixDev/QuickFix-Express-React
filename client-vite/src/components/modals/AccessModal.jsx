@@ -53,51 +53,37 @@ const AccessModal = ({ showModal, handleClose }) => {
     return (
         <Modal show={showModal} onHide={handleClose} size='lg' centered backdrop="static">
             <Modal.Header closeButton>
-                <Modal.Title>User requests</Modal.Title>
+                <Modal.Title className='fw-bold'>User requests</Modal.Title>
             </Modal.Header>
             <Modal.Body className='p-4'>
                 <div className="row">
                     {pendingUsers.length > 0 ? (
-                        <table className='table'>
-                            <thead>
-                                <tr>
-                                    <th className='col-10'>Name</th>
-                                    <th className='col-1 text-center'>Accept</th>
-                                    <th className='col-1 text-center'>Deny</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {pendingUsers.map((user) => (
-                                    <tr key={user.user_id}>
-                                        <td>
-                                            <span> {user.first_name} {user.last_name} </span>
-                                        </td>
-                                        <td className='text-center'>
-                                            <button
-                                                className='btn'
-                                                onClick={() => {
-                                                    setSelectedUserId(user.user_id);
-                                                    handleAcceptRequest();
-                                                }}
-                                            >
-                                                <FontAwesomeIcon className='px-2 text-primary' icon={faCheck} />
-                                            </button>
-                                        </td>
-                                        <td className='text-center'>
-                                            <button
-                                                className='btn'
-                                                onClick={() => {
-                                                    setSelectedUserId(user.user_id);
-                                                    handleDenyRequest();
-                                                }}
-                                            >
-                                                <FontAwesomeIcon className='px-2 text-danger' icon={faX} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <div>
+                            {pendingUsers.map((user) => (
+                                <div key={user.user_id} className="row py-3 ">
+                                    <div className="col-8">
+                                        <div className="row">
+                                            <div className="col-auto">
+                                                <img className="rounded-5" src="/images/user_placeholder.png" alt="Loading" width={'40px'} />
+                                            </div>
+                                            <div className="col">
+                                                <span> {user.first_name} {user.last_name} </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-2 text-center">
+                                        <button className='btn' onClick={() => { setSelectedUserId(user.user_id); handleDenyRequest(); }} >
+                                            <FontAwesomeIcon className='p-2 rounded-5 custom-gray-hover text-secondary' icon={faX} />
+                                        </button>
+                                    </div>
+                                    <div className="col-2 text-center">
+                                        <button className='btn' onClick={() => { setSelectedUserId(user.user_id); handleAcceptRequest(); }} >
+                                            <FontAwesomeIcon className='p-2 rounded-5 custom-gray-hover text-primary' icon={faCheck} />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     ) : (
                         <div>
                             No users to display
