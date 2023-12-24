@@ -44,7 +44,7 @@ const AccessModal = ({ showModal, handleClose }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('User updated successfully:', data);
-            })
+            })  
             .catch((error) => {
                 console.error('Error updating user:', error);
             });

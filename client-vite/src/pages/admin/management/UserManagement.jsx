@@ -59,15 +59,15 @@ const UserManager = () => {
     const { residences } = useResidences();
     const [search, setSearch] = useState('');
     const [selectedFilter, setSelectedFilter] = useState('All');
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [userToEdit, setUserToEdit] = useState(null);
     const { isLoggedIn } = useAuth();
 
-    const handleUserClick = (user) => {
-        setSelectedUser(user);
+    const handleClickForEdit = (user) => {
+        setUserToEdit(user);
     };
 
-    const handleCloseModal = () => {
-        setSelectedUser(null);
+    const handleCloseEditModal = () => {
+        setUserToEdit(null);
     };
 
     const handleSelectFilter = (filter) => {
@@ -156,7 +156,7 @@ const UserManager = () => {
                                 .sort((a, b) => a.user_id - b.user_id)
                                 .map((user) => (
 
-                                    <div key={user.user_id} className="custom-gray-hover cursor-pointer row py-2 border-top" id="content" onClick={() => handleUserClick(user)}>
+                                    <div key={user.user_id} className="custom-gray-hover cursor-pointer row py-2 border-top" id="content" onClick={() => handleClickForEdit(user)}>
                                         <div className="col d-flex flex-row align-items-center">
                                             {user.photo_url ? (
                                                 <div className="me-3">
@@ -186,8 +186,8 @@ const UserManager = () => {
                                 ))) : (usersLoading ? (<tr><td>Loading...</td></tr>) : (<tr><td>No users found</td></tr>))
                         }
 
-                        {selectedUser && (
-                            <UserModal user={selectedUser} onClose={handleCloseModal} />
+                        {userToEdit && (
+                            <UserModal user={userToEdit} onClose={handleCloseEditModal} />
                         )}
                     </div>
                 </div>
