@@ -22,7 +22,6 @@ import {
   from '@fortawesome/free-solid-svg-icons';
 import AccessRequestModal from "../../components/modals/AccessRequestModal";
 
-
 const details = [
   {
     subtitle: "User Registration and Authentication:",

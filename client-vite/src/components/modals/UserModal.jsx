@@ -55,7 +55,6 @@ const UserModal = ({ user, onClose }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('User updated successfully:', data);
-                onClose(); // Close the modal on success
             })
             .catch((error) => {
                 console.error('Error updating user:', error);
@@ -153,7 +152,7 @@ const UserModal = ({ user, onClose }) => {
                     </div>
                     <div className="row">
                         <div className="col my-2">
-                            <FloatingLabel controlId="residence_id" label="Status">
+                            <FloatingLabel controlId="residence_id" label="Residence">
                                 <Form.Control name='residence_id' as="select" value={formData.selectedActivityStatus} onChange={handleChange}>
                                     {residences.map((residence) => (
                                         residence.tenant_user_id === user.user_id ? (
@@ -161,7 +160,7 @@ const UserModal = ({ user, onClose }) => {
                                                 {residence.street_name}
                                             </option>
                                         ) : (
-                                            <option value=''>Select a residence</option>
+                                            <option key={residence.residence_id} value=''>Select a residence</option>
                                         )
                                     ))}
                                     {residences.map((residence) => (

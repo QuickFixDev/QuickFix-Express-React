@@ -34,13 +34,13 @@ const insertUserRole = (userId, role_id) => {
     });
 };
 
-const updateResidence = (userId, role_id, residenceId) => {
+const updateResidence = (userId, roleId, residenceId) => {
     return new Promise((resolve, reject) => {
         let residenceQuery;
 
-        if (role_id === 1) {
+        if (roleId !== 7) {
             residenceQuery = `UPDATE residences SET tenant_user_id = ?, status = 'occupied' WHERE residence_id = ?`;
-        } else if (role_id === 7) {
+        } else if (roleId === 7) {
             residenceQuery = `UPDATE residences SET owner_user_id = ? WHERE residence_id = ?`;
         }
 
@@ -55,7 +55,7 @@ const updateResidence = (userId, role_id, residenceId) => {
     });
 };
 
-const updateUser = (userId, first_name, last_name, email, phone, status_id) => {
+const updateUserData = (userId, firstName, lastName, email, phone) => {
     return new Promise((resolve, reject) => {
         const updateUserQuery = `
             UPDATE users
@@ -64,13 +64,57 @@ const updateUser = (userId, first_name, last_name, email, phone, status_id) => {
                 first_name = ?,
                 last_name = ?,
                 email = ?,
-                phone = ?,
+                phone = ?
+
+            WHERE user_id = ?
+        ;`;
+
+        pool.query(updateUserQuery, [firstName, lastName, email, phone, userId], (err) => {
+            if (err) {
+                console.error('Error updating user:', err);
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
+const updateUserRole = (userId, roleId) => {
+    return new Promise((resolve, reject) => {
+        const updateUserQuery = `
+            UPDATE users_roles
+
+            SET 
+                user_id = ?,
+                role_id = ?
+            
+            WHERE user_id = ?
+        ;`;
+
+        pool.query(updateUserQuery, [userId, roleId, userId], (err) => {
+            if (err) {
+                console.error('Error updating user:', err);
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
+const updateUserStatus = (userId, statusId) => {
+    return new Promise((resolve, reject) => {
+        const updateUserQuery = `
+            UPDATE users
+
+            SET 
                 status_id = ?
             
             WHERE user_id = ?
         ;`;
 
-        pool.query(updateUserQuery, [first_name, last_name, email, phone, status_id, userId], (err) => {
+        pool.query(updateUserQuery, [statusId, userId], (err) => {
             if (err) {
                 console.error('Error updating user:', err);
                 reject(err);
@@ -85,5 +129,7 @@ module.exports = {
     createUser,
     insertUserRole,
     updateResidence,
-    updateUser,
+    updateUserData,
+    updateUserRole,
+    updateUserStatus,
 };

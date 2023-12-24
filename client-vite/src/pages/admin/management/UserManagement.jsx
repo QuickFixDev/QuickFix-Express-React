@@ -14,7 +14,9 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { useResidences } from "../../../hooks/useResidences";
 import AccessModal from "../../../components/modals/AccessModal";
 import { modalGlobalConfig } from "antd/es/modal/confirm";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const filterOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 
@@ -93,7 +95,7 @@ const UserManager = () => {
 
         return isSearchMatch && isStatusActive;
     });
-
+    
     return (
         <div className="list container-fluid p-md-5 p-3">
             <div className="row d-flex flex-row align-items-center">
@@ -127,49 +129,57 @@ const UserManager = () => {
 
             <div className="row">
                 <div className="col">
-                    <table className="table table-hover mt-4">
-                        <thead>
-                            <tr>
-                                <th className="col-3">User</th>
-                                <th className="col-3">Role</th>
-                                <th className="col-3 d-none d-lg-table-cell">Status</th>
-                                <th className="col-3 d-none d-lg-table-cell">Residence</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredUsers.length > 0 ? (
-                                filteredUsers
-                                    .sort((a, b) => a.user_id - b.user_id) // Sort the users by user ID
-                                    .map((user) => (
-                                        <tr className="cursor-pointer" key={user.user_id} onClick={() => handleUserClick(user)}>
-                                            <td>{user.first_name} {user.last_name}</td>
-                                            <td>{user.role_name}</td>
-                                            <td className="d-none d-lg-table-cell">{user.status}</td>
-                                            <td className="d-none d-lg-table-cell">
-                                                {residences.map((residence) => (
-                                                    residence.tenant_user_id === user.user_id ? (
-                                                        <div key={residence.residence_id}>
-                                                            {`${residence.street_name} ${residence.street_number}`}
-                                                        </div>
-                                                    ) : (
-                                                        <div>- - -</div>
-                                                    )))
-                                                }
-                                            </td>
-                                        </tr>
-                                    ))
-                            ) : (usersLoading ? (<tr><td>Loading...</td></tr>) : (<tr><td>No users found</td></tr>))
-                            }
-                        </tbody>
-                    </table>
+                    <div className="user-table mt-4">
+                        <div className="row py-2" id="header">
+                            <div className="col fw-bold">User</div>
+                            <div className="col fw-bold d-lg-block d-none">Role</div>
+                            <div className="col fw-bold d-lg-block d-none">Status</div>
+                            <div className="col fw-bold">Residence</div>
+                        </div>
 
-                    {selectedUser && (
-                        <UserModal user={selectedUser} onClose={handleCloseModal} />
-                    )}
+                        {filteredUsers.length > 0 ? (
+                            filteredUsers
+                                .sort((a, b) => a.user_id - b.user_id)
+                                .map((user) => (
+
+                                    <div key={user.user_id} className="custom-gray-hover cursor-pointer row py-2 border-top" id="content" onClick={() => handleUserClick(user)}>
+                                        <div className="col d-flex flex-row align-items-center">
+                                            {user.photo_url ? (
+                                                <div className="me-3">
+                                                    <img className="rounded-5" src={user.photo_url} alt="Loading" width={'40px'} />
+                                                </div>
+                                            ) : (
+                                                <div className="me-3">
+                                                    <img className="rounded-5" src="/images/user_placeholder.png" alt="Loading" width={'40px'} />
+                                                </div>
+                                            )}
+                                            <span>{user.first_name} {user.last_name}</span>
+                                        </div>
+                                        <div className="col d-lg-flex d-none flex-row align-items-center">{user.role_name}</div>
+                                        <div className="col d-lg-flex d-none flex-row align-items-center">{user.status}</div>
+                                        <div className="col d-flex flex-row align-items-center">
+                                            {residences.map((residence) => (
+                                                residence.tenant_user_id === user.user_id ? (
+                                                    <div key={residence.residence_id}>
+                                                        {`${residence.street_name} ${residence.street_number}`}
+                                                    </div>
+                                                ) : (
+                                                    <div key={`not-${residence.residence_id}`}>- - -</div>
+                                                )
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))) : (usersLoading ? (<tr><td>Loading...</td></tr>) : (<tr><td>No users found</td></tr>))
+                        }
+
+                        {selectedUser && (
+                            <UserModal user={selectedUser} onClose={handleCloseModal} />
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
 
-export default UserManager;
+export default UserManager; 

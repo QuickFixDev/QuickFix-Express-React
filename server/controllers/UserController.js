@@ -2,7 +2,10 @@
 
 const UserController = {};
 const pool = require('../dbConnection');
-const userDAO = require('../dao/userDAO')
+
+const createUserDAO = require('../dao/user/create')
+const updateUserDAO = require('../dao/user/update')
+const updateResidenceDAO = require('../dao/residence/update')
 
 UserController.getAllUsers = (req, res) => {
     console.log("Fetching the users");
@@ -13,9 +16,10 @@ UserController.getAllUsers = (req, res) => {
         u.last_name,
         u.email,
         u.phone,
+        u.status_id,
+        u.photo_url,
         r.role_name,
         ur.role_id,
-        u.status_id,
         us.name AS status,
         re.residence_id
     FROM
@@ -85,11 +89,14 @@ UserController.getUserByEmail = (req, res) => {
 
 UserController.updateUser = async (req, res) => {
     const formData = req.body;
-    const userId = req.params;
-    const { first_name, last_name, email, phone, status_id } = formData;
+    const userId = req.params.id;
+    const { first_name, last_name, email, phone, role_id, status_id, residence_id } = formData;
 
     try {
-        await userDAO.updateUser(userId, first_name, last_name, email, phone, status_id);
+        await updateUserDAO.updateUserData(userId, first_name, last_name, email, phone);
+        await updateUserDAO.updateUserRole(userId, role_id);
+        await updateUserDAO.updateUserStatus(userId, status_id);
+        await updateResidenceDAO.updateResidenceUser(userId, role_id, residence_id);
 
         console.log('success');
         res.json({ message: 'success' });
@@ -169,9 +176,9 @@ UserController.createUserRequest = async (req, res) => {
     console.log('form data in query: ', formData);
 
     try {
-        const userId = await userDAO.createUser(formData);
-        await userDAO.insertUserRole(userId, formData.role_id);
-        await userDAO.updateResidence(userId, formData.role_id, formData.residence_id);
+        const userId = await createUserDAO.createUser(formData);
+        await createUserDAO.createUserRole(userId, formData.role_id);
+        await updateResidenceDAO.updateResidenceUser(userId, formData.role_id, formData.residence_id);
 
         console.log('Form data, user role, and residence saved successfully');
         res.json({ message: 'Form data, user role, and residence saved successfully' });
@@ -202,6 +209,23 @@ UserController.updateUserStatus = (req, res) => {
             res.json({ message: 'User updated successfully' });
         }
     });
+}
+
+UserController.updateUserPhoto = async (req, res) => {
+    const userId = req.params.id;
+    const photoUrl = req.body.photoUrl;
+
+    console.log('url in query: ', photoUrl);
+
+    try {
+        await updateUserDAO.updateUserPhoto(userId, photoUrl);
+
+        console.log('Form data, user role, and residence saved successfully');
+        res.json({ message: 'Form data, user role, and residence saved successfully' });
+    } catch (error) {
+        console.error('Error creating user and inserting data:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 module.exports = UserController;
