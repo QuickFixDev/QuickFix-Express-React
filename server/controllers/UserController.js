@@ -124,51 +124,21 @@ UserController.deleteUser = async (req, res) => {
     });
 };
 
-UserController.createUser = (req, res) => {
+UserController.createUser = async (req, res) => {
     const formData = req.body;
     console.log('form data in query: ', formData);
 
-    const { first_name, last_name, email, phone, role_id, residence } = formData;
+    try {
+        const userId = await createUserDAO.createUser(formData);
+        await createUserDAO.createUserRole(userId, formData.role_id);
+        await updateResidenceDAO.updateResidenceUser(userId, formData.role_id, formData.residence_id);
 
-    const userSqlQuery = `INSERT INTO users (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)`;
-    const userRolesSqlQuery = `INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)`;
-
-    pool.query(userSqlQuery, [first_name, last_name, email, phone], (err, userResults) => {
-        if (err) {
-            console.error('Error storing form data:', err);
-            res.status(500).json({ message: 'Internal server error' });
-        } else {
-            const userId = userResults.insertId;
-
-            // Execute the second query to insert into the user_roles table
-            pool.query(userRolesSqlQuery, [userId, role_id], (err) => {
-                if (err) {
-                    console.error('Error storing user role data:', err);
-                    res.status(500).json({ message: 'Internal server error' });
-                } else {
-                    console.log('Form data and user role saved successfully');
-
-                    // Insert into residences table based on the role
-                    let residenceQuery;
-                    if (role_id === '1') {
-                        residenceQuery = `UPDATE residences SET tenant_user_id = ?, status = 'occupied' WHERE residence_id = ?`;
-                    } else if (role_id === '7') {
-                        residenceQuery = `UPDATE residences SET owner_user_id = ? WHERE residence_id = ?`;
-                    }
-
-                    pool.query(residenceQuery, [userId, residence], (err) => {
-                        if (err) {
-                            console.error('Error storing residence data:', err);
-                            res.status(500).json({ message: 'Internal server error' });
-                        } else {
-                            console.log('Residence data saved successfully');
-                            res.json({ message: 'Form data, user role, and residence saved successfully' });
-                        }
-                    });
-                }
-            });
-        }
-    });
+        console.log('Form data, user role, and residence saved successfully');
+        res.json({ message: 'Form data, user role, and residence saved successfully' });
+    } catch (error) {
+        console.error('Error creating user and inserting data:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 UserController.createUserRequest = async (req, res) => {

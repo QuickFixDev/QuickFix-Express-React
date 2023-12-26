@@ -11,7 +11,8 @@ router.get('/get-by-email/:id', UserController.getUserByEmail);
 
 router.post('/:id/photo', UserController.updateUserPhoto);
 
-router.post('/new/request', UserController.createUserRequest);
+router.post('/new-request', UserController.createUserRequest);
+router.post('/new-user', UserController.createUser);
 router.post('/edit/:id', UserController.updateUser);
 router.post('/access/:id', UserController.updateUserStatus);
 

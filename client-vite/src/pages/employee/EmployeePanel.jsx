@@ -5,34 +5,33 @@ import { useComplaints } from "../../hooks/useComplaints";
 
 const EmployeePanel = () => {
     const { authUser } = useAuth();
-    const {complaints, loading} = useComplaints();
+    const { complaints, loading } = useComplaints();
 
     return (
         <div className="container-fluid px-md-5 px-1">
             <div className="row">
-                <h2 className="fw-bold py-5 px-4">Assigned complaints{authUser.FirstName}</h2>
+                <h2 className="fw-bold py-5 px-4">Complaints assigned to you</h2>
             </div>
-            <div className="row">
-                <div className="col order-md-1 order-2">
-                    <div className="h-100 rounded-3 shadow-sm p-3">
+            <div aria-label='table'>
 
-                        <Table className='table-hover'>
-                            <thead>
-                                <tr>
-                                    <th>Assigned complaints</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {complaints.map ((complaint) => (
-                                    <tr key={complaint.complaint_id}>
-                                        <td>{complaint.complaint_title}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-
-                    </div>
+                <div className="row py-2 text-secondary" aria-label='header'>
+                    <div className="col-6">Name</div>
+                    <div className="col-3">Assigned by</div>
+                    <div className="col-3">Status</div>
                 </div>
+
+                <div className="row py-2 border-top" aria-label=''>
+                    <div className="col-6 fw-bold">text</div>
+                    <div className="col-3">text</div>
+                    <div className="col-3">text</div>
+                </div>
+
+                <div className="row py-2 border-top" aria-label=''>
+                    <div className="col-6 fw-bold">text</div>
+                    <div className="col-3">text</div>
+                    <div className="col-3">text</div>
+                </div>
+
             </div>
         </div>
     )

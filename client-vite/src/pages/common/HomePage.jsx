@@ -21,6 +21,7 @@ import {
 }
   from '@fortawesome/free-solid-svg-icons';
 import AccessRequestModal from "../../components/modals/AccessRequestModal";
+import EmployeePanel from "../employee/EmployeePanel";
 
 const details = [
   {
@@ -201,7 +202,7 @@ const HomePage = () => {
     return <ResidentPanel />
   }
   if (authUser.Role === 'dev') {
-    return <AdminPanel />
+    return <EmployeePanel />
   }
 
 }

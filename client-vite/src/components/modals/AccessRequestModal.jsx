@@ -70,7 +70,7 @@ const AccessRequestModal = ({ showModal, handleClose }) => {
             return;
         }
 
-        fetch(`${ServerUrl}/user/new/request`, {
+        fetch(`${ServerUrl}/user/new-request`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
