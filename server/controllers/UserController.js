@@ -8,7 +8,6 @@ const updateUserDAO = require('../dao/user/update')
 const updateResidenceDAO = require('../dao/residence/update')
 
 UserController.getAllUsers = (req, res) => {
-    console.log("Fetching the users");
     const sqlQuery = `
     SELECT 
         u.user_id,

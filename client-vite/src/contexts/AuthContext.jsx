@@ -23,7 +23,6 @@ const updateUserPhoto = async (userId, photoUrl) => {
                 photoUrl: photoUrl
             }),
         });
-        console.log('User data updated successfully.');
     } catch (error) {
         console.error('Error updating user data:', error);
     }

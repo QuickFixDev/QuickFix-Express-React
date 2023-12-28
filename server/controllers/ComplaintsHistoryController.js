@@ -16,6 +16,60 @@ ComplaintsHistoryController.getAllComplaintsHistory = (req, res) => {
     })
 }
 
+ComplaintsHistoryController.getComplaintHistory = (req, res) => {
+    const id = req.params.complaintId
+    const sqlQuery = `
+        SELECT * FROM complaints_history
+        WHERE complaint_id = ?
+    ;`;
+
+    pool.query(sqlQuery, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error fetching data' });
+        } else {
+            res.json(results);
+        }
+    })
+}
+
+ComplaintsHistoryController.getAdminComplaintsHistory = (req, res) => {
+    const id = req.params.adminId
+    const sqlQuery = `
+        SELECT * FROM complaints_history
+        WHERE admin_id = ?
+    ;`;
+
+    pool.query(sqlQuery, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error fetching data' });
+        } else {
+            res.json(results);
+        }
+    })
+}
+
+ComplaintsHistoryController.getEmployeeComplaintsHistory = (req, res) => {
+    const id = req.params.employeeId
+    console.log('test for employee id: ', id)
+    const sqlQuery = `
+        SELECT * FROM complaints_history
+        WHERE employee_id = ?
+    ;`;
+
+    pool.query(sqlQuery, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error fetching data' });
+        } else {
+            res.json(results);
+        }
+    })
+}
+
+
+
 ComplaintsHistoryController.createComplaintHistory = (req, res) => {
     const { comment, employee_id, complaint_id, status_id } = req.body;
     const sqlQuery = `
@@ -32,5 +86,7 @@ ComplaintsHistoryController.createComplaintHistory = (req, res) => {
         }
     })
 }
+
+
 
 module.exports = ComplaintsHistoryController;

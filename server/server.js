@@ -30,6 +30,7 @@ app.use('/api/residentials', ResidentialRoutes);
 app.use('/api/complaints', ComplaintRoutes);
 app.use('/api/complaints-test', ComplaintRoutes);
 app.use('/api/complaint-statuses', ComplaintsStatusRoutes);
+app.use('/api/complaints-history', ComplaintsHistoryRoutes);
 app.use('/api/users', UserRoutes);
 app.use('/api/activity-statuses', ActivityStatusesRoutes);
     

@@ -20,11 +20,26 @@ ComplaintController.getAllComplaints = (req, res) => {
     });
 };
 
-ComplaintController.getComplaintById = (req, res) => {
-    const userId = req.params.id;
-    const sqlQuery = `SELECT * FROM complaints WHERE user_id = ?`;
+ComplaintController.getComplaintByComplaintId = (req, res) => {
+    const complaintId = req.params.complaintId;
+    const sqlQuery = `SELECT * FROM complaints_test WHERE id = ?`;
 
-    pool.query(sqlQuery, userId, (err, result) => {
+    pool.query(sqlQuery, [complaintId], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json('internal server error');
+        } else {
+            res.json(result);
+        }
+    });
+
+};
+
+ComplaintController.getComplaintByUserId = (req, res) => {
+    const userId = req.params.userId;
+    const sqlQuery = `SELECT * FROM complaints_test WHERE user_id = ?`;
+
+    pool.query(sqlQuery, [userId], (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).json('internal server error');

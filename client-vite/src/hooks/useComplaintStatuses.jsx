@@ -2,15 +2,18 @@ import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
 export function useComplaintStatuses(params = {}) {
-    const { id } = params;
+    const { statusId } = params;
     const [complaintStatuses, setComplaintStatuses] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     let apiUrl = `${ServerUrl}/api/complaint-statuses`;
 
-    if (id) {
-        apiUrl += `/${id}`
+    if (statusId) {
+        apiUrl += `/statusId/${statusId}`
     }
+
+    console.log(apiUrl)
+    console.log('effect')
 
     useEffect(() => {
         fetch(apiUrl, {
