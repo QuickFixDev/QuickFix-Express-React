@@ -72,7 +72,7 @@ ComplaintController.createComplaint = async (req, res) => {
 
 ComplaintController.getComplaintsInGraphic = (req, res) => {
     console.log("Fetching all complaints");
-    const sqlQuery = `SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM complaints uc INNER JOIN categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name`;
+    const sqlQuery = `SELECT cc.category_name, COUNT(uc.category_id) AS category_count FROM complaints_test uc INNER JOIN categories cc ON uc.category_id = cc.category_id GROUP BY cc.category_name`;
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {

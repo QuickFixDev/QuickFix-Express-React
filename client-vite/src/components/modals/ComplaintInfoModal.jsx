@@ -2,14 +2,14 @@
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Steps } from 'antd';
-import { useComplaintsTest } from '../../hooks/useComplaintsTest';
+import { useComplaints } from '../../hooks/useComplaints';
 import { useComplaintsHistory } from '../../hooks/useComplaintsHistory';
 import { useComplaintStatuses } from '../../hooks/useComplaintStatuses';
 
 const { Step } = Steps;
 
 const ComplaintInfoModal = ({ showModal, handleClose, complaintId, statusId }) => {
-    const { complaints } = useComplaintsTest({ complaintId: complaintId });
+    const { complaints } = useComplaints({ complaintId: complaintId });
     const { complaintsHistory } = useComplaintsHistory({ complaintId: complaintId })
     const { complaintStatuses } = useComplaintStatuses()
 

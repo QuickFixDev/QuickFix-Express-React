@@ -7,7 +7,7 @@ import FilterComponent from "../../../components/filtering/FilterComponent";
 import { Checkbox } from "antd";
 import ComplaintModal from "../../../components/modals/ComplaintModal";
 
-import { useComplaintsTest } from "../../../hooks/useComplaintsTest";
+import { useComplaints } from "../../../hooks/useComplaints";
 import { useCategories } from "../../../hooks/useCategories";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -19,7 +19,7 @@ const Filter = () => {
   const { categories } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { authUser, isLoggedIn } = useAuth();
-  const { complaints, loading } = useComplaintsTest();
+  const { complaints, loading } = useComplaints();
 
   const handleFilterChange = (categoryId) => {
     setSelectedCategories((prevCategories) => {
@@ -80,7 +80,7 @@ const Filter = () => {
 
 
 const ComplaintManager = () => {
-  const { complaints, isLoading: complaintsLoading } = useComplaintsTest();
+  const { complaints, isLoading: complaintsLoading } = useComplaints();
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [selectedComplaint, setSelectedComplaint] = useState(null);

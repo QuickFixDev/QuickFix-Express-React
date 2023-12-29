@@ -10,8 +10,8 @@ import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useCategories } from '../../hooks/useCategories';
-import { useComplaints } from '../../hooks/useComplaints';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { useComplaints } from '../../hooks/useComplaints';
 
 const MyComplaints = () => {
     const { authUser, isLoggedIn } = useAuth();
