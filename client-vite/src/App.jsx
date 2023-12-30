@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -32,6 +32,20 @@ import ResidentialStorage from './pages/admin/creation/ResidentialStorage';
 import EmployeePanel from './pages/employee/EmployeePanel';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import AccessDenied from './components/access/AccessDenied';
+
+const AuthenticatedRoute = ({ path, element, requiredRoles }) => {
+  const { isAuthenticated, user } = useAuth0();
+  const { authUser } = useAuth();
+  const navigate = useNavigate();
+
+  if (!isAuthenticated || !requiredRoles.includes(authUser.Role)) {
+    // Redirect to access denied if not authenticated or doesn't have the required role
+    navigate('/access-denied');
+  }
+
+  return element();
+};
 
 export default function App() {
   return (
@@ -47,7 +61,17 @@ export default function App() {
               <main className="col-xl-10 col-md-11 col-10 p-0">
                 <Routes>
 
-                  <Route path="/user/complaints/new" element={<ComplainForm />} />
+                  <Route
+                    path="/user/complaints/new"
+                    element={() => (
+                      <AuthenticatedRoute
+                        element={() => <ComplainForm />}
+                        requiredRoles={['resident', 'dev']}
+                      />
+                    )}
+                  />
+
+                  <Route path="/access-denied" element={<AccessDenied />} />
                   <Route path="/user/complaints" element={<MyComplaints />} />
                   <Route path="/user/residences" element={<ResidenceList />} />
 

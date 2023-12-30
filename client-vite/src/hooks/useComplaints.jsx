@@ -9,7 +9,7 @@ export function useComplaints(params = {}) {
     let apiUrl = `${ServerUrl}/api/complaints`;
 
     if (userId) {
-        apiUrl += `/${userId}`
+        apiUrl += `/userId/${userId}`
     }
 
     useEffect(() => {
