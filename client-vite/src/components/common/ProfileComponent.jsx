@@ -45,7 +45,7 @@ const BootstrapTable = () => {
                 <h2 className='fw-bold'>My Profile</h2>
             </div>
             <div className="row profile-row">
-                <div className="p-4 profile-card">
+                <div className="p-4">
                     <ProfileImage imageUrl={user.picture} altText={user.name} />
                     <table className="table table-hover table-bordered profile-table">
                         <thead className="thead-light">

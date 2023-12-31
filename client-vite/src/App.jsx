@@ -32,20 +32,101 @@ import ResidentialStorage from './pages/admin/creation/ResidentialStorage';
 import EmployeePanel from './pages/employee/EmployeePanel';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import AccessDenied from './components/access/AccessDenied';
+import AccessDenied from './pages/common/AccessDenied';
 
-const AuthenticatedRoute = ({ path, element, requiredRoles }) => {
-  const { isAuthenticated, user } = useAuth0();
-  const { authUser } = useAuth();
-  const navigate = useNavigate();
+function LoginRequiredPage({ children }) {
+  const { isLoggedIn } = useAuth();
 
-  if (!isAuthenticated || !requiredRoles.includes(authUser.Role)) {
-    // Redirect to access denied if not authenticated or doesn't have the required role
-    navigate('/access-denied');
+  if (isLoggedIn) {
+    return <>
+      {children}
+    </>
+  } else {
+    return (
+      <AccessDenied isLoggedIn={isLoggedIn} requiredRole={'no role required'} userRole={'no role required'} hasPaid={true} />
+    );
   }
+}
 
-  return element();
-};
+function ResidentPage({ children }) {
+  const { authUser, isLoggedIn } = useAuth();
+
+  if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev' || authUser.Role === 'tester') {
+    return <>
+      {children}
+    </>
+  } else {
+    return (
+      <AccessDenied isLoggedIn={isLoggedIn} requiredRole={['resident', 'dev', 'tester']} userRole={authUser.Role} hasPaid={true} />
+    );
+  }
+}
+
+function AdminPage({ children }) {
+  const { authUser, isLoggedIn } = useAuth();
+
+  if (isLoggedIn && authUser.Role === 'admin' || authUser.Role === 'dev' || authUser.Role === 'tester') {
+    return <>
+      {children}
+    </>
+  } else {
+    return (
+      <AccessDenied isLoggedIn={isLoggedIn} requiredRole={['admin', 'dev', 'tester']} userRole={authUser.Role} hasPaid={true} />
+    );
+  }
+}
+
+function DevPage({ children }) {
+  const { authUser, isLoggedIn } = useAuth();
+
+  if (isLoggedIn && authUser.Role === 'dev' || authUser.Role === 'tester') {
+    return <>
+      {children}
+    </>
+  } else {
+    return (
+      <AccessDenied isLoggedIn={isLoggedIn} requiredRole={['dev', 'tester']} userRole={authUser.Role} hasPaid={true} />
+    );
+  }
+}
+
+function EmployeePage({ children }) {
+  const { authUser, isLoggedIn } = useAuth();
+
+  if (isLoggedIn && authUser.Role === 'employee' || authUser.Role === 'dev' || authUser.Role === 'tester') {
+    return <>
+      {children}
+    </>
+  } else {
+    return (
+      <AccessDenied isLoggedIn={isLoggedIn} requiredRole={['employee', 'dev', 'tester']} userRole={authUser.Role} hasPaid={true} />
+    );
+  }
+}
+
+function OwnerPage({ children }) {
+  const { authUser, isLoggedIn } = useAuth();
+
+  if (isLoggedIn && authUser.Role === 'owner' || authUser.Role === 'dev' || authUser.Role === 'tester') {
+    return <>
+      {children}
+    </>
+  } else {
+    return (
+      <AccessDenied isLoggedIn={isLoggedIn} requiredRole={['owner', 'dev', 'tester']} userRole={authUser.Role} hasPaid={true} />
+    );
+  }
+}
+
+function ConditionalSidebar({ children }) {
+  const { isLoggedIn } = useAuth();
+
+  if (isLoggedIn) {
+    return <>
+      {children}
+    </>
+  }
+}
 
 export default function App() {
   return (
@@ -55,50 +136,48 @@ export default function App() {
           <TopNavbar></TopNavbar>
           <div className="container-fluid m-0">
             <div className="row full-height p-0">
-              <div className="col-xl-2 col-md-1 col-2 bg-danger bg-light position-sticky p-0">
-                <Navbar />
-              </div>
-              <main className="col-xl-10 col-md-11 col-10 p-0">
+              <ConditionalSidebar>
+                <div className="col-xl-2 col-md-1 col-2 bg-danger bg-light position-sticky p-0">
+                  <Navbar />
+                </div>
+              </ConditionalSidebar>
+              <main className="col p-0">
                 <Routes>
-
-                  <Route
-                    path="/user/complaints/new"
-                    element={() => (
-                      <AuthenticatedRoute
-                        element={() => <ComplainForm />}
-                        requiredRoles={['resident', 'dev']}
-                      />
-                    )}
-                  />
-
-                  <Route path="/access-denied" element={<AccessDenied />} />
-                  <Route path="/user/complaints" element={<MyComplaints />} />
-                  <Route path="/user/residences" element={<ResidenceList />} />
-
+                  {/* Non-protected routes (common) */}
                   <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/role-filter" element={<RoleFilter />} />
+                  <Route path="/access-denied" element={<AccessDenied />} />
 
-                  <Route path="/admin/complaints" element={<ComplaintManagement />} />
-                  <Route path="/admin/complaints/stats" element={<Stats />} />
-                  <Route path="/admin/users" element={<UserManagement />} />
-                  <Route path="/admin/users/new" element={<UserStorage />} />
-                  <Route path="/admin/roles/new" element={<CreateRole />} />
-                  <Route path="/admin/residences" element={<ResidenceManagement />} />
-                  <Route path="/admin/residences/new" element={<ResidenceStorage />} />
-                  <Route path="/admin/residentials" element={<ResidentialsManagement />} />
-                  <Route path="/admin/residentials/new" element={<ResidentialStorage />} />
+                  {/* Common routes (no login required) */}
+                  <Route path="/profile" element={<LoginRequiredPage><Profile /></LoginRequiredPage>} />
+                  <Route path="/notification-panel" element={<LoginRequiredPage><NotificationPanel /></LoginRequiredPage>} />
 
-                  <Route path="/category-management" element={<CategoryManagement />} />
-                  <Route path="/context-test" element={<ContextTest />} />
-                  <Route path="/resident-panel" element={<ResidentPanel />} />
+                  {/* Resident protected routes (login required) */}
+                  <Route path="/user/complaints/new" element={<ResidentPage> <ComplainForm /> </ResidentPage>} />
+                  <Route path="/user/complaints" element={<ResidentPage> <MyComplaints /> </ResidentPage>} />
+                  <Route path="/user/residences" element={<ResidentPage> <ResidenceList /> </ResidentPage>} />
+                  <Route path="/resident-panel" element={<ResidentPage> <ResidentPanel /> </ResidentPage>} />
 
-                  <Route path="/employee-panel" element={<EmployeePanel />} />
-                  <Route path="/notification-panel" element={<NotificationPanel />} />
+                  {/* Admin protected routes (login required) */}
+                  <Route path="/role-filter" element={<AdminPage> <RoleFilter /> </AdminPage>} />
+                  <Route path="/admin/complaints" element={<AdminPage> <ComplaintManagement /> </AdminPage>} />
+                  <Route path="/admin/complaints/stats" element={<AdminPage> <Stats /> </AdminPage>} />
+                  <Route path="/admin/users" element={<AdminPage> <UserManagement /> </AdminPage>} />
+                  <Route path="/admin/users/new" element={<AdminPage> <UserStorage /> </AdminPage>} />
+                  <Route path="/admin/roles/new" element={<AdminPage> <CreateRole /> </AdminPage>} />
+                  <Route path="/admin/residences" element={<AdminPage> <ResidenceManagement /> </AdminPage>} />
+                  <Route path="/admin/residences/new" element={<AdminPage> <ResidenceStorage /> </AdminPage>} />
+                  <Route path="/admin/residentials" element={<AdminPage> <ResidentialsManagement /> </AdminPage>} />
+                  <Route path="/admin/residentials/new" element={<AdminPage> <ResidentialStorage /> </AdminPage>} />
+                  <Route path="/category-management" element={<AdminPage> <CategoryManagement /> </AdminPage>} />
 
+                  {/* Employee protected routes (login required) */}
+
+                  {/* Dev protected routes (login required) */}
+                  <Route path="/context-test" element={<DevPage> <ContextTest /> </DevPage>} />
+
+                  {/* Owner protected routes (login required) */}
                 </Routes>
-
               </main>
             </div>
           </div>

@@ -166,7 +166,7 @@ const WelcomePage = () => {
             {details.map((detail, index) => (
               <div className="col-md-4 rounded-2 mb-4" key={index}>
                 <div className=" shadow-sm h-100 rounded-2">
-                  <div className="container-fluid text-black d-flex flex-col justify-content-center align-items-center p-5"
+                  <div className="container-fluid text-black d-flex flex-column justify-content-center align-items-center p-5"
                     style={{
                       background: randomGradients[index],
                       color: 'black',

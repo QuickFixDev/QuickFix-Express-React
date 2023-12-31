@@ -52,7 +52,7 @@ const ComplaintItem = ({ title, description, status }) => {
                 <div className="row fw-bold">{title}</div>
                 <div className="row">{description}</div>
             </div>
-            <div className="col-2 d-flex flex-col align-items-center justify-content-center">
+            <div className="col-2 d-flex flex-column align-items-center justify-content-center">
                 <span className=''>{status}</span>
             </div>
         </div>
@@ -65,7 +65,7 @@ const ComplaintTableHeader = () => {
             <div className="col">
                 <div className="row fw-bold">Complaint</div>
             </div>
-            <div className="col-2 d-flex flex-col align-items-center justify-content-center">
+            <div className="col-2 d-flex flex-column align-items-center justify-content-center">
                 <span className='fw-bold'>status</span>
             </div>
         </div>

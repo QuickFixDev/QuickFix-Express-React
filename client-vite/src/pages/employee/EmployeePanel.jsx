@@ -28,9 +28,9 @@ const getLatestComplaintsHistory = (complaintsHistory) => {
 };
 
 const EmployeePanel = () => {
-    const { authUser } = useAuth();
+    const { authUserm, isLoggedIn } = useAuth();
     const { complaints, loading } = useComplaints();
-    const { complaintsHistory } = useComplaintsHistory({ employeeId: 13 });
+    const { complaintsHistory, isLoading: complaintsHistoryLoading } = useComplaintsHistory({ employeeId: 13 });
     const { users } = useUsers();
     const { complaintStatuses } = useComplaintStatuses();
 
@@ -50,7 +50,7 @@ const EmployeePanel = () => {
         setShowComplaintInfoModal(false)
     }
 
-    if (complaintsHistory.length < 1) {
+    if (!complaintsHistoryLoading && complaintsHistory.length < 1) {
         return (
             <div className="container-fluid px-md-5 px-1">
                 <div className="row py-5 px-4">
@@ -76,17 +76,23 @@ const EmployeePanel = () => {
                             <div className="col-3">Status</div>
                         </div>
 
-                        {resultArray.map(({ history_id, employee_comment, admin_id, status_id, complaint_id }) => (
-                            <div key={history_id} className="row py-2 border-top cursor-pointer" onClick={() => handleHistoryClick(complaint_id, status_id)} aria-label=''>
-                                <div className="col-6 fw-bold">{employee_comment}</div>
-                                <div className="col-3">
-                                    {users.find((user) => user.user_id === admin_id)?.first_name || 'User not found'}
+                        {complaintsHistoryLoading ? (
+                            <span>Loading...</span>
+                        ) : (
+                            resultArray.map(({ history_id, employee_comment, admin_id, status_id, complaint_id }) => (
+                                <div key={history_id} className="row py-2 border-top cursor-pointer" onClick={() => handleHistoryClick(complaint_id, status_id)} aria-label=''>
+                                    <div className="col-6 fw-bold">{employee_comment}</div>
+                                    <div className="col-3">
+                                        {users.find((user) => user.user_id === admin_id)?.first_name || 'User not found'}
+                                    </div>
+                                    <div className="col-3">
+                                        {complaintStatuses.find((status) => status.id === status_id)?.name || 'No status was found'}
+                                    </div>
                                 </div>
-                                <div className="col-3">
-                                    {complaintStatuses.find((status) => status.id === status_id)?.name || 'No status was found'}
-                                </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
+
+
                     </div>
                 </div>
 
