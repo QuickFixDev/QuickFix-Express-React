@@ -1,7 +1,8 @@
 import ServerUrl from '../constants/ServerUrl';
 import { useState, useEffect } from 'react';
 
-export function useUsers({ id } = {}) {
+export function useUsers(params = {}) {
+    const { id } = params;
     const [users, setUsers] = useState([]);
     const [isLoading, setLoading] = useState(true);
 

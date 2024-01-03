@@ -45,28 +45,29 @@ const getOldestUpdates = () => {
     });
 };
 
-const ComplaintItem = ({ title, description, status }) => {
+const ComplaintTableHeader = () => {
     return (
-        <div className='row border-top py-2 cursor-pointer'>
+        <div className='row py-3'>
             <div className="col">
-                <div className="row fw-bold">{title}</div>
-                <div className="row">{description}</div>
+                <span>Complaint</span>
             </div>
             <div className="col-2 d-flex flex-column align-items-center justify-content-center">
-                <span className=''>{status}</span>
+                <span className='fw-bold'>status</span>
             </div>
         </div>
     );
 }
 
-const ComplaintTableHeader = () => {
+const ComplaintItem = ({ title, description, status }) => {
     return (
-        <div className='row py-3'>
+        <div className='row border-top py-3 cursor-pointer'>
+
             <div className="col">
-                <div className="row fw-bold">Complaint</div>
+                <span className='fw-bold'>{title}</span>
+                <p>{description}</p>
             </div>
             <div className="col-2 d-flex flex-column align-items-center justify-content-center">
-                <span className='fw-bold'>status</span>
+                <span className=''>{status}</span>
             </div>
         </div>
     );
@@ -96,20 +97,21 @@ const ComplaintPanel = () => {
     }
 
     return (
-        <div className="row">
-            <div className="col-3" aria-label='filter section'></div>
-
-            <div className="col-9" aria-label='content section'>
-                <ComplaintTableHeader />
-                <div className="row row-cols-1">
-                    {complaints.map((complaint) => (
-                        <div className="col">
-                            <ComplaintItem title={complaint.title} description={complaint.description} status={'closed'} />
-                        </div>
-                    ))}
-                </div>
+        <>
+            <div className="row">
+                <div className="col-10" aria-label='search'></div>
+                <div className="col-2" aria-label='filters'></div>
             </div>
-        </div>
+
+            <div className="container">
+                <ComplaintTableHeader />
+
+                {complaints.map((complaint) => (
+                    <ComplaintItem title={complaint.title} description={complaint.description} status={'closed'} />
+                ))}
+            </div>
+
+        </>
     )
 }
 

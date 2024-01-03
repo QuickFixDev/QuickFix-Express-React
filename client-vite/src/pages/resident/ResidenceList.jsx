@@ -1,69 +1,40 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouseCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { faHouseCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import LoadingSpinner from '../../components/common/LoadingSpinner';
-import AccessDenied from '../../components/access/AccessDenied';
-import ServerUrl from '../../constants/ServerUrl';
-import { useAuth } from '../../contexts/AuthContext';
-import { useEffect, useState } from 'react';
 import { useResidences } from '../../hooks/useResidences';
+import { useUsers } from '../../hooks/useUsers';
+
+const ResidenceItem = ({ street, number }) => {
+    return (
+        <div className='container d-flex flex-column align-items-center'>
+            <div className="container p-0  rounded-2 shadow-sm">
+                <div>
+                    <img src="https://placehold.co/325x325?text=Residence\nImage" alt="" className='w-100' />
+                </div>
+                <div className='row row-cols-1 p-2 pt-3'>
+                    <div className="col fw-bold">
+                        <span>{street} {number}</span>
+                    </div>
+                    <div className="col text-size-14 text-secondary ">
+                        <span>Occupied by josh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 const ResidenceList = () => {
     const { residences, isLoading: residencesLoading } = useResidences();
+    const { users } = useUsers()
 
     return (
-        <div className="list container-fluid p-md-5 p-3">
-            <div className="p-4 mb-4">
-                <h2 className='fw-bold'>Available residences</h2>
-            </div>
-            <div className="row d-flex flex-row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 px-4">
-
-                {residencesLoading ? (
-                    <div className="container-fluid">
-                        <LoadingSpinner />
-                    </div>
-                ) : (
-
-                    residences.map(residence => (
-                        <div key={residence.residence_id} className="col">
-                            <div className="container text-center rounded-4 p-3 hover-navlink">
-                                {residence.status === 'available' ? (
-                                    <div className="street my-3 text-primary">
-                                        <FontAwesomeIcon icon={faHouseCircleCheck} size="3x"></FontAwesomeIcon>
-                                    </div>
-                                ) : (
-                                    <div className="street my-3">
-                                        <FontAwesomeIcon icon={faHouseCircleExclamation} size="3x"></FontAwesomeIcon>
-                                    </div>
-                                )}
-
-                                <div className="street my-3 ">
-                                    <h5>{residence.street_name} {residence.street_number}</h5>
-                                </div>
-                                <div className="state my-3">
-                                    <p>{residence.status}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )))}
-            </div>
-
+        <div className="row">
+            {residences.map((residence) => (
+                <div key={residence.residence_id} className="col-3">
+                    <ResidenceItem street={residence.street_name} number={residence.street_number}/>
+                </div>
+            ))}
         </div>
     );
 };
 
-
-const Residences = () => {
-    const { authUser, isLoggedIn } = useAuth();
-
-
-    if (isLoggedIn && authUser.Role === 'resident' || authUser.Role === 'dev') {
-        return <ResidenceList />
-    } else {
-        return (
-            <AccessDenied />
-        )
-    }
-}
-export default Residences;
+export default ResidenceList;
