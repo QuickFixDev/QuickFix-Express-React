@@ -137,8 +137,8 @@ const WelcomePage = () => {
 
             <div className="row">
               <p className="fw-light m-0 mt-4 ">
-                QuickFix is a system designed to enhance communication between tenants and managers residential complexes and private residences.
-                The system facilitates efficient communication between residents and management, allowing users to report and track various maintenance and service requests seamlessly.
+                QuickFix is a system designed to enhance communication between residents and service managers,
+                allowing users to report and track various maintenance and service requests seamlessly.
               </p>
             </div>
 
