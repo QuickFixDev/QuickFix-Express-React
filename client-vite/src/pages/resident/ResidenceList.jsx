@@ -35,15 +35,6 @@ const ResidenceList = () => {
                         <ResidenceItem street={residence.street_name} number={residence.street_number} />
                     </div>
                 ))}
-                <div className="col mb-3">
-                    <ResidenceItem street={'street'} number={'123'} />
-                </div>
-                <div className="col mb-3">
-                    <ResidenceItem street={'street'} number={'123'} />
-                </div>
-                <div className="col mb-3">
-                    <ResidenceItem street={'street'} number={'123'} />
-                </div>
             </div>
         </div>
     );

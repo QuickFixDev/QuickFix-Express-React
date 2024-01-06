@@ -45,7 +45,6 @@ const routes = [
   { userRequired: 'common', path: '/', label: 'Home', iconName: 'faHome' },
   { userRequired: 'common', path: '/profile', label: 'Profile', iconName: 'faUser' },
   { userRequired: 'resident', path: '/user/complaints', label: 'My reports', iconName: 'faList' },
-  { userRequired: 'resident', path: '/user/complaints/new', label: 'Submit report', iconName: 'faPlusCircle' },
   { userRequired: 'resident', path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
   { userRequired: 'admin', path: '/admin/complaints/stats', label: 'Stats', iconName: 'faChartBar' },
   { userRequired: 'admin', path: '/admin/users', label: 'Manage users', iconName: 'faUsers' },

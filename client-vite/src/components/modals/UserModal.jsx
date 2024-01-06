@@ -10,7 +10,7 @@ import { useRoles } from '../../hooks/useRoles';
 import { useActivityStatuses } from '../../hooks/useActivityStatuses';
 import { useResidences } from '../../hooks/useResidences';
 
-const UserModal = ({ user, show, onClose }) => {
+const UserModal = ({ user, onClose }) => {
     const { roles } = useRoles();
     const { activityStatuses } = useActivityStatuses();
     const { residences } = useResidences();
@@ -61,10 +61,11 @@ const UserModal = ({ user, show, onClose }) => {
 
     return (
         <Modal
-            show={show}
+            show={true}
             onHide={onClose}
-            size='xl'
-            centered
+            onExit={() => console.log('Modal is exiting')}
+            onExited={onClose}
+            size='xl' centered
             backdrop="static"
         >
             <Modal.Header closeButton>

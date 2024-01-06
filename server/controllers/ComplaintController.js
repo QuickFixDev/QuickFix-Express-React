@@ -51,15 +51,15 @@ ComplaintController.getComplaintByUserId = (req, res) => {
 };
 
 ComplaintController.createComplaint = async (req, res) => {
-    const formData = req.body;
+    const formData = req.body;  
     console.log('form data in query: ', formData)
-    const { user_id, complaint_status, category_id, complaint_date, complaint_title, complaint_description } = formData;
+    const { user_id, category_id, title, description, submitted_date } = formData;
     const sqlQuery = `
-        INSERT INTO complaints (user_id, complaint_status, category_id, complaint_date, complaint_title, complaint_description)
-        VALUES (?, ?, ?, ?, ?, ?)
-        `;
+        INSERT INTO complaints_test (user_id, category_id, title, description, submitted_date)
+        VALUES (?, ?, ?, ?, ?)
+    `;
 
-    pool.query(sqlQuery, [user_id, complaint_status, category_id, complaint_date, complaint_title, complaint_description], (err, results) => {
+    pool.query(sqlQuery, [user_id, category_id, title, description, submitted_date], (err, results) => {
         if (err) {
             console.error('Error storing form data:', err);
             res.status(500).json({ message: 'Internal server error' });

@@ -26,7 +26,7 @@ const CreateUserModal = ({ showModal, handleClose }) => {
         residence_id: '',
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e) => {   
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
@@ -56,9 +56,6 @@ const CreateUserModal = ({ showModal, handleClose }) => {
                 <Modal.Title className='fw-bold'>Create user</Modal.Title>
             </Modal.Header>
             <Modal.Body className='p-4'>
-                <pre>
-                    {JSON.stringify(formData, null, 2)}
-                </pre>
                 <Form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col my-2 floating-placeholder">
@@ -74,6 +71,7 @@ const CreateUserModal = ({ showModal, handleClose }) => {
                             </FloatingLabel>
                         </div>
                     </div>
+                    
                     <div className="row row-cols-md-2 row-cols-1">
                         <div className="col my-2">
                             <FloatingLabel controlId="email" label="Email">

@@ -25,7 +25,7 @@ const Stats = () => {
     }, []);
 
     return (
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="50%" height={400}>
             <PieChart>
                 <Pie
                     data={data}

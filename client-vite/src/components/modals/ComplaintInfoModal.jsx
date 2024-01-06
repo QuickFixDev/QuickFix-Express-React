@@ -33,14 +33,16 @@ const ComplaintInfoModal = ({ showModal, handleClose, complaintId, statusId }) =
             <Modal.Body className='p-4'>
                 <div className="row">
                     {complaints.map((complaint) => (
-                        <div key={complaint.id} className="row">
-                            <p className='fw-bold'>
-                                {complaint.title}
-                            </p>
-                            <p>
-                                {complaint.description}
-                            </p>
-                        </div>
+                        complaint.id === complaintId ? (
+                            <div key={complaint.id} className="row">
+                                <p className='fw-bold'>
+                                    {complaint.title}
+                                </p>
+                                <p>
+                                    {complaint.description}
+                                </p>
+                            </div>
+                        ) : null
                     ))}
                 </div>
                 <Steps

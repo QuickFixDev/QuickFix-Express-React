@@ -63,11 +63,11 @@ const ComplaintTableHeader = () => {
 
 const ComplaintItem = ({ title, description, status }) => {
     return (
-        <div className='row border-top py-3 cursor-pointer'>
+        <div className='row border-top py-2 cursor-pointer'>
 
             <div className="col">
                 <span className='fw-bold'>{title}</span>
-                <p>{description}</p>
+                <p className='m-0'>{description}</p>
             </div>
             <div className="col-2 d-flex flex-column align-items-center justify-content-center">
                 <span className=''>{status}</span>

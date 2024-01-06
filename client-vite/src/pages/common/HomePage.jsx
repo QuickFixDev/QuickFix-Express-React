@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import ResidentPanel from "../resident/ResidentPanel";
 import AdminPanel from "../admin/AdminPanel";
 
+import ContextTest from "../common/ContextTest"
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHome,
@@ -200,9 +202,18 @@ const HomePage = () => {
 
   if (authUser.Role === 'resident') {
     return <ResidentPanel />
-  }
-  if (authUser.Role === 'dev') {
+
+  } else if (authUser.Role === 'admin') {
+    return <AdminPanel />
+
+  } else if (authUser.Role === 'employee') {
     return <EmployeePanel />
+
+  } else if (authUser.Role === 'tester') {
+    return <ContextTest />
+
+  } else if (authUser.Role === 'dev') {
+    return <ContextTest />
   }
 
 }

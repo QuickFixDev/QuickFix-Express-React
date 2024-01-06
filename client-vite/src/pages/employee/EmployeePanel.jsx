@@ -41,9 +41,9 @@ const EmployeePanel = () => {
     const [selectedStatusId, setSelectedStatusId] = useState(0)
 
     const handleHistoryClick = (complaint_id, status_id) => {
-        setShowComplaintInfoModal(true)
         setSelectedComplaintId(complaint_id)
         setSelectedStatusId(status_id)
+        setShowComplaintInfoModal(true)
     }
 
     const handleCloseComplaintInfoModal = () => {
