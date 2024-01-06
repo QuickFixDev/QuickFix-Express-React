@@ -55,7 +55,7 @@ const MyComplaints = () => {
                 <div className="p-2 mb-4 ">
                     <div className="row row-cols-md-2 row-cols-1 align-items-center">
                         <div className="col text-start">
-                            <h2 className="fw-bold">Your reports ({complaints.length})</h2>
+                            <h2>Your reports ({complaints.length})</h2>
                         </div>
                         {complaints.length > 0 && (
                             <div className="col text-md-end text-start p-md-1 py-3">

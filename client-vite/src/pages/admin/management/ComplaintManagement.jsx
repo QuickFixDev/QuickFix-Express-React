@@ -125,7 +125,7 @@ const ComplaintManager = () => {
       <div className="list container-fluid p-md-5 p-3">
         <div className="row">
           <div className="col text-start">
-            <h2 className="fw-bold">Complaint manager</h2>
+            <h2>Complaint manager</h2>
           </div>
         </div>
 

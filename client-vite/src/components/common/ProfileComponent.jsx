@@ -42,7 +42,7 @@ const BootstrapTable = () => {
     return (
         <div className="container p-sm-5 p-0 profile-container">
             <div className="p-4 ps-0 mb-4">
-                <h2 className='fw-bold'>My Profile</h2>
+                <h2>My Profile</h2>
             </div>
             <div className="row profile-row">
                 <div className="p-4">

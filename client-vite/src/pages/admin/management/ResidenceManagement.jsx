@@ -72,7 +72,7 @@ function ResidenceList({ owners, tenants, residences, setSelectedResidence, dele
     <div className="list container-fluid p-md-5 p-3">
       <div className="row">
         <div className="col text-start">
-          <h2 className="fw-bold">Residence manager</h2>
+          <h2>Residence manager</h2>
         </div>
         <div className="col">
           <button className="btn btn-primary mb-3">

@@ -62,7 +62,9 @@ const UserManager = () => {
     const [selectedFilter, setSelectedFilter] = useState('All');
     const { isLoggedIn } = useAuth();
 
-    const [userToEdit, setUserToEdit] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false)
+
+    const [userToEdit, setUserToEdit] = useState({});
     const [showCreateModal, setShowCreateModal] = useState(false)
 
     const handleShowCreateModal = () => {
@@ -75,10 +77,12 @@ const UserManager = () => {
 
     const handleClickForEdit = (user) => {
         setUserToEdit(user);
+        setShowEditModal(true);
     };
 
-    const handleCloseEditModal = () => {
-        setUserToEdit(null);
+    const handleHideEditModal = () => {
+        setUserToEdit({});
+        setShowEditModal(false);
     };
 
     const handleSelectFilter = (filter) => {
@@ -114,7 +118,7 @@ const UserManager = () => {
                     <div className="col">
                         <div className="row d-flex flex-row align-items-center">
                             <div className="col-auto text-start">
-                                <h2 className="m-0 fw-bold">User manager</h2>
+                                <h2 className="m-0">User manager</h2>
                             </div>
                             <div className="col text-start">
                                 <IconInfo
@@ -198,15 +202,13 @@ const UserManager = () => {
                                     ))) : (usersLoading ? (<tr><td>Loading...</td></tr>) : (<tr><td>No users found</td></tr>))
                             }
 
-                            {userToEdit && (
-                                <UserModal user={userToEdit} onClose={handleCloseEditModal} />
-                            )}
                         </div>
                     </div>
                 </div>
             </div>
 
-            <CreateUserModal showModal={showCreateModal} handleClose={handleCloseCreateModal}/>
+            <UserModal show={showEditModal} user={userToEdit} onClose={handleHideEditModal} />
+            <CreateUserModal showModal={showCreateModal} handleClose={handleCloseCreateModal} />
         </>
 
 

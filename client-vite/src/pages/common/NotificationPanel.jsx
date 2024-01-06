@@ -22,7 +22,7 @@ const NotificationPanel = () => {
         return (
             <div className="px-2">
                 <div className="text-center py-4">
-                    <h2 className="fw-bold">
+                    <h2>
                         Notifications
                     </h2>
                 </div>

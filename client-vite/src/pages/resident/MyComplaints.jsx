@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { Checkbox } from 'antd';
+import { faFlag, faPlusCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import 'antd/lib/checkbox/style';
 import 'antd/lib/style';
 import AccessDenied from '../../components/access/AccessDenied';
-import ServerUrl from '../../constants/ServerUrl';
 import { useAuth } from '../../contexts/AuthContext';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useCategories } from '../../hooks/useCategories';
+
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+
+import SearchBar from '../../components/filtering/SearchBar';
+import FilterComponent from '../../components/filtering/FilterComponent';
+
 import { useComplaints } from '../../hooks/useComplaints';
 import { useComplaintsHistory } from '../../hooks/useComplaintsHistory';
+import IconInfo from '../../components/icons/IconInfo';
+import ComplaintDetailsModal from '../../components/modals/ComplaintDetailsModal';
+import CreateComplaintModal from '../../components/modals/CreateComplaintModal';
 
 const groupUpdatesByComplaintId = (array) => {
     const updatesByComplaint = {};
@@ -73,16 +76,79 @@ const ComplaintItem = ({ title, description, status }) => {
     );
 }
 
+const Header = () => {
+    const [showCreateComplaintModal, setShowCreateComplaintModal] = useState(false)
+
+    const handleShowCreateComplaintModal = () => {
+        setShowCreateComplaintModal(true)
+    }
+
+    const handleHideCreateComplaintModal = () => {
+        setShowCreateComplaintModal(false)
+    }
+
+    return (
+        <>
+            <div className="row">
+                <div className="col">
+                    <div className="row d-flex flex-row align-items-center">
+                        <div className="col-auto text-start">
+                            <h2 className="m-0">My reports</h2>
+                        </div>
+                        <div className="col text-start">
+                            <IconInfo
+                                message=
+                                {
+                                    "Click on a complaint to see its status and details."
+                                }
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="col text-end">
+                    <button /* onClick={handleShowCreateModal} */ onClick={() => handleShowCreateComplaintModal()} className="btn btn-primary">
+                        <div className="row row-cols-2">
+                            <div className="col-auto">
+                                <span>New</span>
+                            </div>
+                            <div className='col-auto'>
+                                <FontAwesomeIcon icon={faFlag} />
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <CreateComplaintModal showModal={showCreateComplaintModal} handleCancel={handleHideCreateComplaintModal} />
+        </>
+    );
+}
+
 const ComplaintPanel = () => {
     const { authUser, isLoggedIn } = useAuth()
     const { complaints, isLoading: complaintsLoading } = useComplaints()
     const { complaintsHistory, isLoading: complaintsHitoryLoading } = useComplaintsHistory()
+    const [showComplaintDetailsModal, setShowComplaintDetailsModal] = useState(false)
+    const [selectedComplaint, setSelectedComplaint] = useState(null)
+
+    const handleShowComplaintDetailsModal = (complaint) => {
+        setShowComplaintDetailsModal(true)
+        setSelectedComplaint(complaint)
+    }
+
+    const handleHideComplaintDetailsModal = () => {
+        setShowComplaintDetailsModal(false)
+    }
 
     const latestUpdates = getLatestUpdates()
     const oldestUpdates = getOldestUpdates()
 
-    console.log("Latest Updates:", latestUpdates);
-    console.log("Oldest Updates:", oldestUpdates);
+    // console.log("Latest Updates:", latestUpdates);
+    // console.log("Oldest Updates:", oldestUpdates);
+
+    const filterOptions = [
+        {},
+    ]
 
     if (!isLoggedIn) {
         return (
@@ -98,19 +164,35 @@ const ComplaintPanel = () => {
 
     return (
         <>
-            <div className="row">
-                <div className="col-10" aria-label='search'></div>
-                <div className="col-2" aria-label='filters'></div>
+            <div className="container p-md-5 p-3">
+                <Header />
+
+                <div className="row py-3">
+                    <div className="col-10" aria-label='search'>
+                        <div className="col">
+                            <SearchBar searchType='reports' />
+                        </div>
+                    </div>
+                    <div className="col-2" aria-label='filters'></div>
+                </div>
+
+                <div className="container">
+                    <ComplaintTableHeader />
+
+                    {complaintsLoading ? (
+                        <span>Loading...</span>
+                    ) : (
+                        complaints.map((complaint) => (
+                            <div key={complaint.id} onClick={() => handleShowComplaintDetailsModal(complaint)}>
+                                <ComplaintItem title={complaint.title} description={complaint.description} status={'closed'} />
+                            </div>
+                        ))
+                    )}
+
+                </div>
             </div>
 
-            <div className="container">
-                <ComplaintTableHeader />
-
-                {complaints.map((complaint) => (
-                    <ComplaintItem title={complaint.title} description={complaint.description} status={'closed'} />
-                ))}
-            </div>
-
+            <ComplaintDetailsModal showModal={showComplaintDetailsModal} handleCancel={handleHideComplaintDetailsModal} complaint={selectedComplaint} />
         </>
     )
 }

@@ -49,7 +49,7 @@ function CreateRoleComponent() {
         <div className="container-fluid d-flex flex-column align-items-center justify-content-center p-0">
             <div className="container p-lg-5 p-md-3 p-1 col-xl-6 col-lg-10 col-12">
                 <form onSubmit={handleSubmit} className="container mt-4">
-                    <h2 className="pb-4 text-center fw-bold">Create new role</h2>
+                    <h2 className="pb-4 text-center">Create new role</h2>
 
                     <div className="form-group">
                         <label className="my-2" htmlFor="role_name">

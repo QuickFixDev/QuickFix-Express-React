@@ -4,10 +4,10 @@ import { useUsers } from '../../hooks/useUsers';
 
 const ResidenceItem = ({ street, number }) => {
     return (
-        <div className='container d-flex flex-column align-items-center'>
+        <div className='container px-0 d-flex flex-column align-items-center'>
             <div className="container p-0  rounded-2 shadow-sm">
                 <div>
-                    <img src="https://placehold.co/325x325?text=Residence\nImage" alt="" className='w-100' />
+                    <img src="https://placehold.co/1?text=Residence\nImage" alt="" className='w-100' />
                 </div>
                 <div className='row row-cols-1 p-2 pt-3'>
                     <div className="col fw-bold">
@@ -27,12 +27,24 @@ const ResidenceList = () => {
     const { users } = useUsers()
 
     return (
-        <div className="row">
-            {residences.map((residence) => (
-                <div key={residence.residence_id} className="col-3">
-                    <ResidenceItem street={residence.street_name} number={residence.street_number}/>
+        <div className="container p-md-5 p-3">
+            <h2>Available residences</h2>
+            <div className="row pt-3 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
+                {residences.map((residence) => (
+                    <div key={residence.residence_id} className="col mb-3">
+                        <ResidenceItem street={residence.street_name} number={residence.street_number} />
+                    </div>
+                ))}
+                <div className="col mb-3">
+                    <ResidenceItem street={'street'} number={'123'} />
                 </div>
-            ))}
+                <div className="col mb-3">
+                    <ResidenceItem street={'street'} number={'123'} />
+                </div>
+                <div className="col mb-3">
+                    <ResidenceItem street={'street'} number={'123'} />
+                </div>
+            </div>
         </div>
     );
 };

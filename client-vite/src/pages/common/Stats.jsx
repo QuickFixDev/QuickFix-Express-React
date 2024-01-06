@@ -11,7 +11,7 @@ const Stats = () => {
             <div className="row">
                 <div className="list container-fluid p-md-5 p-3">
                     <div className="p-4 mb-4">
-                        <h2 className='fw-bold'>Stats</h2>
+                        <h2>Stats</h2>
                     </div>
                     <div className="d-flex flex-column justify-content-center align-items-center shadow-md">
                         <Graphic />

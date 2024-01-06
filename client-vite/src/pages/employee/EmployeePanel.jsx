@@ -54,8 +54,10 @@ const EmployeePanel = () => {
         return (
             <div className="container-fluid px-md-5 px-1">
                 <div className="row py-5 px-4">
-                    <h2 className="fw-bold">Complaints assigned to you</h2>
+                    <h2>Complaints assigned to you</h2>
                 </div>
+
+                fw-bold
 
                 <div aria-label='alert' className='row px-4 py-3'>
                     <CustomAlert title={'All done'} message={'You have no complaints assigned for now!'} type={'success'} />
@@ -67,7 +69,7 @@ const EmployeePanel = () => {
             <>
                 <div className="container-fluid px-md-5 px-1">
                     <div className="row">
-                        <h2 className="fw-bold py-5 px-4">Complaints assigned to you</h2>
+                        <h2 className="py-5 px-4">Complaints assigned to you</h2>
                     </div>
                     <div aria-label='table' className='row px-4 py-3'>
                         <div className="row py-2 text-secondary" aria-label='header'>
