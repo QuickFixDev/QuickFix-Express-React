@@ -25,33 +25,33 @@ const Stats = () => {
     }, []);
 
     return (
-        <ResponsiveContainer width="50%" height={400}>
-            <PieChart>
-                <Pie
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    paddingAngle={5}
-                    dataKey="category_count"
-                    label
-                >
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                </Pie>
-                <Tooltip />
-                <Legend
-                    layout="horizontal"
-                    align="center"
-                    formatter={(value, entry) => entry.payload.category_name}
-                    wrapperStyle={{ padding: '0 0 50px 0 ' }}
-
-                />
-            </PieChart>
-        </ResponsiveContainer>
+        <div className="col-9">
+            <ResponsiveContainer height={400}>
+                <PieChart>
+                    <Pie
+                        data={data}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="category_count"
+                        label
+                    >
+                        {data.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend
+                        layout="horizontal"
+                        align="center"
+                        formatter={(value, entry) => entry.payload.category_name}
+                        wrapperStyle={{ padding: '0 0 50px 0 ' }}
+                    />
+                </PieChart>
+            </ResponsiveContainer>
+        </div>
     );
 };
 

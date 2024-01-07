@@ -17,8 +17,8 @@ const AdminPanel = () => {
                 <LoadingSpinner />
             ) : (
                 <div className="row row-cols-lg-2 row-cols-1">
-                    <div className="col order-lg-1 order-2">
-                        <div className="h-100 rounded-3 shadow-sm p-3">
+                    <div className="col shadow-sm order-lg-1 order-2">
+                        <div className="h-100 rounded-3 p-3">
 
                             <Table className='table-hover'>
                                 <thead>
@@ -45,14 +45,8 @@ const AdminPanel = () => {
 
                         </div>
                     </div>
-                    <div className="col order-lg-2 order-1 p-1">
-                        <div className="rounded-3 shadow-sm">
-                            <div className="row">
-                                <div className="col">
-                                    <Graphic></Graphic>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="col d-flex flex-column justify-content-center align-items-center order-lg-2 order-1 p-1">
+                        <Graphic></Graphic>
                     </div>
                 </div>
             )}
