@@ -11,6 +11,7 @@ import HomePage from './pages/common/HomePage';
 import Profile from './pages/common/Profile';
 import ContextTest from './pages/common/ContextTest';
 import NotificationPanel from './pages/common/NotificationPanel';
+import TextSwapper from './pages/common/TextSwapper';
 
 import MyComplaints from './pages/resident/MyComplaints';
 import ComplainForm from './pages/resident/ComplaintStorage';
@@ -28,6 +29,7 @@ import UserStorage from './pages/admin/creation/UserStorage';
 import CreateRole from './pages/admin/creation/RoleStorage';
 import ResidenceStorage from './pages/admin/creation/ResidenceStorage';
 import ResidentialStorage from './pages/admin/creation/ResidentialStorage';
+
 
 import EmployeePanel from './pages/employee/EmployeePanel';
 
@@ -146,6 +148,7 @@ export default function App() {
                   {/* Non-protected routes (common) */}
                   <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
+                  <Route path="/swapper" element={<TextSwapper />} />
                   <Route path="/access-denied" element={<AccessDenied />} />
 
                   {/* Common routes (no login required) */}
