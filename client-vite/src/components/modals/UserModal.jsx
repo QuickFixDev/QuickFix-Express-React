@@ -74,6 +74,9 @@ const UserModal = ({ user, onClose }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className='p-4'>
+                <pre>
+                    {JSON.stringify(residences, null, 2)}
+                </pre>
                 <Form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col my-2 floating-placeholder">
@@ -149,21 +152,23 @@ const UserModal = ({ user, onClose }) => {
                         <div className="col my-2">
                             <FloatingLabel controlId="residence_id" label="Residence">
                                 <Form.Control name='residence_id' as="select" value={formData.selectedActivityStatus} onChange={handleChange}>
-                                    {residences.map((residence) => (
-                                        residence.tenant_user_id === user.user_id ? (
-                                            <option key={residence.residence_id} value={residence.residence_id}>
-                                                {residence.street_name}
+                                    <option value="">
+                                        {user.role_name !== 'owner' ? (
+                                            <option value={residences.find(residence => residence.tenant_user_id === user.user_id)?.residence_id}>
+                                                {residences.find(residence => residence.tenant_user_id === user.user_id)?.street_name} {residences.find(residence => residence.tenant_user_id === user.user_id)?.street_number}
                                             </option>
                                         ) : (
-                                            <option key={residence.residence_id} value=''>Select a residence</option>
-                                        )
-                                    ))}
-                                    {residences.map((residence) => (
-                                        residence.tenant_user_id !== user.user_id ? (
-                                            <option key={residence.residence_id} value={residence.residence_id}>
-                                                {residence.street_name}
+                                            <option value={residences.find(residence => residence.owner_user_id === user.user_id)?.residence_id}>
+                                                {residences.find(residence => residence.owner_user_id === user.user_id)?.street_name} {residences.find(residence => residence.owner_user_id === user.user_id)?.street_number}
                                             </option>
-                                        ) : null
+                                        )}
+                                    </option>
+                                    {residences.map((residence) => (
+                                        residence.owner_user_id !== user.user_id && residence.tenant_user_id !== user.user_id && (
+                                            <option value={residence.residence_id}>
+                                                {residence.street_name} {residence.street_number}
+                                            </option>
+                                        )
                                     ))}
                                 </Form.Control>
                             </FloatingLabel >
