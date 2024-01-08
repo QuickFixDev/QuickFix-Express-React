@@ -23,13 +23,11 @@ import ResidenceManagement from './pages/admin/management/ResidenceManagement';
 import UserManagement from './pages/admin/management/UserManagement';
 import ComplaintManagement from './pages/admin/management/ComplaintManagement';
 import CategoryManagement from './pages/admin/management/CategoryManagement';
-import RoleFilter from './pages/admin/management/RoleManagement';
+import RoleManagement from './pages/admin/management/RoleManagement';
 
 import UserStorage from './pages/admin/creation/UserStorage';
-import CreateRole from './pages/admin/creation/RoleStorage';
 import ResidenceStorage from './pages/admin/creation/ResidenceStorage';
 import ResidentialStorage from './pages/admin/creation/ResidentialStorage';
-
 
 import EmployeePanel from './pages/employee/EmployeePanel';
 
@@ -162,12 +160,11 @@ export default function App() {
                   <Route path="/resident-panel" element={<ResidentPage> <ResidentPanel /> </ResidentPage>} />
 
                   {/* Admin protected routes (login required) */}
-                  <Route path="/role-filter" element={<AdminPage> <RoleFilter /> </AdminPage>} />
                   <Route path="/admin/complaints" element={<AdminPage> <ComplaintManagement /> </AdminPage>} />
                   <Route path="/admin/complaints/stats" element={<AdminPage> <Stats /> </AdminPage>} />
                   <Route path="/admin/users" element={<AdminPage> <UserManagement /> </AdminPage>} />
                   <Route path="/admin/users/new" element={<AdminPage> <UserStorage /> </AdminPage>} />
-                  <Route path="/admin/roles/new" element={<AdminPage> <CreateRole /> </AdminPage>} />
+                  <Route path="/admin/roles" element={<AdminPage> <RoleManagement /> </AdminPage>} />
                   <Route path="/admin/residences" element={<AdminPage> <ResidenceManagement /> </AdminPage>} />
                   <Route path="/admin/residences/new" element={<AdminPage> <ResidenceStorage /> </AdminPage>} />
                   <Route path="/admin/residentials" element={<AdminPage> <ResidentialsManagement /> </AdminPage>} />

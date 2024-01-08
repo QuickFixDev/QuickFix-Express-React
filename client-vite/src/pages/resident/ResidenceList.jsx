@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useResidences } from '../../hooks/useResidences';
 import { useUsers } from '../../hooks/useUsers';
 
-const ResidenceItem = ({ street, number }) => {
+const ResidenceItem = ({ street, number, user }) => {
     return (
         <div className='container px-0 d-flex flex-column align-items-center'>
             <div className="container p-0  rounded-2 shadow-sm">
@@ -14,7 +14,9 @@ const ResidenceItem = ({ street, number }) => {
                         <span>{street} {number}</span>
                     </div>
                     <div className="col text-size-14 text-secondary ">
-                        <span>Occupied by josh</span>
+                        {user && (
+                            <span>Occupied by {user.first_name}</span>
+                        )}
                     </div>
                 </div>
             </div>
@@ -32,7 +34,7 @@ const ResidenceList = () => {
             <div className="row pt-3 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
                 {residences.map((residence) => (
                     <div key={residence.residence_id} className="col mb-3">
-                        <ResidenceItem street={residence.street_name} number={residence.street_number} />
+                        <ResidenceItem street={residence.street_name} number={residence.street_number} user={users.find(user => user.user_id === residence.tenant_user_id)} />
                     </div>
                 ))}
             </div>
