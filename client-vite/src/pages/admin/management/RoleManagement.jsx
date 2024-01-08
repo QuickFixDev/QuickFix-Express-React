@@ -1,11 +1,11 @@
 import { useState } from "react";
 import IconInfo from "../../../components/icons/IconInfo";
-import { useRoles } from "../../../hooks/useRoles"; // Assuming you have a useRoles hook
+import { useRoles } from "../../../hooks/useRoles";
 import { Button } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import EditRoleModal from "../../../components/modals/EditRoleModal"; // You need to create this modal component
-import CreateRoleModal from "../../../components/modals/CreateRoleModal"; // You need to create this modal component
+import EditRoleModal from "../../../components/modals/EditRoleModal";
+import CreateRoleModal from "../../../components/modals/CreateRoleModal";
 
 const Header = () => {
   const [showCreateRoleModal, setShowCreateRoleModal] = useState(false);
@@ -63,7 +63,7 @@ const RoleItem = ({ id, name }) => {
 };
 
 const RoleManagement = () => {
-  const { roles, isLoading: rolesLoading } = useRoles(); // Assuming you have a useRoles hook
+  const { roles, isLoading: rolesLoading } = useRoles();
   const [showEditRoleModal, setShowEditRoleModal] = useState(false);
   const [roleToEdit, setRoleToEdit] = useState({});
 

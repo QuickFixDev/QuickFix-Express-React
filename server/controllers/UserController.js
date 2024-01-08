@@ -36,7 +36,7 @@ UserController.getAllUsers = (req, res) => {
 
     pool.query(sqlQuery, (err, results) => {
         if (err) {
-            console.error("Error fetching data:", err); // Log the error
+            console.error("Error fetching data:", err);
             res.status(500).json({ error: 'Error fetching data' });
         } else {
             res.json(results);

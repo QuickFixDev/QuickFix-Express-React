@@ -63,7 +63,6 @@ const CreateResidentialModal = ({ showModal, handleCancel }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Residential created:', data);
-                // Optionally handle success and update UI accordingly
             })
             .catch((error) => console.error('Error creating residential:', error));
     };

@@ -46,8 +46,6 @@ const CreateComplaintModal = ({ showModal, handleCancel }) => {
         setFormData({ ...formData, submitted_date: formattedDate });
     }, []);
 
-    // id, user_id, category_id, title, description, submitted_date
-
     return (
         <>
             <Modal width={1000} centered title="Create a new report" open={showModal} onCancel={handleCancel} footer={[<Button onClick={handleSubmit} key="submit">Submit</Button>]}>

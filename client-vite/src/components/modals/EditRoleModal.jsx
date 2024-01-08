@@ -34,14 +34,12 @@ const EditRoleModal = ({ showModal, handleCancel, role }) => {
     const [formData, setFormData] = useState({
         roleId: '',
         roleName: '',
-        // Add other role fields here
     });
 
     useEffect(() => {
         setFormData({
             roleId: role.role_id,
             roleName: role.role_name,
-            // Set other role fields here
         });
     }, [role]);
 
@@ -61,7 +59,6 @@ const EditRoleModal = ({ showModal, handleCancel, role }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Role updated:', data);
-                // Optionally handle success and update UI accordingly
             })
             .catch((error) => console.error('Error updating role:', error));
     };
@@ -74,7 +71,6 @@ const EditRoleModal = ({ showModal, handleCancel, role }) => {
                     <Form.Control className="my-2" name='roleName' type="text" onChange={handleChange} value={formData.roleName} />
                 </FloatingLabel>
 
-                {/* Add other role fields here using the FloatingLabel and Form.Control components */}
             </div>
 
             <div>

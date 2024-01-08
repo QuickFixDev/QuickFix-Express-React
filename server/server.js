@@ -41,7 +41,6 @@ app.use('/admin/roles', RoleRoutes);
 app.use('/admin/residences', ResidenceRoutes);
 app.use('/admin/residentials', ResidentialRoutes);
 
-//FIXME
 app.use('/user/complaints', ComplaintRoutes);
 app.use('/user/residences', ResidenceRoutes);
 app.use('/user', UserRoutes);

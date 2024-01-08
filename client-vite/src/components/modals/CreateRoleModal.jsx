@@ -59,7 +59,6 @@ const CreateRoleModal = ({ showModal, handleCancel }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Role created:', data);
-                // Optionally handle success and update UI accordingly
             })
             .catch((error) => console.error('Error creating role:', error));
     };
@@ -72,7 +71,6 @@ const CreateRoleModal = ({ showModal, handleCancel }) => {
                     <Form.Control className="my-2" name='roleName' type="text" onChange={handleChange} value={formData.roleName} />
                 </FloatingLabel>
 
-                {/* Add other role fields here using the FloatingLabel and Form.Control components */}
             </div>
 
             <div>

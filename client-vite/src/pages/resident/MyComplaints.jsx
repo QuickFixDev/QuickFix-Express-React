@@ -143,9 +143,6 @@ const ComplaintPanel = () => {
     const latestUpdates = getLatestUpdates()
     const oldestUpdates = getOldestUpdates()
 
-    // console.log("Latest Updates:", latestUpdates);
-    // console.log("Oldest Updates:", oldestUpdates);
-
     const filterOptions = [
         {},
     ]

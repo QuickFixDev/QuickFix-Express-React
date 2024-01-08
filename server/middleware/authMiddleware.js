@@ -14,10 +14,9 @@ function isAdmin(req, res, next) {
 }
 
 function isResident(req, res, next) {
-    // Check user's role
     if (tentant.role === 'resident') {
         console.log(tentant.role, "authorized");
-        return next(); // Allow access for dev and resident
+        return next();
     }   
     
     console.log("Access Denied")

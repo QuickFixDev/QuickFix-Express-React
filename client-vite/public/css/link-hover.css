@@ -40,7 +40,6 @@
   transition: width 0.3s ease-in-out;
 }
 
-/* Add the hover effect */
 .centered-expand-underline:hover::before {
   width: 100%;
 }
