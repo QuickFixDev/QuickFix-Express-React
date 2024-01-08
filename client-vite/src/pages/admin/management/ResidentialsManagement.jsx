@@ -1,202 +1,115 @@
-import { useState, useEffect } from 'react';
-import { Modal, Button, Form, Table } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import AccessDenied from '../../../components/access/AccessDenied';
-import { useAuth } from '../../../contexts/AuthContext';
-import { Link } from 'react-router-dom';
-import ServerUrl from '../../../constants/ServerUrl';
+import { useState } from "react";
+import IconInfo from "../../../components/icons/IconInfo";
+import { useResidentials } from "../../../hooks/useResidentials";
+import { useUsers } from "../../../hooks/useUsers";
+import EditResidentialModal from "../../../components/modals/EditResidentialModal";
+import CreateResidentialModal from "../../../components/modals/CreateResidentialModal";
+import { Button } from "antd"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
-function ResidentialList({ residentials, setSelectedResidential, deleteResidential, showModal }) {
+const Header = () => {
+    const [showCreateResidentialModal, setShowCreateResidentialModal] = useState(false)
+
+    const handleShowCreateResidentialModal = () => {
+        setShowCreateResidentialModal(true)
+    }
+
+    const handleHideCreateResidentialModal = () => {
+        setShowCreateResidentialModal(false)
+    }
+
     return (
-        <div className="residential-list card border-0 p-3">
-            <div className="container d-flex flex-row justify-content-between align-items-center">
-                <h2>Residential manager</h2>
-                <Link className="text-white text-decoration-none" to="/admin/residentials/new">
-                    <button className="btn btn-primary mb-3">
-                        <FontAwesomeIcon icon={faPlus} /> Create New Residential
+        <>
+            <div className="row d-flex flex-row align-items-center">
+                <div className="col-auto text-start">
+                    <h2 className="m-0">Residentials manager</h2>
+                </div>
+                <div className="col text-start">
+                    <IconInfo
+                        message=
+                        {
+                            "Click on a residential to manage its data."
+                        }
+                    />
+                </div>
+                <div className="col text-end">
+                    <button onClick={() => handleShowCreateResidentialModal()} className="btn btn-primary">
+                        <div className="row">
+                            <div className="col-auto">New</div>
+                            <div className="col-auto">
+                                <FontAwesomeIcon icon={faHome} />
+                            </div>
+                        </div>
                     </button>
-                </Link>
+                </div>
             </div>
-            <div className="card-body">
-                <Table bordered={false} hover>
-                    <thead style={{ backgroundColor: '#f2f2f2' }}>
-                        <tr>
-                            <th>Residential Name</th>
-                            <th className='d-none d-md-table-cell'>Country</th>
-                            <th className='d-none d-md-table-cell'>State</th>
-                            <th>City</th>
-                            <th className="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {residentials.map((residential) => (
-                            <tr key={residential.residential_id}>
-                                <td>{residential.residential_name}</td>
-                                <td className='d-none d-md-table-cell'>{residential.country}</td>
-                                <td className='d-none d-md-table-cell'>{residential.state}</td>
-                                <td>{residential.city}</td>
-                                <td className="text-end">
-                                    <Button
-                                        variant="outline-primary"
-                                        className="me-2"
-                                        onClick={() => {
-                                            setSelectedResidential(residential);
-                                            showModal();
-                                        }}
-                                    >
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </Button>
-                                    <Button
-                                        variant="outline-danger"
-                                        onClick={() => deleteResidential(residential.residential_id)}
-                                    >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </div>
+
+            <CreateResidentialModal showModal={showCreateResidentialModal} handleCancel={() => handleHideCreateResidentialModal()} />
+        </>
+    );
+}
+
+const ResidentialListHeader = () => {
+    return (
+        <div className="row py-2">
+            <div className="col fw-bold">Name</div>
+            <div className="col fw-bold">Country</div>
+            <div className="col fw-bold">State</div>
+            <div className="col fw-bold">City</div>
         </div>
     );
 }
 
-function ResidentialDetails({ residential, handleClose, handleSave }) {
-    const [editedResidential, setEditedResidential] = useState({ ...residential });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEditedResidential((prevResidential) => ({
-            ...prevResidential,
-            [name]: value,
-        }));
-    };
-
+const ResidentialItem = ({ name, country, state, city }) => {
     return (
-        <Modal show={true} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Edit Residential</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formResidentialName">
-                        <Form.Label>Residential Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="residential_name"
-                            value={editedResidential.residential_name}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formCountry">
-                        <Form.Label>Country</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="country"
-                            value={editedResidential.country}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formState">
-                        <Form.Label>State</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="state"
-                            value={editedResidential.state}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formCity">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="city"
-                            value={editedResidential.city}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={() => handleSave(editedResidential)}>
-                    Save Changes
-                </Button>
-            </Modal.Footer>
-        </Modal>
+        <div className="row py-3 cursor-pointer custom-gray-hover border-top">
+            <div className="col">{name}</div>
+            <div className="col">{country}</div>
+            <div className="col">{state}</div>
+            <div className="col">{city}</div>
+        </div>
     );
 }
 
-function ResidentialsManagement() {
-    const { authUser, isLoggedIn } = useAuth();
-    const [residentials, setResidentials] = useState([]);
-    const [selectedResidential, setSelectedResidential] = useState(null);
-    const [show, setShow] = useState(false);
+const ResidentialManagement = () => {
+    const { residentials, isLoading: residentialsLoading } = useResidentials()
+    const { users } = useUsers()
+    const [showEditResidentialModal, setShowEditResidentialModal] = useState(false)
+    const [residentialToEdit, setResidentialToEdit] = useState({})
 
-    const showModal = () => setShow(true);
-    const handleClose = () => {
-        setShow(false);
-        setSelectedResidential(null);
-    };
-
-    useEffect(() => {
-        fetch(`${ServerUrl}/admin/residentials`)
-            .then((response) => response.json())
-            .then((data) => setResidentials(data))
-            .catch((error) => console.error('Error fetching data:', error));
-    }, []);
-
-    const deleteResidential = (residentialId) => {
-        fetch(`${ServerUrl}/admin/residentials/${residentialId}`, {
-            method: 'DELETE',
-        })
-            .then((response) => {
-                if (response.ok) {
-                    const updatedResidentials = residentials.filter(
-                        (residential) => residential.residential_id !== residentialId
-                    );
-                    setResidentials(updatedResidentials);
-                }
-            })
-            .catch((error) => console.error('Error deleting residential:', error));
-    };
-
-    const handleSave = (editedResidential) => {
-        console.log('Saving changes:', editedResidential);
-        handleClose();
-    };
-
-    if (isLoggedIn && (authUser.Role === 'admin' || authUser.Role === 'dev')) {
-        return (
-            <div className="container mt-4">
-                <div className="row row-cols-1">
-                    <div className="col">
-                        <ResidentialList
-                            residentials={residentials}
-                            setSelectedResidential={setSelectedResidential}
-                            deleteResidential={deleteResidential}
-                            showModal={showModal}
-                        />
-                    </div>
-                    <div className="col">
-                        {selectedResidential && (
-                            <ResidentialDetails
-                                residential={selectedResidential}
-                                handleClose={handleClose}
-                                handleSave={handleSave}
-                            />
-                        )}
-                    </div>
-                </div>
-            </div>
-        );
-    } else {
-        return <AccessDenied />;
+    const handleShowEditResidentialModal = (residential) => {
+        setShowEditResidentialModal(true)
+        setResidentialToEdit(residential)
     }
+
+    const handleHideEditResidentialModal = () => {
+        setShowEditResidentialModal(false)
+        setResidentialToEdit({})
+    }
+
+    return (
+        <div className="p-5">
+            <Header />
+
+            <div className="mt-4" id="table">
+                <ResidentialListHeader />
+
+                {residentialsLoading ? (
+                    <span>loading..</span>
+                ) : (
+                    residentials.map((residential) => (
+                        <div key={residential.residential_id} onClick={() => handleShowEditResidentialModal(residential)}>
+                            <ResidentialItem name={residential.residential_name} country={residential.country} state={residential.state} city={residential.city} />
+                        </div>
+                    ))
+                )}
+
+            </div>
+
+            <EditResidentialModal showModal={showEditResidentialModal} handleCancel={() => handleHideEditResidentialModal()} residential={residentialToEdit} />
+        </div>
+    )
 }
 
-export default ResidentialsManagement;
+export default ResidentialManagement;

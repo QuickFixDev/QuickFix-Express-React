@@ -37,11 +37,33 @@ ResidentialController.deleteResidential = async (req, res) => {
 ResidentialController.createResidential = (req, res) => {
     const formData = req.body;
     console.log('form data in query: ', formData)
-    const { residential_name, country, state, city } = formData;
+    const { residentialName, country, state, city } = formData;
 
     sqlQuery = `INSERT INTO residentials ( residential_name, country, state, city ) VALUES ( ?, ?, ?, ? )`
 
-    pool.query(sqlQuery, [ residential_name, country, state, city ], (err, results) => {
+    pool.query(sqlQuery, [ residentialName, country, state, city ], (err, results) => {
+        if (err) {
+            console.error('Error storing form data:', err);
+            res.status(500).json({ message: 'Internal server error' });
+        } else {
+            console.log('Form data saved with ID:', results.insertId);
+            res.json({ message: 'Form data saved successfully' });
+        }
+    });
+}
+
+ResidentialController.updateResidential = (req, res) => {
+    const formData = req.body;
+    console.log('form data in query: ', formData)
+    const { residentialId, residentialName, country, state, city } = formData;
+
+    sqlQuery = `
+        UPDATE residentials
+        SET residential_name = ?, country = ?, state = ?, city = ?
+        WHERE residential_id = ?
+    `
+
+    pool.query(sqlQuery, [ residentialName, country, state, city, residentialId ], (err, results) => {
         if (err) {
             console.error('Error storing form data:', err);
             res.status(500).json({ message: 'Internal server error' });

@@ -10,5 +10,6 @@ router.get('/', ResidenceController.getAllResidences);
 // router.get('/owner/:id', ResidenceController.getResidenceByOwnerId);
 // router.delete('/:id', ResidenceController.deleteResidence);
 router.post('/new', ResidenceController.createResidence);
+router.post('/edit/:id', ResidenceController.updateResidence);
 
 module.exports = router;

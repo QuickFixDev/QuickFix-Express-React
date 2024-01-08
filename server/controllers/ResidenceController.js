@@ -47,16 +47,38 @@ ResidenceController.deleteResidence = async (req, res) => {
 ResidenceController.createResidence = (req, res) => {
     const formData = req.body;
     console.log('form data in query: ', formData)
-    const { residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details } = formData;
+    const { residentialId, zipCode, streetName, streetNumber, details, ownerUserId, tenantUserId } = formData;
 
     sqlQuery = `
-        INSERT INTO residences (residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details)
+        INSERT INTO residences (residential_id, zip_code, street_name, street_number, details, owner_user_id, tenant_user_id)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     `
 
-    pool.query(sqlQuery, [residential_id, owner_user_id, tenant_user_id, zip_code, street_name, street_number, details], (err, results) => {
+    pool.query(sqlQuery, [residentialId, zipCode, streetName, streetNumber, details, ownerUserId, tenantUserId], (err, results) => {
         if (err) {
             console.error('Error storing form data:', err);
+            res.status(500).json({ message: 'Internal server error' });
+        } else {
+            console.log('Form data saved with ID:', results.insertId);
+            res.json({ message: 'Form data saved successfully' });
+        }
+    });
+}
+
+ResidenceController.updateResidence = (req, res) => {
+    const formData = req.body;
+    console.log('form data in query: ', formData)
+    const { residentialId, zipCode, streetName, streetNumber, details, ownerUserId, tenantUserId, residenceId } = formData;
+
+    sqlQuery = `
+        UPDATE residences
+        SET residential_id = ?, zip_code = ?, street_name = ?, street_number = ?, details = ?, owner_user_id = ?, tenant_user_id = ?
+        WHERE residence_id = ?
+    `
+
+    pool.query(sqlQuery, [residentialId, zipCode, streetName, streetNumber, details, ownerUserId, tenantUserId, residenceId], (err, results) => {
+        if (err) {
+            console.error('Error updating residence data:', err);
             res.status(500).json({ message: 'Internal server error' });
         } else {
             console.log('Form data saved with ID:', results.insertId);

@@ -6,6 +6,7 @@ const ResidentialController = require('../controllers/ResidentialController');
 
 router.get('/', ResidentialController.getAllResidentials);
 router.delete('/:id', ResidentialController.deleteResidential);
+router.post('/edit/:id', ResidentialController.updateResidential);
 router.post('/new', ResidentialController.createResidential);
 
 module.exports = router;

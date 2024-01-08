@@ -5,14 +5,35 @@ const pool = require('../dbConnection');
 
 RoleController.createRole = (req, res) => {
     const formData = req.body;
-    const { role_name } = formData;
-    console.log(role_name);
+    const { roleName } = formData;
+
     const sqlQuery = `
     INSERT INTO roles (role_name)
     VALUES (?)
     `;
 
-    pool.query(sqlQuery, [role_name], (err, results) => {
+    pool.query(sqlQuery, [roleName], (err, results) => {
+        if (err) {
+            console.error('Error storing form data:', err);
+            res.status(500).json({ message: 'Internal server error' });
+        } else {
+            console.log('Form data saved with ID:', results.insertId);
+            res.json({ message: 'Form data saved successfully' });
+        }
+    });
+}
+
+RoleController.editRole = (req, res) => {
+    const formData = req.body;
+    const { roleName, roleId } = formData;
+
+    const sqlQuery = `
+        UPDATE roles
+        SET role_name = ?
+        WHERE role_id = ?
+    `;
+
+    pool.query(sqlQuery, [roleName, roleId], (err, results) => {
         if (err) {
             console.error('Error storing form data:', err);
             res.status(500).json({ message: 'Internal server error' });
