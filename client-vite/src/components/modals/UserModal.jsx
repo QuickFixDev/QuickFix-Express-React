@@ -175,7 +175,7 @@ const UserModal = ({ user, onClose }) => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col my-2">
+                        <div className="col my-2">  
                             <Button type='submit'>
                                 Save changes
                             </Button>
