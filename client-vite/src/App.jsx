@@ -11,6 +11,7 @@ import HomePage from './pages/common/HomePage';
 import Profile from './pages/common/Profile';
 import ContextTest from './pages/common/ContextTest';
 import NotificationPanel from './pages/common/NotificationPanel';
+import PageNotFound from './pages/common/PageNotFound';
 import TextSwapper from './pages/common/TextSwapper';
 
 import MyComplaints from './pages/resident/MyComplaints';
@@ -30,6 +31,8 @@ import ResidenceStorage from './pages/admin/creation/ResidenceStorage';
 import ResidentialStorage from './pages/admin/creation/ResidentialStorage';
 
 import EmployeePanel from './pages/employee/EmployeePanel';
+
+import Form from './pages/form_test/Form'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AccessDenied from './pages/common/AccessDenied';
@@ -144,10 +147,13 @@ export default function App() {
               <main className="col p-0">
                 <Routes>
                   {/* Non-protected routes (common) */}
+                  <Route path="*" element={<PageNotFound />} />
                   <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/swapper" element={<TextSwapper />} />
                   <Route path="/access-denied" element={<AccessDenied />} />
+                  <Route path="/form-test" element={<Form />} />
+
 
                   {/* Common routes (no login required) */}
                   <Route path="/profile" element={<LoginRequiredPage><Profile /></LoginRequiredPage>} />
