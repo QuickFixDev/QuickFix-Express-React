@@ -41,3 +41,13 @@ span {
 .text-size-16 {
   font-size: 16px;
 }
+
+.custom-input-text {
+  font-size: 10px;
+}
+
+.custom-input-text::placeholder {
+  font-size: 14px;
+  color: red;
+  /* Change the color to red */
+}

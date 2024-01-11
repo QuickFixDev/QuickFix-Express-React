@@ -5,3 +5,11 @@ select {
 .custom-gray-hover:hover {
     background-color: rgb(235, 235, 235);
 }
+
+.display-child-on-hover {
+    display: none;
+}
+
+.parent-hover:hover .display-child-on-hover {
+    display: block;
+}
