@@ -192,7 +192,7 @@ const UserManager = () => {
                           residences.find(residence => residence.tenant_user_id === user.user_id)?.street_name
                         ) : (
                           residences.find(residence => residence.owner_user_id === user.user_id)?.street_name
-                          + 'owner'
+                          + ' ' + 'owner'
                         )}
                       </div>
                     </div>
