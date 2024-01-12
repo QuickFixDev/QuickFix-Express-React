@@ -53,7 +53,7 @@
 
 .custom-navlink:hover {
   background-color: #f0f0f0;
-  color: rgb(0, 59, 223);
+  color: #003bdf;
 }
 
 .custom-navlink:active {
@@ -64,6 +64,13 @@
   text-decoration: none;
 }
 
+.blue-active-text {
+  color: #003bdf;
+}
+
+.light-gray-active-background {
+  background-color: #f0f0f0;
+}
 
 @keyframes colorLoop {
   0% {

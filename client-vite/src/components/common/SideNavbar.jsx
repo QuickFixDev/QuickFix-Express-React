@@ -20,9 +20,10 @@ import {
   faCity,
   faHouseChimney,
   faSearch,
-  
+
 }
   from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 
 const iconMapping = {
   faPlusCircle: faPlusCircle,
@@ -59,6 +60,15 @@ const routes = [
 const Sidebar = () => {
   const { authUser, isLoggedIn } = useAuth();
   const { isLoading } = useAuth0();
+  const [selectedRouteId, setSelectedRouteId] = useState('');
+
+  const handleSelectedRouteId = (index) => {
+    setSelectedRouteId(index);
+  };
+  
+  useEffect(() => {
+    console.log(selectedRouteId);
+  }, [selectedRouteId]);
 
   if (isLoading) {
     return (
@@ -82,15 +92,18 @@ const Sidebar = () => {
                 <div className="col-xl-9 col-0 d-xl-block d-none navlink-text">
                   Home
                 </div>
-              </div>  
+              </div>
             </div>
           </NavLink>
         ) : (
           <>
-            {routes.map((route) =>
+            {routes.map((route, index) =>
               (authUser.Role === route.userRequired || route.userRequired === "common" || authUser.Role === "dev" || authUser.Role === "test") && (
-                <div key={route.path}>
-                  <NavLink to={route.path} className="custom-navlink px-2 py-4">
+                <div onClick={() => handleSelectedRouteId(index)} key={route.path} className='text-primary'>
+                  <p>
+                    {selectedRouteId.label}
+                  </p>
+                  <NavLink to={route.path} className={`custom-navlink px-2 py-4 ${selectedRouteId === index ? 'blue-active-text light-gray-active-background' : ''}`}>
                     <div className="container">
                       <div className="row">
                         <div className="col-xl-3 col-12 text-center">
