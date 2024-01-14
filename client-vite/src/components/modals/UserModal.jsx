@@ -74,9 +74,6 @@ const UserModal = ({ user, onClose }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className='p-4'>
-                <pre>
-                    {JSON.stringify(residences, null, 2)}
-                </pre>
                 <Form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col my-2 floating-placeholder">

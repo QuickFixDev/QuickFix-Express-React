@@ -1,31 +1,50 @@
-import { Button, Modal } from "antd"
-import { useComplaintsHistory } from "../../hooks/useComplaintsHistory"
-import { Steps } from 'antd';
-import { useComplaintStatuses } from "../../hooks/useComplaintStatuses";
-import { useCategories } from "../../hooks/useCategories";
-import { Form, FloatingLabel } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { Modal, Button } from "antd";
 import { useAuth } from "../../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useCategories } from "../../hooks/useCategories";
 import ServerUrl from "../../constants/ServerUrl";
+import FieldWithValidation from "../../components/forms/FieldWithValidation";
+import DropdownWithValidation from "../forms/DropdownWithValidation";
+import sanitizeArray from "../../functions/sanitizeArray";
 
-const CreateComplaintModal = ({ showModal, handleCancel }) => {
-    const { authUser } = useAuth()
-    const { categories } = useCategories()
+const CreateComplaintForm = ({ handleCancel, showModal }) => {
+    const { authUser } = useAuth();
+    const { categories } = useCategories();
+    const [sanitizedArray, setSanitizedArray] = useState([]);
+    const { control, register, handleSubmit, formState: { errors } } = useForm();
+
+    useEffect(() => {
+        if (categories) {
+            const newArray = sanitizeArray({ array: categories, arrayId: 'category_id', arrayValue: 'category_name' });
+            setSanitizedArray(newArray);
+        }
+    }, [categories]);
+
 
     const [formData, setFormData] = useState({
         user_id: authUser.Id,
         category_id: 0,
         title: '',
         description: '',
+        submitted_date: '',
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+        setFormData((prevFormData) => ({ ...prevFormData, submitted_date: formattedDate }));
+    }, []);
+
+    const onSubmit = () => {
         fetch(`${ServerUrl}/user/complaints/new`, {
             method: 'POST',
             headers: {
@@ -40,38 +59,64 @@ const CreateComplaintModal = ({ showModal, handleCancel }) => {
             .catch((error) => console.error('Error registering user:', error));
     };
 
-    useEffect(() => {
-        const currentDate = new Date();
-        const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
-        setFormData({ ...formData, submitted_date: formattedDate });
-    }, []);
+    // useEffect(() => {
+    //     const currentDate = new Date();
+    //     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+    //     setFormData({ ...formData, submitted_date: formattedDate });
+    // }, []);
 
     return (
-        <>
-            <Modal width={1000} centered title="Create a new report" open={showModal} onCancel={handleCancel} footer={[<Button onClick={handleSubmit} key="submit">Submit</Button>]}>
-                <div className="mt-4">
-
-                    <FloatingLabel controlId="first_name" label="Title">
-                        <Form.Control className="my-2" name='title' type="text" onChange={handleChange} value={formData.title}/>
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="first_name" label="Description">
-                        <Form.Control className="my-2" name='description' as="textarea" rows={5} onChange={handleChange} value={formData.description}/>
-                    </FloatingLabel>
-
-                    <FloatingLabel controlId="first_name" label="Category">
-                        <Form.Control className="my-2" name="category_id" as="select" onChange={handleChange} value={formData.category_id}>
-                            <option value="">Select</option>
-                            {categories.map((category) => (
-                                <option key={category.category_id} value={category.category_id}>{category.category_name}</option>
-                            ))}
-                        </Form.Control>
-                    </FloatingLabel>
-
+        <Modal width={1000} centered title="Create a new report" open={showModal} onCancel={handleCancel} footer={[<Button onClick={handleSubmit(onSubmit)} key="submit">Submit</Button>]}>
+            <div className="mt-4">
+                <pre>
+                    {JSON.stringify(formData, null, 2)}
+                </pre>
+                <div className="row mt-2">
+                    <FieldWithValidation
+                        label="Title"
+                        fieldName="title"
+                        register={register}
+                        errors={errors}
+                        minLength={3}
+                        value={formData.title}
+                        onChange={(value) => setFormData({ ...formData, title: value })}
+                    />
                 </div>
-            </Modal>
-        </>
-    )
-}
+                <div className="row mt-2">
+                    <FieldWithValidation
+                        label="Description"
+                        fieldName="description"
+                        register={register}
+                        errors={errors}
+                        minLength={50}
+                        customAs="textarea"
+                        rows={5}
+                        value={formData.description}
+                        onChange={(value) => setFormData({ ...formData, description: value })}
+                        styles={{
+                            height: '150px'
+                        }}
+                    />
+                </div>
+                <div className="row mt-2">
+                    <DropdownWithValidation
+                        label="Category"
+                        fieldName="category_id"
+                        register={register}
+                        errors={errors}
+                        customAs='select'
+                        value={formData.category_id}
+                        options={sanitizedArray}
+                        onChange={(value) => setFormData({ ...formData, category_id: value })}
+                    />
+                </div>
+            </div>
+        </Modal>
 
-export default CreateComplaintModal
+
+
+
+    );
+};
+
+export default CreateComplaintForm;

@@ -1,0 +1,15 @@
+.box-shadow-none {
+    box-shadow: none !important;
+}
+
+.box-shadow-none:active {
+    box-shadow: none !important;
+}
+
+.box-shadow-red {
+    box-shadow: 10px red !important;
+}
+
+.box-shadow-red:active {
+    box-shadow: 10px red !important;
+}

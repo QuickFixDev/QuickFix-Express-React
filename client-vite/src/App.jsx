@@ -36,6 +36,7 @@ import Form from './pages/form_test/Form'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AccessDenied from './pages/common/AccessDenied';
+import DropdownTest from './pages/form_test/DropdownTest';
 
 function LoginRequiredPage({ children }) {
   const { isLoggedIn } = useAuth();
@@ -153,6 +154,7 @@ export default function App() {
                   <Route path="/swapper" element={<TextSwapper />} />
                   <Route path="/access-denied" element={<AccessDenied />} />
                   <Route path="/form-test" element={<Form />} />
+                  <Route path="/dropdown-test" element={<DropdownTest />} />
 
 
                   {/* Common routes (no login required) */}
