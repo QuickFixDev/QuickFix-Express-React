@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import Auth0ProviderWithNavigate from './components/access/Auth0ProviderWithNavigate';
 import Navbar from './components/common/SideNavbar';
-import TopNavBar from './components/common/TopNavBar';
+import TopNavBar from './components/common/NavBar';
 
 import Stats from './pages/common/Stats';
 import HomePage from './pages/common/HomePage';
