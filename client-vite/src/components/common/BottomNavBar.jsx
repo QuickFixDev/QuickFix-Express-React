@@ -45,8 +45,8 @@ const adminRoutes = [
 const residentRoutes = [
     { path: '/', label: 'Home', iconName: 'faHome' },
     { path: '/profile', label: 'Profile', iconName: 'faUser' },
-    { path: '/user/complaints', label: 'My reports', iconName: 'faList' },
-    { path: '/user/residences', label: 'Available residences', iconName: 'faHouseChimneyUser' },
+    { path: '/user/complaints', label: 'Reports', iconName: 'faList' },
+    { path: '/user/residences', label: 'Residences', iconName: 'faHouseChimneyUser' },
 ];
 
 const routesByType = [
@@ -70,7 +70,7 @@ const BottomNavBar = () => {
             {assignedRoutes && assignedRoutes.map((route, index) => (
                 <div onClick={() => setSelectedRouteId(index)} key={index} className='col column-center-xy'>
                     <div className={`column-center-xy cursor-pointer p-2 rounded-3 navbar-bottom-button ${selectedRouteId === index && 'bg-blue-1 text-blue-8'}`}>
-                        <FontAwesomeIcon icon={iconMapping[route.iconName]} className='mt-1 px-3' />
+                        <FontAwesomeIcon icon={iconMapping[route.iconName]} className='my-1 px-3' />
                         <span className='text-size-12'>{route.label}</span>
                     </div>
                 </div>
