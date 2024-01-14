@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import Auth0ProviderWithNavigate from './components/access/Auth0ProviderWithNavigate';
 import Navbar from './components/common/SideNavbar';
-import TopNavbar from './components/common/TopNavbar';
+import TopNavBar from './components/common/TopNavBar';
 
 import Stats from './pages/common/Stats';
 import HomePage from './pages/common/HomePage';
@@ -37,6 +37,7 @@ import Form from './pages/form_test/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AccessDenied from './pages/common/AccessDenied';
 import DropdownTest from './pages/form_test/DropdownTest';
+import BottomNavBar from './components/common/BottomNavBar';
 
 function LoginRequiredPage({ children }) {
   const { isLoggedIn } = useAuth();
@@ -137,11 +138,11 @@ export default function App() {
     <BrowserRouter>
       <Auth0ProviderWithNavigate>
         <AuthProvider>
-          <TopNavbar></TopNavbar>
+          <TopNavBar />
           <div className="container-fluid m-0">
             <div className="row full-height p-0">
               <ConditionalSidebar>
-                <div className="col-xl-2 col-md-1 col-2 bg-danger bg-light position-sticky p-0">
+                <div className="col-xl-2 col-md-1 d-md-block d-none bg-light position-sticky p-0">
                   <Navbar />
                 </div>
               </ConditionalSidebar>
@@ -189,6 +190,7 @@ export default function App() {
               </main>
             </div>
           </div>
+          <BottomNavBar />
         </AuthProvider>
       </Auth0ProviderWithNavigate>
     </BrowserRouter>

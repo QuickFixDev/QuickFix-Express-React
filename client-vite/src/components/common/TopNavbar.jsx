@@ -6,7 +6,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from "../../contexts/AuthContext";
 import { Link } from 'react-router-dom';
 
-function TopNavbar() {
+function TopNavBar() {
     const { authUser, isLoggedIn } = useAuth();
     const { user, isAuthenticated } = useAuth0();
 
@@ -30,14 +30,6 @@ function TopNavbar() {
                             Quickfix
                         </span>
                     )}
-
-                    {/* {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS === 'true' ? (
-                        <span className="nav-link text-white ps-1">
-                            {import.meta.env.VITE_REACT_APP_GITHUB_ACTIONS}
-                        </span> //test
-                    ) : (
-                        <span></span>
-                    )} */}
 
                 </div>
                 <div className="d-flex col justify-content-end align-items-center">
@@ -76,4 +68,4 @@ function TopNavbar() {
     );
 }
 
-export default TopNavbar;
+export default TopNavBar;
