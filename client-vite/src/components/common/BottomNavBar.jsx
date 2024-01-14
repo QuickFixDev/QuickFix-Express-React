@@ -2,6 +2,7 @@ import { faPlusCircle, faTrash, faUserPlus, faHome, faUser, faList, faChartBar, 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const iconMapping = {
     faPlusCircle: faPlusCircle,
@@ -68,12 +69,12 @@ const BottomNavBar = () => {
     return (
         <div className="row row-cols-5 fixed-bottom bg-white navbar-shadow d-md-none d-flex flex-row justify-content-evenly py-2">
             {assignedRoutes && assignedRoutes.map((route, index) => (
-                <div onClick={() => setSelectedRouteId(index)} key={index} className='col column-center-xy'>
+                <Link to={route.path} onClick={() => setSelectedRouteId(index)} key={index} className='text-decoration-none text-black col column-center-xy'>
                     <div className={`column-center-xy cursor-pointer p-2 rounded-3 navbar-bottom-button ${selectedRouteId === index && 'bg-blue-1 text-blue-8'}`}>
                         <FontAwesomeIcon icon={iconMapping[route.iconName]} className='my-1 px-3' />
                         <span className='text-size-12'>{route.label}</span>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     );

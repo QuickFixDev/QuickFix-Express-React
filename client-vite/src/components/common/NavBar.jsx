@@ -18,18 +18,9 @@ function TopNavBar() {
                 <div className="d-flex col justify-content-start align-items-center">
                     <img src="/svg/QuickFixWhite.svg" alt="System Photo" className="user-photo mx-3" width={'50px'} />
 
-                    {isLoggedIn ? (
-                        <span className="nav-link text-white user-username">
-                            Quickfix
-                            <span className='badge bg-secondary mx-3'>
-                                {authUser.Role}
-                            </span>
-                        </span>
-                    ) : (
-                        <span className="nav-link text-white user-username">
-                            Quickfix
-                        </span>
-                    )}
+                    <span className="nav-link text-white user-username d-sm-block d-none">
+                        Quickfix
+                    </span>
 
                 </div>
                 <div className="d-flex col justify-content-end align-items-center">
@@ -37,7 +28,7 @@ function TopNavBar() {
                     {isAuthenticated ? (
                         <>
                             <Link to={'/notification-panel'} className='text-white px-md-3'>
-                                <FontAwesomeIcon icon={faBell} className='px-2'/>
+                                <FontAwesomeIcon icon={faBell} className='px-2' />
                                 <span className='badge bg-danger p-2'>
                                     123
                                 </span>
@@ -51,13 +42,13 @@ function TopNavBar() {
                                 <img src={user.picture} alt="User Photo" className="user-photo" width={'50px'} />
                             </div> */}
 
-                            <div className="px-md-3 px-2" >
+                            <div className="px-md-3 px-2 d-md-block d-none" >
                                 <LoginButton />
                             </div>
                         </>
 
                     ) : (
-                        <div className="me-3" >
+                        <div className="me-3 d-md-block d-none" >
                             <LoginButton />
                         </div>
                     )}
