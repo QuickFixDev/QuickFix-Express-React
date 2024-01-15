@@ -1,5 +1,6 @@
 import { faCheck, faCheckCircle, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LoginButton from "../../components/access/LoginButton";
 
 function usePlural(isLoggedIn) {
     return isLoggedIn ? 'Reasons' : 'Reason'
@@ -46,11 +47,14 @@ const AccessDenied = ({ isLoggedIn, requiredRole, userRole, hasPaid }) => {
                 </div>
             </div>
             <div className="row row-cols-2 text-center bg-light col-xl-4 col-lg-5 col-md-6 col-sm-10 py-3 border-start border-3">
-                <div className="col-2 text-center">
+                <div className="col-2 column-center-xy text-center">
                     <FontAwesomeIcon icon={IsLoggedIn.loggedInIcon} className={IsLoggedIn.loggedInIconColor}></FontAwesomeIcon>
                 </div>
-                <div className="col-10 text-start px-0">
+                <div className="col-7 column-center-y text-start px-0">
                     {IsLoggedIn.loggedInMessage}
+                </div>
+                <div className="col-3 text-start column-center-xy ">
+                    <LoginButton></LoginButton>
                 </div>
 
                 {isLoggedIn && (

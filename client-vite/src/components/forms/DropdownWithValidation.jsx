@@ -2,17 +2,12 @@ import React, { useEffect } from "react";
 import { FloatingLabel } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 
-const DropdownWithValidation = ({ label, fieldName, register, errors, options, value, onChange }) => {
+const DropdownWithValidation = ({ label, fieldName, register, errors, options }) => {
     useEffect(() => {
         register(fieldName, {
             required: `${label} is required`,
         });
     }, [register, fieldName, label]);
-
-    const handleChange = (e) => {
-        const { value } = e.target;
-        onChange(value);
-    };
 
     return (
         <Form.Group controlId={`validationCustom${fieldName}`}>
@@ -23,8 +18,6 @@ const DropdownWithValidation = ({ label, fieldName, register, errors, options, v
                     {...register(fieldName, {
                         required: `${label} is required`,
                     })}
-                    value={value}
-                    onChange={handleChange}
                 >
                     <option value="">Select</option>
                     {options.map((option) => (

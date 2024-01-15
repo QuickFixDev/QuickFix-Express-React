@@ -33,7 +33,7 @@ const groupUpdatesByComplaintId = (array) => {
 const getLatestUpdates = () => {
     const { complaintsHistory } = useComplaintsHistory()
     const updatesByComplaint = groupUpdatesByComplaintId(complaintsHistory);
-    return Object.values(updatesByComplaint).map(updates => {
+            return Object.values(updatesByComplaint).map(updates => {
         const sortedUpdates = updates.sort((a, b) => new Date(b.modified_date) - new Date(a.modified_date));
         return sortedUpdates[0];
     });
@@ -77,14 +77,20 @@ const ComplaintItem = ({ title, description, status }) => {
 }
 
 const Header = () => {
+    const { refresh } = useComplaints()
     const [showCreateComplaintModal, setShowCreateComplaintModal] = useState(false)
 
     const handleShowCreateComplaintModal = () => {
-        setShowCreateComplaintModal(true)
+        setShowCreateComplaintModal(true);
     }
 
     const handleHideCreateComplaintModal = () => {
-        setShowCreateComplaintModal(false)
+        setShowCreateComplaintModal(false);
+    }
+
+    const handleCloseCreate = () => {
+        setShowCreateComplaintModal(false);
+        refresh();
     }
 
     return (
@@ -119,7 +125,7 @@ const Header = () => {
                 </div>
             </div>
 
-            <CreateComplaintModal showModal={showCreateComplaintModal} handleCancel={handleHideCreateComplaintModal} />
+            <CreateComplaintModal showModal={showCreateComplaintModal} handleCancel={handleHideCreateComplaintModal} onClose={handleCloseCreate}/>
         </>
     );
 }

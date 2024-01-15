@@ -66,9 +66,7 @@ const Sidebar = () => {
     setSelectedRouteId(index);
   };
   
-  useEffect(() => {
-    console.log(selectedRouteId);
-  }, [selectedRouteId]);
+  useEffect(() => {}, [selectedRouteId]);
 
   if (isLoading) {
     return (

@@ -5,6 +5,7 @@ export function useComplaints(params = {}) {
     const { userId } = params;
     const [complaints, setComplaints] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [refreshed, setRefreshed] = useState(false);
 
     let apiUrl = `${ServerUrl}/api/complaints`;
 
@@ -26,7 +27,11 @@ export function useComplaints(params = {}) {
                 console.error('Error fetching data:', error);
                 setLoading(false);
             });
-    }, []);
+    }, [refreshed]);
 
-    return { complaints, isLoading };
+    const refresh = () => {
+        setRefreshed(!refreshed)
+    }
+
+    return { complaints, isLoading, refresh};
 }

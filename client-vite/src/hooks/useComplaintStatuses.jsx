@@ -12,9 +12,6 @@ export function useComplaintStatuses(params = {}) {
         apiUrl += `/statusId/${statusId}`
     }
 
-    console.log(apiUrl)
-    console.log('effect')
-
     useEffect(() => {
         fetch(apiUrl, {
             method: 'GET',

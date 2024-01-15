@@ -11,11 +11,13 @@ import FieldWithValidation from "../../components/forms/FieldWithValidation";
 import DropdownWithValidation from "../forms/DropdownWithValidation";
 import sanitizeArray from "../../functions/sanitizeArray";
 
-const CreateComplaintForm = ({ handleCancel, showModal }) => {
+const CreateComplaintForm = ({ handleCancel, showModal, onClose }) => {
     const { authUser } = useAuth();
     const { categories } = useCategories();
     const [sanitizedArray, setSanitizedArray] = useState([]);
-    const { control, register, handleSubmit, formState: { errors } } = useForm();
+    const { reset, control, register, handleSubmit, formState: { errors, isValid, isDirty } } = useForm();
+
+    const { Id: user_id } = authUser;
 
     useEffect(() => {
         if (categories) {
@@ -24,53 +26,58 @@ const CreateComplaintForm = ({ handleCancel, showModal }) => {
         }
     }, [categories]);
 
-
-    const [formData, setFormData] = useState({
-        user_id: authUser.Id,
-        category_id: 0,
-        title: '',
-        description: '',
-        submitted_date: '',
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    };
-
     useEffect(() => {
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
-        setFormData((prevFormData) => ({ ...prevFormData, submitted_date: formattedDate }));
     }, []);
 
-    const onSubmit = () => {
+    const onSubmit = (data) => {
+        const newData = {
+            ...data, user_id
+        }
+        console.log(newData)
         fetch(`${ServerUrl}/user/complaints/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(newData),
         })
             .then((response) => response.json())
             .then((data) => {
                 console.log('Complaint registered:', data);
+                onClose();
             })
             .catch((error) => console.error('Error registering user:', error));
     };
 
-    // useEffect(() => {
-    //     const currentDate = new Date();
-    //     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
-    //     setFormData({ ...formData, submitted_date: formattedDate });
-    // }, []);
+    const handleError = (error) => {
+        console.log('handler error: ', error)
+    }
+
+    const okButtonProps = {
+        disabled: !(isValid && isDirty)
+
+    }
+
+    console.log('isValid: ', isValid, 'isDirty: ', isDirty)
 
     return (
-        <Modal width={1000} centered title="Create a new report" open={showModal} onCancel={handleCancel} footer={[<Button onClick={handleSubmit(onSubmit)} key="submit">Submit</Button>]}>
+        <Modal
+            width={1000}
+            centered
+            title="Create a new report"
+            open={showModal}
+            onCancel={handleCancel}
+            okButtonProps={okButtonProps}
+            afterClose={reset}
+            // footer={[<Button type="primary" key="submit">Submit</Button>]}
+            // footer={null}
+            onOk={handleSubmit(onSubmit, handleError)}
+        >
+            {/* <form onSubmit={handleSubmit(onSubmit, handleError)}> */}
+
             <div className="mt-4">
-                <pre>
-                    {JSON.stringify(formData, null, 2)}
-                </pre>
                 <div className="row mt-2">
                     <FieldWithValidation
                         label="Title"
@@ -78,8 +85,6 @@ const CreateComplaintForm = ({ handleCancel, showModal }) => {
                         register={register}
                         errors={errors}
                         minLength={3}
-                        value={formData.title}
-                        onChange={(value) => setFormData({ ...formData, title: value })}
                     />
                 </div>
                 <div className="row mt-2">
@@ -91,8 +96,6 @@ const CreateComplaintForm = ({ handleCancel, showModal }) => {
                         minLength={50}
                         customAs="textarea"
                         rows={5}
-                        value={formData.description}
-                        onChange={(value) => setFormData({ ...formData, description: value })}
                         styles={{
                             height: '150px'
                         }}
@@ -105,12 +108,12 @@ const CreateComplaintForm = ({ handleCancel, showModal }) => {
                         register={register}
                         errors={errors}
                         customAs='select'
-                        value={formData.category_id}
                         options={sanitizedArray}
-                        onChange={(value) => setFormData({ ...formData, category_id: value })}
                     />
                 </div>
             </div>
+            {/* <button disabled={!okButtonProps} type="submit" className="btn btn-primary mt-2">submit2</button> */}
+            {/* </form> */}
         </Modal>
 
 

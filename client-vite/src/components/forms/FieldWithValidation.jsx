@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { FloatingLabel } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 
-const FieldWithValidation = ({ customAs, rows, label, fieldName, register, errors, minLength, pattern, styles, value, onChange }) => {
+const FieldWithValidation = ({ customAs, rows, label, fieldName, register, errors, minLength, pattern, styles }) => {
     useEffect(() => {
         register(fieldName, {
             required: `${label} is required`,
             minLength: {
                 value: minLength,
-                message: `this field should have at least ${minLength} characters`,
+                message: `This field should have at least ${minLength} characters`,
             },
             pattern: {
                 value: pattern,
@@ -16,11 +16,6 @@ const FieldWithValidation = ({ customAs, rows, label, fieldName, register, error
             },
         });
     }, [register, fieldName, label, minLength, pattern]);
-
-    const handleChange = (e) => {
-        const { value } = e.target;
-        onChange(value);
-    };
 
     return (
         <Form.Group controlId={`validationCustom${fieldName}`}>
@@ -31,8 +26,7 @@ const FieldWithValidation = ({ customAs, rows, label, fieldName, register, error
                     as={customAs}
                     placeholder=""
                     style={styles}
-                    value={value}
-                    onChange={handleChange}
+                    {...register(fieldName)}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors[fieldName]?.message}
