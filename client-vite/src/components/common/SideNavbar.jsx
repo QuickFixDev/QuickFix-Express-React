@@ -77,8 +77,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="sidebar" style={{ minHeight: '100vh' }}>
-      <div className="menu ">
+    <div className="" style={{ minHeight: '100vh' }}>
 
         {!isLoggedIn ? (
           <NavLink to={'/'} className="custom-navlink px-2 py-4">
@@ -120,7 +119,6 @@ const Sidebar = () => {
         )}
 
 
-      </div>
     </div>
   );
 };
