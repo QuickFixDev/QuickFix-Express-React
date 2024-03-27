@@ -100,7 +100,7 @@ const Sidebar = () => {
                   <p>
                     {selectedRouteId.label}
                   </p>
-                  <NavLink to={route.path} className={`custom-navlink px-2 py-4 ${selectedRouteId === index ? 'blue-active-text light-gray-active-background' : ''}`}>
+                  <NavLink to={route.path} className={`custom-navlink px-2 py-3 ${selectedRouteId === index ? 'blue-active-text light-gray-active-background' : ''}`}>
                     <div className="container">
                       <div className="row">
                         <div className="col-xl-3 col-12 text-center">
